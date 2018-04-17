@@ -1,0 +1,645 @@
+<!doctype html>
+<html>
+  <head>
+    <title>ToDo API</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>ToDo API</h1>
+    <div class="app-desc">Ica MinButik - Todo</div>
+    <div class="app-desc">More information: <a href=""></a></div>
+    <div class="app-desc">Contact Info: <a href="goran.roseen@acando.com">goran.roseen@acando.com</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/ica-egenkontroll/todo/1.0.0</div>
+    <div class="license-info">Apache 2.0</div>
+    <div class="license-url">http://www.apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Admins">Admins</a></h4>
+  <ul>
+  <li><a href="#addCategory"><code><span class="http-method">post</span> /categories</code></a></li>
+  </ul>
+  <h4><a href="#Clients">Clients</a></h4>
+  <ul>
+  <li><a href="#addTodo"><code><span class="http-method">post</span> /todo</code></a></li>
+  <li><a href="#getCategories"><code><span class="http-method">get</span> /categories</code></a></li>
+  <li><a href="#searchTodo"><code><span class="http-method">get</span> /todo</code></a></li>
+  <li><a href="#updateTodo"><code><span class="http-method">put</span> /todo</code></a></li>
+  </ul>
+
+  <h1><a name="Admins">Admins</a></h1>
+  <div class="method"><a name="addCategory"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /categories</code></pre></div>
+    <div class="method-summary">adds a Category (<span class="nickname">addCategory</span>)</div>
+    <div class="method-notes">Adds a Category to the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Category <a href="#Category">Category</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Category to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Clients">Clients</a></h1>
+  <div class="method"><a name="addTodo"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /todo</code></pre></div>
+    <div class="method-summary">adds a Todo item (<span class="nickname">addTodo</span>)</div>
+    <div class="method-notes">Adds a Todo item to the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">TodoItem <a href="#TodoItem">TodoItem</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; ToDo item to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getCategories"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /categories</code></pre></div>
+    <div class="method-summary">Fetch all categories (<span class="nickname">getCategories</span>)</div>
+    <div class="method-notes">Fetch all categories</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Category">Category</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "sortId" : 1,
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+  "title" : "Frukt och Grönt"
+}, {
+  "sortId" : 1,
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+  "title" : "Frukt och Grönt"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    all categories
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="searchTodo"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /todo</code></pre></div>
+    <div class="method-summary">searches for todos (<span class="nickname">searchTodo</span>)</div>
+    <div class="method-notes">By passing in the appropriate options, you can search for
+available todos in the system</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; fetch a specific ToDo </div><div class="param">assignedTo (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; fetch ToDos for a specific user or group </div><div class="param">category (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; fetch ToDos with a specific category </div><div class="param">skip (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; number of records to skip for pagination format: int32</div><div class="param">limit (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; maximum number of records to return format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#TodoItem">TodoItem</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "note" : "Gör så här",
+  "todoType" : 0,
+  "isArchived" : true,
+  "title" : "Städa charken",
+  "assignedTo" : [ {
+    "name" : "Frukt & Grönt",
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "objectType" : "Group"
+  }, {
+    "name" : "Frukt & Grönt",
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "objectType" : "Group"
+  } ],
+  "tags" : [ {
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Rengöring"
+  }, {
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Rengöring"
+  } ],
+  "dueAt" : "2018-04-12 12:00",
+  "createdAt" : "2018-03-14 15:22",
+  "sortId" : 1,
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+  "category" : {
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Frukt och Grönt"
+  },
+  "isCompleted" : true,
+  "checkitems" : [ {
+    "createdAt" : "2018-03-14 15:22",
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Svabba golvet",
+    "todoId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "isCompleted" : true
+  }, {
+    "createdAt" : "2018-03-14 15:22",
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Svabba golvet",
+    "todoId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "isCompleted" : true
+  } ]
+}, {
+  "note" : "Gör så här",
+  "todoType" : 0,
+  "isArchived" : true,
+  "title" : "Städa charken",
+  "assignedTo" : [ {
+    "name" : "Frukt & Grönt",
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "objectType" : "Group"
+  }, {
+    "name" : "Frukt & Grönt",
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "objectType" : "Group"
+  } ],
+  "tags" : [ {
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Rengöring"
+  }, {
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Rengöring"
+  } ],
+  "dueAt" : "2018-04-12 12:00",
+  "createdAt" : "2018-03-14 15:22",
+  "sortId" : 1,
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+  "category" : {
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Frukt och Grönt"
+  },
+  "isCompleted" : true,
+  "checkitems" : [ {
+    "createdAt" : "2018-03-14 15:22",
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Svabba golvet",
+    "todoId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "isCompleted" : true
+  }, {
+    "createdAt" : "2018-03-14 15:22",
+    "sortId" : 1,
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "title" : "Svabba golvet",
+    "todoId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "isCompleted" : true
+  } ]
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results matching criteria
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateTodo"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /todo</code></pre></div>
+    <div class="method-summary">updates a Todo item (<span class="nickname">updateTodo</span>)</div>
+    <div class="method-notes">Updates a Todo item in the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">TodoItem <a href="#TodoItem">TodoItem</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; ToDo item to update </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#Assignee"><code>Assignee</code> - </a></li>
+    <li><a href="#Category"><code>Category</code> - </a></li>
+    <li><a href="#CheckItem"><code>CheckItem</code> - </a></li>
+    <li><a href="#Group"><code>Group</code> - </a></li>
+    <li><a href="#Tag"><code>Tag</code> - </a></li>
+    <li><a href="#TodoItem"><code>TodoItem</code> - </a></li>
+    <li><a href="#User"><code>User</code> - </a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="Assignee"><code>Assignee</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">objectType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> User or Group </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Category"><code>Category</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">sortId (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CheckItem"><code>CheckItem</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">createdAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">isCompleted (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">sortId (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">todoId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Group"><code>Group</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">objectType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> User or Group </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Tag"><code>Tag</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">sortId (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TodoItem"><code>TodoItem</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">note (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">todoType (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">createdAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">dueAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">isArchived (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">isCompleted (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">sortId (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">category (optional)</div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
+<div class="param">checkitems (optional)</div><div class="param-desc"><span class="param-type"><a href="#CheckItem">array[CheckItem]</a></span>  </div>
+<div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#Tag">array[Tag]</a></span>  </div>
+<div class="param">assignedTo (optional)</div><div class="param-desc"><span class="param-type"><a href="#Assignee">array[Assignee]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="User"><code>User</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">username </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">fullname (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>

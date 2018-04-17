@@ -1,7 +1,7 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "Metadata about Users",
+    "description" : "Ica MinButik - Metadata about Users",
     "version" : "1.0.0",
     "title" : "User API",
     "contact" : {
@@ -182,7 +182,7 @@
     }
   },
   "host" : "virtserver.swaggerhub.com",
-  "basePath" : "/roseen/user/1.0.0",
   "schemes" : [ "https" ],
-  "x-azure-api-id" : "user-api"
+  "x-azure-api-id" : "user-api",
+  "basePath" : "/ica-egenkontroll/user/1.0.0"
 }
