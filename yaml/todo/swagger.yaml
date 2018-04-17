@@ -1,0 +1,362 @@
+---
+swagger: "2.0"
+info:
+  description: Ica MinButik - Todo
+  version: 1.0.0
+  title: ToDo API
+  contact:
+    email: goran.roseen@acando.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: virtserver.swaggerhub.com
+basePath: /ica-egenkontroll/todo/1.0.0
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: clients
+  description: Operations available to regular clients
+schemes:
+- https
+paths:
+  /todo:
+    get:
+      tags:
+      - clients
+      summary: searches for todos
+      description: |
+        By passing in the appropriate options, you can search for
+        available todos in the system
+      operationId: searchTodo
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: query
+        description: fetch a specific ToDo
+        required: false
+        type: string
+      - name: assignedTo
+        in: query
+        description: fetch ToDos for a specific user or group
+        required: false
+        type: string
+      - name: category
+        in: query
+        description: fetch ToDos with a specific category
+        required: false
+        type: string
+      - name: skip
+        in: query
+        description: number of records to skip for pagination
+        required: false
+        type: integer
+        minimum: 0
+        format: int32
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        type: integer
+        minimum: 0
+        format: int32
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TodoItem'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - clients
+      summary: adds a Todo item
+      description: Adds a Todo item to the system
+      operationId: addTodo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: TodoItem
+        description: ToDo item to add
+        required: false
+        schema:
+          $ref: '#/definitions/TodoItem'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+    put:
+      tags:
+      - clients
+      summary: updates a Todo item
+      description: Updates a Todo item in the system
+      operationId: updateTodo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: TodoItem
+        description: ToDo item to update
+        required: false
+        schema:
+          $ref: '#/definitions/TodoItem'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+  /categories:
+    get:
+      tags:
+      - clients
+      summary: Fetch all categories
+      description: Fetch all categories
+      operationId: getCategories
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: all categories
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Category'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a Category
+      description: Adds a Category to the system
+      operationId: addCategory
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Category
+        description: Category to add
+        required: false
+        schema:
+          $ref: '#/definitions/Category'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+definitions:
+  TodoItem:
+    type: object
+    required:
+    - id
+    - title
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      title:
+        type: string
+        example: Städa charken
+      note:
+        type: string
+        example: Gör så här
+      todoType:
+        type: integer
+        format: int32
+        example: 0
+        minimum: 0
+      createdAt:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+      dueAt:
+        type: string
+        format: date-time
+        example: 2018-04-12 12:00
+      isArchived:
+        type: boolean
+        example: true
+      isCompleted:
+        type: boolean
+        example: true
+      sortId:
+        type: integer
+        format: int32
+        example: 1
+      category:
+        $ref: '#/definitions/Category'
+      checkitems:
+        type: array
+        items:
+          $ref: '#/definitions/CheckItem'
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+      assignedTo:
+        type: array
+        items:
+          $ref: '#/definitions/Assignee'
+    example:
+      note: Gör så här
+      todoType: 0
+      isArchived: true
+      title: Städa charken
+      assignedTo:
+      - name: Frukt & Grönt
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        objectType: Group
+      - name: Frukt & Grönt
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        objectType: Group
+      tags:
+      - sortId: 1
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title: Rengöring
+      - sortId: 1
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title: Rengöring
+      dueAt: 2018-04-12 12:00
+      createdAt: 2018-03-14 15:22
+      sortId: 1
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      category:
+        sortId: 1
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title: Frukt och Grönt
+      isCompleted: true
+      checkitems:
+      - createdAt: 2018-03-14 15:22
+        sortId: 1
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title: Svabba golvet
+        todoId: d290f1ee-6c54-4b01-90e6-d701748f0851
+        isCompleted: true
+      - createdAt: 2018-03-14 15:22
+        sortId: 1
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title: Svabba golvet
+        todoId: d290f1ee-6c54-4b01-90e6-d701748f0851
+        isCompleted: true
+  CheckItem:
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      title:
+        type: string
+        example: Svabba golvet
+      createdAt:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+      isCompleted:
+        type: boolean
+        example: true
+      sortId:
+        type: integer
+        format: int32
+        example: 1
+      todoId:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+    example:
+      createdAt: 2018-03-14 15:22
+      sortId: 1
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      title: Svabba golvet
+      todoId: d290f1ee-6c54-4b01-90e6-d701748f0851
+      isCompleted: true
+  Tag:
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      title:
+        type: string
+        example: Rengöring
+      sortId:
+        type: integer
+        format: int32
+        example: 1
+    example:
+      sortId: 1
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      title: Rengöring
+  Category:
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      title:
+        type: string
+        example: Frukt och Grönt
+      sortId:
+        type: integer
+        format: int32
+        example: 1
+    example:
+      sortId: 1
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      title: Frukt och Grönt
+  User:
+    required:
+    - username
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      username:
+        type: string
+        example: segorros
+      fullname:
+        type: string
+        example: Göran Roseen
+  Group:
+    allOf:
+    - $ref: '#/definitions/Assignee'
+    - {}
+  Assignee:
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Frukt & Grönt
+      objectType:
+        type: string
+        example: Group
+        description: User or Group
+    example:
+      name: Frukt & Grönt
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      objectType: Group
+x-azure-api-id: sh-1523977537155
