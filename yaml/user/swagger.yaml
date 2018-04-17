@@ -1,0 +1,180 @@
+---
+swagger: "2.0"
+info:
+  description: Ica MinButik - Metadata about Users
+  version: 1.0.0
+  title: User API
+  contact:
+    email: goran.roseen@acando.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: virtserver.swaggerhub.com
+basePath: /ica-egenkontroll/user/1.0.0
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+- name: others
+  description: Operations available to nobody
+schemes:
+- https
+paths:
+  /users:
+    get:
+      tags:
+      - developers
+      summary: searches for users
+      description: |
+        By passing in the appropriate options, you can search for
+        available users in the system
+      operationId: searchUsers
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: query
+        description: find a user by Id
+        required: false
+        type: string
+      - name: group
+        in: query
+        description: find all users in a group
+        required: false
+        type: string
+      - name: skip
+        in: query
+        description: number of records to skip for pagination
+        required: false
+        type: integer
+        minimum: 0
+        format: int32
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        type: integer
+        minimum: 0
+        format: int32
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a user
+      description: Adds a user to the system
+      operationId: addUser
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: Inventory item to add
+        required: false
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+    put:
+      tags:
+      - admins
+      summary: updates a user
+      description: Updates a user in the system
+      operationId: updateUser
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: Inventory item to add
+        required: false
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+definitions:
+  User:
+    type: object
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Carl von Linné
+      groups:
+        type: array
+        items:
+          $ref: '#/definitions/Group'
+      roles:
+        type: array
+        items:
+          $ref: '#/definitions/Role'
+    example:
+      roles:
+      - name: Marknadsansvarig
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      - name: Marknadsansvarig
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name: Carl von Linné
+      groups:
+      - name: Frukt & Grönt
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      - name: Frukt & Grönt
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+  Group:
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Frukt & Grönt
+    example:
+      name: Frukt & Grönt
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+  Role:
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Marknadsansvarig
+    example:
+      name: Marknadsansvarig
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+x-azure-api-id: user-api
