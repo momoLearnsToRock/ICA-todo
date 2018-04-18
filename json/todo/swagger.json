@@ -192,15 +192,19 @@
           "type" : "string",
           "example" : "Städa charken"
         },
+        "todoType" : {
+          "type" : "string",
+          "description" : "Must be one of \"basic\", \"measure\", \"yesno\"",
+          "example" : "basic"
+        },
         "note" : {
           "type" : "string",
           "example" : "Gör så här"
         },
-        "todoType" : {
-          "type" : "integer",
-          "format" : "int32",
-          "minimum" : 0,
-          "example" : 0
+        "contentUrl" : {
+          "type" : "string",
+          "format" : "url",
+          "example" : "https://episerver.ica.se/getContent?id=4711"
         },
         "createdAt" : {
           "type" : "string",
@@ -220,6 +224,17 @@
           "type" : "boolean",
           "example" : true
         },
+        "completedBy" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/User"
+          }
+        },
+        "completedAt" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-04-12 12:00"
+        },
         "sortId" : {
           "type" : "integer",
           "format" : "int32",
@@ -227,12 +242,6 @@
         },
         "category" : {
           "$ref" : "#/definitions/Category"
-        },
-        "checkitems" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/CheckItem"
-          }
         },
         "tags" : {
           "type" : "array",
@@ -245,39 +254,6 @@
           "items" : {
             "$ref" : "#/definitions/Assignee"
           }
-        }
-      }
-    },
-    "CheckItem" : {
-      "required" : [ "title" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "format" : "uuid",
-          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "title" : {
-          "type" : "string",
-          "example" : "Svabba golvet"
-        },
-        "createdAt" : {
-          "type" : "string",
-          "format" : "date-time",
-          "example" : "2018-03-14 15:22"
-        },
-        "isCompleted" : {
-          "type" : "boolean",
-          "example" : true
-        },
-        "sortId" : {
-          "type" : "integer",
-          "format" : "int32",
-          "example" : 1
-        },
-        "todoId" : {
-          "type" : "string",
-          "format" : "uuid",
-          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
         }
       }
     },
@@ -310,7 +286,7 @@
         },
         "title" : {
           "type" : "string",
-          "example" : "Frukt och Grönt"
+          "example" : "HACCP"
         },
         "sortId" : {
           "type" : "integer",
@@ -337,25 +313,14 @@
         }
       }
     },
-    "Group" : {
-      "required" : [ "title" ],
-      "allOf" : [ {
-        "$ref" : "#/definitions/Assignee"
-      } ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "format" : "uuid",
-          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "title" : {
-          "type" : "string",
-          "example" : "Frukt & Grönt"
-        }
-      }
-    },
     "Assignee" : {
       "properties" : {
+        "objectType" : {
+          "type" : "string",
+          "description" : "Mus be one of User or Group",
+          "enum" : [ "User", "Group" ],
+          "example" : "Group"
+        },
         "id" : {
           "type" : "string",
           "format" : "uuid",
@@ -364,11 +329,6 @@
         "name" : {
           "type" : "string",
           "example" : "Frukt & Grönt"
-        },
-        "objectType" : {
-          "type" : "string",
-          "description" : "User or Group",
-          "example" : "Group"
         }
       }
     }

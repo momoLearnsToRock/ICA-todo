@@ -172,14 +172,17 @@ definitions:
       title:
         type: string
         example: Städa charken
+      todoType:
+        type: string
+        example: basic
+        description: Must be one of "basic", "measure", "yesno"
       note:
         type: string
         example: Gör så här
-      todoType:
-        type: integer
-        format: int32
-        example: 0
-        minimum: 0
+      contentUrl:
+        type: string
+        format: url
+        example: https://episerver.ica.se/getContent?id=4711
       createdAt:
         type: string
         format: date-time
@@ -194,16 +197,20 @@ definitions:
       isCompleted:
         type: boolean
         example: true
+      completedBy:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      completedAt:
+        type: string
+        format: date-time
+        example: 2018-04-12 12:00
       sortId:
         type: integer
         format: int32
         example: 1
       category:
         $ref: '#/definitions/Category'
-      checkitems:
-        type: array
-        items:
-          $ref: '#/definitions/CheckItem'
       tags:
         type: array
         items:
@@ -214,7 +221,8 @@ definitions:
           $ref: '#/definitions/Assignee'
     example:
       note: Gör så här
-      todoType: 0
+      completedAt: 2018-04-12 12:00
+      todoType: basic
       isArchived: true
       title: Städa charken
       assignedTo:
@@ -233,58 +241,20 @@ definitions:
         title: Rengöring
       dueAt: 2018-04-12 12:00
       createdAt: 2018-03-14 15:22
+      contentUrl: https://episerver.ica.se/getContent?id=4711
       sortId: 1
       id: d290f1ee-6c54-4b01-90e6-d701748f0851
       category:
         sortId: 1
         id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        title: Frukt och Grönt
-      isCompleted: true
-      checkitems:
-      - createdAt: 2018-03-14 15:22
-        sortId: 1
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        title: Svabba golvet
-        todoId: d290f1ee-6c54-4b01-90e6-d701748f0851
-        isCompleted: true
-      - createdAt: 2018-03-14 15:22
-        sortId: 1
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        title: Svabba golvet
-        todoId: d290f1ee-6c54-4b01-90e6-d701748f0851
-        isCompleted: true
-  CheckItem:
-    required:
-    - title
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      title:
-        type: string
-        example: Svabba golvet
-      createdAt:
-        type: string
-        format: date-time
-        example: 2018-03-14 15:22
-      isCompleted:
-        type: boolean
-        example: true
-      sortId:
-        type: integer
-        format: int32
-        example: 1
-      todoId:
-        type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-    example:
-      createdAt: 2018-03-14 15:22
-      sortId: 1
-      id: d290f1ee-6c54-4b01-90e6-d701748f0851
-      title: Svabba golvet
-      todoId: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title: HACCP
+      completedBy:
+      - id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        fullname: Göran Roseen
+        username: segorros
+      - id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        fullname: Göran Roseen
+        username: segorros
       isCompleted: true
   Tag:
     required:
@@ -315,7 +285,7 @@ definitions:
         example: d290f1ee-6c54-4b01-90e6-d701748f0851
       title:
         type: string
-        example: Frukt och Grönt
+        example: HACCP
       sortId:
         type: integer
         format: int32
@@ -323,7 +293,7 @@ definitions:
     example:
       sortId: 1
       id: d290f1ee-6c54-4b01-90e6-d701748f0851
-      title: Frukt och Grönt
+      title: HACCP
   User:
     required:
     - username
@@ -338,12 +308,19 @@ definitions:
       fullname:
         type: string
         example: Göran Roseen
-  Group:
-    allOf:
-    - $ref: '#/definitions/Assignee'
-    - {}
+    example:
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      fullname: Göran Roseen
+      username: segorros
   Assignee:
     properties:
+      objectType:
+        type: string
+        example: Group
+        description: Mus be one of User or Group
+        enum:
+        - User
+        - Group
       id:
         type: string
         format: uuid
@@ -351,10 +328,6 @@ definitions:
       name:
         type: string
         example: Frukt & Grönt
-      objectType:
-        type: string
-        example: Group
-        description: User or Group
     example:
       name: Frukt & Grönt
       id: d290f1ee-6c54-4b01-90e6-d701748f0851
