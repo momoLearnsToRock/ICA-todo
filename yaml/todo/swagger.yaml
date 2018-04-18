@@ -191,9 +191,8 @@ definitions:
         type: string
         format: date-time
         example: 2018-04-12 12:00
-      isArchived:
-        type: boolean
-        example: true
+      assignedTo:
+        $ref: '#/definitions/Assignee'
       isCompleted:
         type: boolean
         example: true
@@ -213,13 +212,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Tag'
-      assignedTo:
-        $ref: '#/definitions/Assignee'
     example:
       note: Gör så här
       completedAt: 2018-04-12 12:00
       todoType: basic
-      isArchived: true
       title: Städa charken
       assignedTo:
         name: Frukt & Grönt

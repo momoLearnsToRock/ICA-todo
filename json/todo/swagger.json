@@ -216,9 +216,8 @@
           "format" : "date-time",
           "example" : "2018-04-12 12:00"
         },
-        "isArchived" : {
-          "type" : "boolean",
-          "example" : true
+        "assignedTo" : {
+          "$ref" : "#/definitions/Assignee"
         },
         "isCompleted" : {
           "type" : "boolean",
@@ -245,9 +244,6 @@
           "items" : {
             "$ref" : "#/definitions/Tag"
           }
-        },
-        "assignedTo" : {
-          "$ref" : "#/definitions/Assignee"
         }
       }
     },
