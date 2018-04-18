@@ -198,9 +198,7 @@ definitions:
         type: boolean
         example: true
       completedBy:
-        type: array
-        items:
-          $ref: '#/definitions/User'
+        $ref: '#/definitions/User'
       completedAt:
         type: string
         format: date-time
@@ -216,9 +214,7 @@ definitions:
         items:
           $ref: '#/definitions/Tag'
       assignedTo:
-        type: array
-        items:
-          $ref: '#/definitions/Assignee'
+        $ref: '#/definitions/Assignee'
     example:
       note: Gör så här
       completedAt: 2018-04-12 12:00
@@ -226,10 +222,7 @@ definitions:
       isArchived: true
       title: Städa charken
       assignedTo:
-      - name: Frukt & Grönt
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        objectType: Group
-      - name: Frukt & Grönt
+        name: Frukt & Grönt
         id: d290f1ee-6c54-4b01-90e6-d701748f0851
         objectType: Group
       tags:
@@ -249,10 +242,7 @@ definitions:
         id: d290f1ee-6c54-4b01-90e6-d701748f0851
         title: HACCP
       completedBy:
-      - id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        fullname: Göran Roseen
-        username: segorros
-      - id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
         fullname: Göran Roseen
         username: segorros
       isCompleted: true

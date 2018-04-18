@@ -225,10 +225,7 @@
           "example" : true
         },
         "completedBy" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/User"
-          }
+          "$ref" : "#/definitions/User"
         },
         "completedAt" : {
           "type" : "string",
@@ -250,10 +247,7 @@
           }
         },
         "assignedTo" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/Assignee"
-          }
+          "$ref" : "#/definitions/Assignee"
         }
       }
     },
