@@ -154,7 +154,7 @@
           "in" : "body",
           "name" : "assignee",
           "description" : "User or Department to assign to",
-          "required" : false,
+          "required" : true,
           "schema" : {
             "$ref" : "#/definitions/Assignee"
           }
@@ -675,7 +675,7 @@
   },
   "definitions" : {
     "TodoItem" : {
-      "required" : [ "title" ],
+      "required" : [ "category", "title", "todoType" ],
       "properties" : {
         "id" : {
           "type" : "string",
@@ -863,6 +863,7 @@
       }
     },
     "Assignee" : {
+      "required" : [ "id", "objectType" ],
       "properties" : {
         "objectType" : {
           "type" : "string",
@@ -887,7 +888,7 @@
     },
     "Activity" : {
       "type" : "object",
-      "required" : [ "title" ],
+      "required" : [ "activityType", "category", "title" ],
       "properties" : {
         "id" : {
           "type" : "string",

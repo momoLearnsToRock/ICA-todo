@@ -1325,7 +1325,7 @@ available todos in the system</div>
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">assignee <a href="#Assignee">Assignee</a> (optional)</div>
+      <div class="param">assignee <a href="#Assignee">Assignee</a> (required)</div>
 
       <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; User or Department to assign to </div>
 
@@ -1517,12 +1517,12 @@ available todos in the system</div>
     <div class="field-items">
       <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">activityType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of &quot;basic&quot;, &quot;measure&quot;, &quot;yesno&quot; </div>
+<div class="param">activityType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of &quot;basic&quot;, &quot;measure&quot;, &quot;yesno&quot; </div>
 <div class="param">note (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">contentUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: url</div>
 <div class="param">createdAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
 <div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
-<div class="param">category (optional)</div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
+<div class="param">category </div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
 <div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#Tag">array[Tag]</a></span>  </div>
 <div class="param">modifiedOn (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
     </div>  <!-- field-items -->
@@ -1531,10 +1531,10 @@ available todos in the system</div>
     <h3><a name="Assignee"><code>Assignee</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">objectType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of User or Group </div>
+      <div class="param">objectType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of User or Group </div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">User</div><div class="param-enum">Group</div>
-<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
@@ -1579,7 +1579,7 @@ available todos in the system</div>
     <div class="field-items">
       <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">todoType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of &quot;basic&quot;, &quot;measure&quot;, &quot;yesno&quot; </div>
+<div class="param">todoType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of &quot;basic&quot;, &quot;measure&quot;, &quot;yesno&quot; </div>
 <div class="param">note (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">contentUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: url</div>
 <div class="param">createdAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
@@ -1589,7 +1589,7 @@ available todos in the system</div>
 <div class="param">completedBy (optional)</div><div class="param-desc"><span class="param-type"><a href="#User">User</a></span>  </div>
 <div class="param">completedAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
 <div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
-<div class="param">category (optional)</div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
+<div class="param">category </div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
 <div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#Tag">array[Tag]</a></span>  </div>
 <div class="param">modifiedOn (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
     </div>  <!-- field-items -->

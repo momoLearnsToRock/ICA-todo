@@ -134,7 +134,7 @@ paths:
       - in: body
         name: assignee
         description: User or Department to assign to
-        required: false
+        required: true
         schema:
           $ref: '#/definitions/Assignee'
       responses:
@@ -568,7 +568,9 @@ paths:
 definitions:
   TodoItem:
     required:
+    - category
     - title
+    - todoType
     properties:
       id:
         type: string
@@ -717,6 +719,9 @@ definitions:
       id: d290f1ee-6c54-4b01-90e6-d701748f0851
       fullname: Göran Roseen
   Assignee:
+    required:
+    - id
+    - objectType
     properties:
       objectType:
         type: string
@@ -738,6 +743,8 @@ definitions:
   Activity:
     type: object
     required:
+    - activityType
+    - category
     - title
     properties:
       id:
