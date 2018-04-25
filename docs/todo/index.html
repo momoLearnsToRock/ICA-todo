@@ -196,17 +196,83 @@ font-style: italic;
   <div class="method-summary"></div>
   <h4><a href="#Admins">Admins</a></h4>
   <ul>
+  <li><a href="#addActivity"><code><span class="http-method">post</span> /activities</code></a></li>
   <li><a href="#addCategory"><code><span class="http-method">post</span> /categories</code></a></li>
+  <li><a href="#addTag"><code><span class="http-method">post</span> /tags</code></a></li>
+  <li><a href="#deleteActivity"><code><span class="http-method">delete</span> /activities/{id}</code></a></li>
+  <li><a href="#deleteCategory"><code><span class="http-method">delete</span> /categories/{id}</code></a></li>
+  <li><a href="#deleteTag"><code><span class="http-method">delete</span> /tags/{id}</code></a></li>
+  <li><a href="#deleteTodo"><code><span class="http-method">delete</span> /todos/{id}</code></a></li>
+  <li><a href="#updateActivity"><code><span class="http-method">put</span> /activities/{id}</code></a></li>
+  <li><a href="#updateCategory"><code><span class="http-method">put</span> /categories/{id}</code></a></li>
+  <li><a href="#updateTag"><code><span class="http-method">put</span> /tags/{id}</code></a></li>
   </ul>
   <h4><a href="#Clients">Clients</a></h4>
   <ul>
-  <li><a href="#addTodo"><code><span class="http-method">post</span> /todo</code></a></li>
+  <li><a href="#createTodoForDepartmentFromActivity"><code><span class="http-method">post</span> /activities/{id}/createTodoForDepartment</code></a></li>
+  <li><a href="#createTodoForUserFromActivity"><code><span class="http-method">post</span> /activities/{id}/createTodoForUser</code></a></li>
+  <li><a href="#getActivityById"><code><span class="http-method">get</span> /activities/{id}</code></a></li>
   <li><a href="#getCategories"><code><span class="http-method">get</span> /categories</code></a></li>
-  <li><a href="#searchTodo"><code><span class="http-method">get</span> /todo</code></a></li>
-  <li><a href="#updateTodo"><code><span class="http-method">put</span> /todo</code></a></li>
+  <li><a href="#getCategoryById"><code><span class="http-method">get</span> /categories/{id}</code></a></li>
+  <li><a href="#getTagById"><code><span class="http-method">get</span> /tags/{id}</code></a></li>
+  <li><a href="#getTags"><code><span class="http-method">get</span> /tags</code></a></li>
+  <li><a href="#getTodDoById"><code><span class="http-method">get</span> /todos/{id}</code></a></li>
+  <li><a href="#searchActivity"><code><span class="http-method">get</span> /activities</code></a></li>
+  <li><a href="#searchTodo"><code><span class="http-method">get</span> /todos</code></a></li>
+  <li><a href="#todoAssignDepartment"><code><span class="http-method">post</span> /todos/{id}/assignDepartment</code></a></li>
+  <li><a href="#todoAssignUser"><code><span class="http-method">post</span> /todos/{id}/assignUser</code></a></li>
+  <li><a href="#todoClose"><code><span class="http-method">post</span> /todos/{id}/closeTodo</code></a></li>
   </ul>
 
   <h1><a name="Admins">Admins</a></h1>
+  <div class="method"><a name="addActivity"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /activities</code></pre></div>
+    <div class="method-summary">adds an Activity (<span class="nickname">addActivity</span>)</div>
+    <div class="method-notes">Adds an activity to the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Activity <a href="#Activity">Activity</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Activity to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="addCategory"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -255,13 +321,12 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <h1><a name="Clients">Clients</a></h1>
-  <div class="method"><a name="addTodo"/>
+  <div class="method"><a name="addTag"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /todo</code></pre></div>
-    <div class="method-summary">adds a Todo item (<span class="nickname">addTodo</span>)</div>
-    <div class="method-notes">Adds a Todo item to the system</div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /tags</code></pre></div>
+    <div class="method-summary">adds a Tag (<span class="nickname">addTag</span>)</div>
+    <div class="method-notes">Adds a Tag to the system</div>
 
 
     <h3 class="field-label">Consumes</h3>
@@ -272,9 +337,9 @@ font-style: italic;
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">TodoItem <a href="#TodoItem">TodoItem</a> (optional)</div>
+      <div class="param">Tag <a href="#Tag">Tag</a> (optional)</div>
 
-      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; ToDo item to add </div>
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Tag to add </div>
 
     </div>  <!-- field-items -->
 
@@ -304,6 +369,480 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="deleteActivity"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /activities/{id}</code></pre></div>
+    <div class="method-summary">Delete Activity by Id (<span class="nickname">deleteActivity</span>)</div>
+    <div class="method-notes">Deletes an activity item in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the activity that needs to be deleted </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delete successful
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Todo not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteCategory"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /categories/{id}</code></pre></div>
+    <div class="method-summary">Delete Category by Id (<span class="nickname">deleteCategory</span>)</div>
+    <div class="method-notes">Deletes a Category in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the Category that needs to be deleted </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delete successful
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Todo not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteTag"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /tags/{id}</code></pre></div>
+    <div class="method-summary">Delete Tag by Id (<span class="nickname">deleteTag</span>)</div>
+    <div class="method-notes">Deletes a Tag in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the Tag that needs to be deleted </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delete successful
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Todo not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteTodo"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /todos/{id}</code></pre></div>
+    <div class="method-summary">Delete ToDo by Id (<span class="nickname">deleteTodo</span>)</div>
+    <div class="method-notes">Deletes a Todo item in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the Todo that needs to be deleted </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delete successful
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Todo not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateActivity"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /activities/{id}</code></pre></div>
+    <div class="method-summary">updates an activity item (<span class="nickname">updateActivity</span>)</div>
+    <div class="method-notes">Updates an activity item in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the Activity item to be updated </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ActivityItem <a href="#TodoItem">TodoItem</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Activity item to update </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateCategory"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /categories/{id}</code></pre></div>
+    <div class="method-summary">updates a Category (<span class="nickname">updateCategory</span>)</div>
+    <div class="method-notes">Updates a Category in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the Category to be updated </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Category <a href="#Category">Category</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Category to update </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateTag"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /tags/{id}</code></pre></div>
+    <div class="method-summary">updates a Tag (<span class="nickname">updateTag</span>)</div>
+    <div class="method-notes">Updates a Tag in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the Tag to be updated </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Tag <a href="#Tag">Tag</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Tag to update </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Clients">Clients</a></h1>
+  <div class="method"><a name="createTodoForDepartmentFromActivity"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /activities/{id}/createTodoForDepartment</code></pre></div>
+    <div class="method-summary">Creates a todo based on the activity (<span class="nickname">createTodoForDepartmentFromActivity</span>)</div>
+    <div class="method-notes">Creates a todo assiged to a department based on the activity</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the activity that the todo will be created from </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Department <a href="#Department">Department</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Properties of the department to assign the todo to </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="createTodoForUserFromActivity"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /activities/{id}/createTodoForUser</code></pre></div>
+    <div class="method-summary">Creates a todo based on the activity (<span class="nickname">createTodoForUserFromActivity</span>)</div>
+    <div class="method-notes">Creates a todo assiged to a user based on the activity</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the activity that the todo will be created from </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">User <a href="#User">User</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Properties of the user to assign the todo to </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getActivityById"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities/{id}</code></pre></div>
+    <div class="method-summary">Find activity by Id (<span class="nickname">getActivityById</span>)</div>
+    <div class="method-notes">Find an activity by Id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Activity">Activity</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#Activity">Activity</a>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Todo not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="getCategories"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -327,15 +866,7 @@ font-style: italic;
 
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>[ {
-  "sortId" : 1,
-  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-  "title" : "HACCP"
-}, {
-  "sortId" : 1,
-  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-  "title" : "HACCP"
-} ]</code></pre>
+    <pre class="example"><code>[ "", "" ]</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -353,10 +884,255 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="getCategoryById"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /categories/{id}</code></pre></div>
+    <div class="method-summary">Find Category by Id (<span class="nickname">getCategoryById</span>)</div>
+    <div class="method-notes">Find a Category by Id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the Category that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Category">Category</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#Category">Category</a>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Todo not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTagById"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tags/{id}</code></pre></div>
+    <div class="method-summary">Find Tag by Id (<span class="nickname">getTagById</span>)</div>
+    <div class="method-notes">Find a Tag by Id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the Tag that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Tag">Tag</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#Tag">Tag</a>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Todo not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTags"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tags</code></pre></div>
+    <div class="method-summary">Fetch all tags (<span class="nickname">getTags</span>)</div>
+    <div class="method-notes">Fetch all tags</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Tag">Tag</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ "", "" ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    all tags
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTodDoById"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /todos/{id}</code></pre></div>
+    <div class="method-summary">Find Todo by Id (<span class="nickname">getTodDoById</span>)</div>
+    <div class="method-notes">Find a Todo by Id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the Todo that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#TodoItem">TodoItem</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#TodoItem">TodoItem</a>
+    <h4 class="field-label">400</h4>
+    Invalid ID supplied
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Todo not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="searchActivity"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities</code></pre></div>
+    <div class="method-summary">searches for activities (<span class="nickname">searchActivity</span>)</div>
+    <div class="method-notes">By passing in the appropriate options, you can search for
+available activity in the system</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; fetch a specific ToDo </div><div class="param">category (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; fetch activities with a specific category </div><div class="param">skip (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; number of records to skip for pagination format: int32</div><div class="param">limit (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; maximum number of records to return format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Activity">Activity</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ "", "" ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results matching criteria
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="searchTodo"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /todo</code></pre></div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /todos</code></pre></div>
     <div class="method-summary">searches for todos (<span class="nickname">searchTodo</span>)</div>
     <div class="method-notes">By passing in the appropriate options, you can search for
 available todos in the system</div>
@@ -391,77 +1167,7 @@ available todos in the system</div>
 
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>[ {
-  "note" : "Gör så här",
-  "completedAt" : "2018-04-12 12:00",
-  "todoType" : "basic",
-  "title" : "Städa charken",
-  "assignedTo" : {
-    "name" : "Frukt & Grönt",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "objectType" : "Group"
-  },
-  "tags" : [ {
-    "sortId" : 1,
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "title" : "Rengöring"
-  }, {
-    "sortId" : 1,
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "title" : "Rengöring"
-  } ],
-  "dueAt" : "2018-04-12 12:00",
-  "createdAt" : "2018-03-14 15:22",
-  "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
-  "sortId" : 1,
-  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-  "category" : {
-    "sortId" : 1,
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "title" : "HACCP"
-  },
-  "completedBy" : {
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "fullname" : "Göran Roseen",
-    "username" : "segorros"
-  },
-  "isCompleted" : true
-}, {
-  "note" : "Gör så här",
-  "completedAt" : "2018-04-12 12:00",
-  "todoType" : "basic",
-  "title" : "Städa charken",
-  "assignedTo" : {
-    "name" : "Frukt & Grönt",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "objectType" : "Group"
-  },
-  "tags" : [ {
-    "sortId" : 1,
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "title" : "Rengöring"
-  }, {
-    "sortId" : 1,
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "title" : "Rengöring"
-  } ],
-  "dueAt" : "2018-04-12 12:00",
-  "createdAt" : "2018-03-14 15:22",
-  "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
-  "sortId" : 1,
-  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-  "category" : {
-    "sortId" : 1,
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "title" : "HACCP"
-  },
-  "completedBy" : {
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "fullname" : "Göran Roseen",
-    "username" : "segorros"
-  },
-  "isCompleted" : true
-} ]</code></pre>
+    <pre class="example"><code>[ "", "" ]</code></pre>
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -479,13 +1185,19 @@ available todos in the system</div>
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="updateTodo"/>
+  <div class="method"><a name="todoAssignDepartment"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="put"><code class="huge"><span class="http-method">put</span> /todo</code></pre></div>
-    <div class="method-summary">updates a Todo item (<span class="nickname">updateTodo</span>)</div>
-    <div class="method-notes">Updates a Todo item in the system</div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /todos/{id}/assignDepartment</code></pre></div>
+    <div class="method-summary">assigns the todo to a department (<span class="nickname">todoAssignDepartment</span>)</div>
+    <div class="method-notes">Assigns a department to the todo</div>
 
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the todo to change the assignee for </div>
+    </div>  <!-- field-items -->
 
     <h3 class="field-label">Consumes</h3>
     This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
@@ -495,9 +1207,60 @@ available todos in the system</div>
 
     <h3 class="field-label">Request body</h3>
     <div class="field-items">
-      <div class="param">TodoItem <a href="#TodoItem">TodoItem</a> (optional)</div>
+      <div class="param">Department <a href="#Department">Department</a> (optional)</div>
 
-      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; ToDo item to update </div>
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Properties of the Department to assign to </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="todoAssignUser"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /todos/{id}/assignUser</code></pre></div>
+    <div class="method-summary">assigns the todo to a user (<span class="nickname">todoAssignUser</span>)</div>
+    <div class="method-notes">Assigns a user to the todo</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the todo to change the assignee for </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">User <a href="#User">User</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Properties of the User to assign to </div>
 
     </div>  <!-- field-items -->
 
@@ -524,44 +1287,124 @@ available todos in the system</div>
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="todoClose"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /todos/{id}/closeTodo</code></pre></div>
+    <div class="method-summary">close the todo (<span class="nickname">todoClose</span>)</div>
+    <div class="method-notes">close the todo</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the todo to change the assignee for </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
 
   <h2><a name="__Models">Models</a></h2>
   [ Jump to <a href="#__Methods">Methods</a> ]
 
   <h3>Table of Contents</h3>
   <ol>
+    <li><a href="#Activity"><code>Activity</code> - </a></li>
     <li><a href="#Assignee"><code>Assignee</code> - </a></li>
+    <li><a href="#BaseTable"><code>BaseTable</code> - </a></li>
     <li><a href="#Category"><code>Category</code> - </a></li>
+    <li><a href="#Department"><code>Department</code> - </a></li>
     <li><a href="#Tag"><code>Tag</code> - </a></li>
     <li><a href="#TodoItem"><code>TodoItem</code> - </a></li>
     <li><a href="#User"><code>User</code> - </a></li>
   </ol>
 
   <div class="model">
+    <h3><a name="Activity"><code>Activity</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">modifiedOn </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">activityType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of &quot;basic&quot;, &quot;measure&quot;, &quot;yesno&quot; </div>
+<div class="param">note (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">contentUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: url</div>
+<div class="param">createdAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">category (optional)</div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
+<div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#Tag">array[Tag]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="Assignee"><code>Assignee</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">objectType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Mus be one of User or Group </div>
+      <div class="param">objectType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of User or Group </div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">User</div><div class="param-enum">Group</div>
-<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BaseTable"><code>BaseTable</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">modifiedOn </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="Category"><code>Category</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+      <div class="param">modifiedOn </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">sortId (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Department"><code>Department</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="Tag"><code>Tag</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+      <div class="param">modifiedOn </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">sortId (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
     </div>  <!-- field-items -->
@@ -570,7 +1413,8 @@ available todos in the system</div>
     <h3><a name="TodoItem"><code>TodoItem</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+      <div class="param">modifiedOn </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">todoType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Must be one of &quot;basic&quot;, &quot;measure&quot;, &quot;yesno&quot; </div>
 <div class="param">note (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
@@ -581,7 +1425,7 @@ available todos in the system</div>
 <div class="param">isCompleted (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
 <div class="param">completedBy (optional)</div><div class="param-desc"><span class="param-type"><a href="#User">User</a></span>  </div>
 <div class="param">completedAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
-<div class="param">sortId (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
 <div class="param">category (optional)</div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
 <div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#Tag">array[Tag]</a></span>  </div>
     </div>  <!-- field-items -->
@@ -590,7 +1434,7 @@ available todos in the system</div>
     <h3><a name="User"><code>User</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">username </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">fullname (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->

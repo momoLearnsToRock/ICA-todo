@@ -19,7 +19,7 @@ tags:
 schemes:
 - https
 paths:
-  /todo:
+  /todos:
     get:
       tags:
       - clients
@@ -69,49 +69,126 @@ paths:
               $ref: '#/definitions/TodoItem'
         400:
           description: bad input parameter
+  /todos/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find Todo by Id
+      description: Find a Todo by Id
+      operationId: getTodDoById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the Todo that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/TodoItem'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Todo not found
+    delete:
+      tags:
+      - admins
+      summary: Delete ToDo by Id
+      description: Deletes a Todo item in the system
+      operationId: deleteTodo
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the Todo that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Todo not found
+  /todos/{id}/assignUser:
     post:
       tags:
       - clients
-      summary: adds a Todo item
-      description: Adds a Todo item to the system
-      operationId: addTodo
+      summary: assigns the todo to a user
+      description: Assigns a user to the todo
+      operationId: todoAssignUser
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
+      - name: id
+        in: path
+        description: ID of the todo to change the assignee for
+        required: true
+        type: string
       - in: body
-        name: TodoItem
-        description: ToDo item to add
+        name: User
+        description: Properties of the User to assign to
         required: false
         schema:
-          $ref: '#/definitions/TodoItem'
-      responses:
-        201:
-          description: item created
-        400:
-          description: invalid input, object invalid
-        409:
-          description: an existing item already exists
-    put:
-      tags:
-      - clients
-      summary: updates a Todo item
-      description: Updates a Todo item in the system
-      operationId: updateTodo
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - in: body
-        name: TodoItem
-        description: ToDo item to update
-        required: false
-        schema:
-          $ref: '#/definitions/TodoItem'
+          $ref: '#/definitions/User'
       responses:
         200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+  /todos/{id}/assignDepartment:
+    post:
+      tags:
+      - clients
+      summary: assigns the todo to a department
+      description: Assigns a department to the todo
+      operationId: todoAssignDepartment
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the todo to change the assignee for
+        required: true
+        type: string
+      - in: body
+        name: Department
+        description: Properties of the Department to assign to
+        required: false
+        schema:
+          $ref: '#/definitions/Department'
+      responses:
+        201:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+  /todos/{id}/closeTodo:
+    post:
+      tags:
+      - clients
+      summary: close the todo
+      description: close the todo
+      operationId: todoClose
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the todo to change the assignee for
+        required: true
+        type: string
+      responses:
+        201:
           description: item updated
         400:
           description: invalid input, object invalid
@@ -158,135 +235,485 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
+  /categories/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find Category by Id
+      description: Find a Category by Id
+      operationId: getCategoryById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the Category that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Category'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Todo not found
+    put:
+      tags:
+      - admins
+      summary: updates a Category
+      description: Updates a Category in the system
+      operationId: updateCategory
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the Category to be updated
+        required: true
+        type: string
+      - in: body
+        name: Category
+        description: Category to update
+        required: false
+        schema:
+          $ref: '#/definitions/Category'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete Category by Id
+      description: Deletes a Category in the system
+      operationId: deleteCategory
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the Category that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Todo not found
+  /tags:
+    get:
+      tags:
+      - clients
+      summary: Fetch all tags
+      description: Fetch all tags
+      operationId: getTags
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: all tags
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tag'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a Tag
+      description: Adds a Tag to the system
+      operationId: addTag
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Tag
+        description: Tag to add
+        required: false
+        schema:
+          $ref: '#/definitions/Tag'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /tags/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find Tag by Id
+      description: Find a Tag by Id
+      operationId: getTagById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the Tag that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Tag'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Todo not found
+    put:
+      tags:
+      - admins
+      summary: updates a Tag
+      description: Updates a Tag in the system
+      operationId: updateTag
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the Tag to be updated
+        required: true
+        type: string
+      - in: body
+        name: Tag
+        description: Tag to update
+        required: false
+        schema:
+          $ref: '#/definitions/Tag'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete Tag by Id
+      description: Deletes a Tag in the system
+      operationId: deleteTag
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the Tag that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Todo not found
+  /activities:
+    get:
+      tags:
+      - clients
+      summary: searches for activities
+      description: |
+        By passing in the appropriate options, you can search for
+        available activity in the system
+      operationId: searchActivity
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: query
+        description: fetch a specific ToDo
+        required: false
+        type: string
+      - name: category
+        in: query
+        description: fetch activities with a specific category
+        required: false
+        type: string
+      - name: skip
+        in: query
+        description: number of records to skip for pagination
+        required: false
+        type: integer
+        minimum: 0
+        format: int32
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        type: integer
+        minimum: 0
+        format: int32
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Activity'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds an Activity
+      description: Adds an activity to the system
+      operationId: addActivity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Activity
+        description: Activity to add
+        required: false
+        schema:
+          $ref: '#/definitions/Activity'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /activities/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find activity by Id
+      description: Find an activity by Id
+      operationId: getActivityById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the activity that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Activity'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Todo not found
+    put:
+      tags:
+      - admins
+      summary: updates an activity item
+      description: Updates an activity item in the system
+      operationId: updateActivity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the Activity item to be updated
+        required: true
+        type: string
+      - in: body
+        name: ActivityItem
+        description: Activity item to update
+        required: false
+        schema:
+          $ref: '#/definitions/TodoItem'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete Activity by Id
+      description: Deletes an activity item in the system
+      operationId: deleteActivity
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the activity that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Todo not found
+  /activities/{id}/createTodoForUser:
+    post:
+      tags:
+      - clients
+      summary: Creates a todo based on the activity
+      description: Creates a todo assiged to a user based on the activity
+      operationId: createTodoForUserFromActivity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the activity that the todo will be created from
+        required: true
+        type: string
+      - in: body
+        name: User
+        description: Properties of the user to assign the todo to
+        required: false
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+  /activities/{id}/createTodoForDepartment:
+    post:
+      tags:
+      - clients
+      summary: Creates a todo based on the activity
+      description: Creates a todo assiged to a department based on the activity
+      operationId: createTodoForDepartmentFromActivity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the activity that the todo will be created from
+        required: true
+        type: string
+      - in: body
+        name: Department
+        description: Properties of the department to assign the todo to
+        required: false
+        schema:
+          $ref: '#/definitions/Department'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
 definitions:
   TodoItem:
-    type: object
-    required:
-    - id
-    - title
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      title:
-        type: string
-        example: Städa charken
-      todoType:
-        type: string
-        example: basic
-        description: Must be one of "basic", "measure", "yesno"
-      note:
-        type: string
-        example: Gör så här
-      contentUrl:
-        type: string
-        format: url
-        example: https://episerver.ica.se/getContent?id=4711
-      createdAt:
-        type: string
-        format: date-time
-        example: 2018-03-14 15:22
-      dueAt:
-        type: string
-        format: date-time
-        example: 2018-04-12 12:00
-      assignedTo:
-        $ref: '#/definitions/Assignee'
-      isCompleted:
-        type: boolean
-        example: true
-      completedBy:
-        $ref: '#/definitions/User'
-      completedAt:
-        type: string
-        format: date-time
-        example: 2018-04-12 12:00
-      sortId:
-        type: integer
-        format: int32
-        example: 1
-      category:
-        $ref: '#/definitions/Category'
-      tags:
-        type: array
-        items:
-          $ref: '#/definitions/Tag'
-    example:
-      note: Gör så här
-      completedAt: 2018-04-12 12:00
-      todoType: basic
-      title: Städa charken
-      assignedTo:
-        name: Frukt & Grönt
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        objectType: Group
-      tags:
-      - sortId: 1
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        title: Rengöring
-      - sortId: 1
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        title: Rengöring
-      dueAt: 2018-04-12 12:00
-      createdAt: 2018-03-14 15:22
-      contentUrl: https://episerver.ica.se/getContent?id=4711
-      sortId: 1
-      id: d290f1ee-6c54-4b01-90e6-d701748f0851
-      category:
-        sortId: 1
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        title: HACCP
-      completedBy:
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        fullname: Göran Roseen
-        username: segorros
-      isCompleted: true
+    allOf:
+    - $ref: '#/definitions/BaseTable'
+    - type: object
+      required:
+      - title
+      properties:
+        id:
+          type: string
+          example: "123456"
+        title:
+          type: string
+          example: Städa charken
+        todoType:
+          type: string
+          example: basic
+          description: Must be one of "basic", "measure", "yesno"
+        note:
+          type: string
+          example: Gör så här
+        contentUrl:
+          type: string
+          format: url
+          example: https://episerver.ica.se/getContent?id=4711
+        createdAt:
+          type: string
+          format: date-time
+          example: 2018-03-14 15:22
+        dueAt:
+          type: string
+          format: date-time
+          example: 2018-04-12 12:00
+        assignedTo:
+          $ref: '#/definitions/Assignee'
+        isCompleted:
+          type: boolean
+          example: true
+        completedBy:
+          $ref: '#/definitions/User'
+        completedAt:
+          type: string
+          format: date-time
+          example: 2018-04-12 12:00
+        priority:
+          type: integer
+          format: int32
+          example: 1
+        category:
+          $ref: '#/definitions/Category'
+        tags:
+          type: array
+          items:
+            $ref: '#/definitions/Tag'
   Tag:
-    required:
-    - title
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      title:
-        type: string
-        example: Rengöring
-      sortId:
-        type: integer
-        format: int32
-        example: 1
-    example:
-      sortId: 1
-      id: d290f1ee-6c54-4b01-90e6-d701748f0851
-      title: Rengöring
+    allOf:
+    - $ref: '#/definitions/BaseTable'
+    - type: object
+      required:
+      - title
+      properties:
+        id:
+          type: string
+          example: "123456"
+        title:
+          type: string
+          example: Rengöring
+        sortId:
+          type: integer
+          format: int32
+          example: 1
   Category:
-    required:
-    - title
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      title:
-        type: string
-        example: HACCP
-      sortId:
-        type: integer
-        format: int32
-        example: 1
-    example:
-      sortId: 1
-      id: d290f1ee-6c54-4b01-90e6-d701748f0851
-      title: HACCP
+    allOf:
+    - $ref: '#/definitions/BaseTable'
+    - type: object
+      required:
+      - title
+      properties:
+        id:
+          type: string
+          example: "123456"
+        title:
+          type: string
+          example: HACCP
+        sortId:
+          type: integer
+          format: int32
+          example: 1
   User:
     required:
+    - id
     - username
     properties:
       id:
         type: string
-        format: uuid
         example: d290f1ee-6c54-4b01-90e6-d701748f0851
       username:
         type: string
@@ -303,19 +730,75 @@ definitions:
       objectType:
         type: string
         example: Group
-        description: Mus be one of User or Group
+        description: Must be one of User or Group
         enum:
         - User
         - Group
       id:
         type: string
-        format: uuid
         example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Frukt & Grönt
+  Activity:
+    allOf:
+    - $ref: '#/definitions/BaseTable'
+    - type: object
+      required:
+      - title
+      properties:
+        id:
+          type: string
+          example: "123456"
+        title:
+          type: string
+          example: Städa charken
+        activityType:
+          type: string
+          example: basic
+          description: Must be one of "basic", "measure", "yesno"
+        note:
+          type: string
+          example: Gör så här
+        contentUrl:
+          type: string
+          format: url
+          example: https://episerver.ica.se/getContent?id=4711
+        createdAt:
+          type: string
+          format: date-time
+          example: 2018-03-14 15:22
+        priority:
+          type: integer
+          format: int32
+          example: 1
+        category:
+          $ref: '#/definitions/Category'
+        tags:
+          type: array
+          items:
+            $ref: '#/definitions/Tag'
+  BaseTable:
+    type: object
+    required:
+    - modifiedOn
+    properties:
+      modifiedOn:
+        type: string
+        format: date-time
+        example: 2018-04-24 14:41
+  Department:
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        example: "123456"
       name:
         type: string
         example: Frukt & Grönt
     example:
       name: Frukt & Grönt
-      id: d290f1ee-6c54-4b01-90e6-d701748f0851
-      objectType: Group
+      id: "123456"
 x-azure-api-id: sh-1523977537155
