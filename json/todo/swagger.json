@@ -12,6 +12,8 @@
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/ica-egenkontroll/todo/1.0.0",
   "tags" : [ {
     "name" : "admins",
     "description" : "Secured Admin-only calls"
@@ -19,46 +21,49 @@
     "name" : "clients",
     "description" : "Operations available to regular clients"
   } ],
+  "schemes" : [ "https" ],
   "paths" : {
     "/todos" : {
       "get" : {
         "tags" : [ "clients" ],
         "summary" : "searches for todos",
-        "operationId" : "searchTodo",
         "description" : "By passing in the appropriate options, you can search for\navailable todos in the system\n",
+        "operationId" : "searchTodo",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "query",
           "name" : "id",
+          "in" : "query",
           "description" : "fetch a specific ToDo",
           "required" : false,
           "type" : "string"
         }, {
-          "in" : "query",
           "name" : "assignedTo",
+          "in" : "query",
           "description" : "fetch ToDos for a specific user or group",
           "required" : false,
           "type" : "string"
         }, {
-          "in" : "query",
           "name" : "category",
+          "in" : "query",
           "description" : "fetch ToDos with a specific category",
           "required" : false,
           "type" : "string"
         }, {
-          "in" : "query",
           "name" : "skip",
-          "description" : "number of records to skip for pagination",
-          "type" : "integer",
-          "format" : "int32",
-          "minimum" : 0
-        }, {
           "in" : "query",
-          "name" : "limit",
-          "description" : "maximum number of records to return",
+          "description" : "number of records to skip for pagination",
+          "required" : false,
           "type" : "integer",
-          "format" : "int32",
-          "minimum" : 0
+          "minimum" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "maximum number of records to return",
+          "required" : false,
+          "type" : "integer",
+          "minimum" : 0,
+          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -81,11 +86,11 @@
         "tags" : [ "clients" ],
         "summary" : "Find Todo by Id",
         "description" : "Find a Todo by Id",
-        "operationId" : "getTodDoById",
+        "operationId" : "getTodoById",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "Id of the Todo that needs to be fetched",
           "required" : true,
           "type" : "string"
@@ -131,31 +136,35 @@
         }
       }
     },
-    "/todos/{id}/assignUser" : {
+    "/todos/{id}/assign" : {
       "post" : {
         "tags" : [ "clients" ],
-        "summary" : "assigns the todo to a user",
-        "operationId" : "todoAssignUser",
-        "description" : "Assigns a user to the todo",
+        "summary" : "assigns the todo",
+        "description" : "Assigns a user or department to the todo",
+        "operationId" : "todoAssign",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "ID of the todo to change the assignee for",
           "required" : true,
           "type" : "string"
         }, {
           "in" : "body",
-          "name" : "User",
-          "description" : "Properties of the User to assign to",
+          "name" : "assignee",
+          "description" : "User or Department to assign to",
+          "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/User"
+            "$ref" : "#/definitions/Assignee"
           }
         } ],
         "responses" : {
           "200" : {
-            "description" : "item updated"
+            "description" : "Item Updated",
+            "schema" : {
+              "$ref" : "#/definitions/TodoItem"
+            }
           },
           "400" : {
             "description" : "invalid input, object invalid"
@@ -163,49 +172,17 @@
         }
       }
     },
-    "/todos/{id}/assignDepartment" : {
-      "post" : {
-        "tags" : [ "clients" ],
-        "summary" : "assigns the todo to a department",
-        "operationId" : "todoAssignDepartment",
-        "description" : "Assigns a department to the todo",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "description" : "ID of the todo to change the assignee for",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "Department",
-          "description" : "Properties of the Department to assign to",
-          "schema" : {
-            "$ref" : "#/definitions/Department"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "item updated"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          }
-        }
-      }
-    },
-    "/todos/{id}/closeTodo" : {
+    "/todos/{id}/close" : {
       "post" : {
         "tags" : [ "clients" ],
         "summary" : "close the todo",
-        "operationId" : "todoClose",
         "description" : "close the todo",
+        "operationId" : "todoClose",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "ID of the todo to change the assignee for",
           "required" : true,
           "type" : "string"
@@ -224,9 +201,10 @@
       "get" : {
         "tags" : [ "clients" ],
         "summary" : "Fetch all categories",
-        "operationId" : "getCategories",
         "description" : "Fetch all categories",
+        "operationId" : "getCategories",
         "produces" : [ "application/json" ],
+        "parameters" : [ ],
         "responses" : {
           "200" : {
             "description" : "all categories",
@@ -245,14 +223,15 @@
       "post" : {
         "tags" : [ "admins" ],
         "summary" : "adds a Category",
-        "operationId" : "addCategory",
         "description" : "Adds a Category to the system",
+        "operationId" : "addCategory",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "Category",
           "description" : "Category to add",
+          "required" : false,
           "schema" : {
             "$ref" : "#/definitions/Category"
           }
@@ -278,8 +257,8 @@
         "operationId" : "getCategoryById",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "Id of the Category that needs to be fetched",
           "required" : true,
           "type" : "string"
@@ -302,13 +281,13 @@
       "put" : {
         "tags" : [ "admins" ],
         "summary" : "updates a Category",
-        "operationId" : "updateCategory",
         "description" : "Updates a Category in the system",
+        "operationId" : "updateCategory",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "id of the Category to be updated",
           "required" : true,
           "type" : "string"
@@ -316,6 +295,7 @@
           "in" : "body",
           "name" : "Category",
           "description" : "Category to update",
+          "required" : false,
           "schema" : {
             "$ref" : "#/definitions/Category"
           }
@@ -359,9 +339,10 @@
       "get" : {
         "tags" : [ "clients" ],
         "summary" : "Fetch all tags",
-        "operationId" : "getTags",
         "description" : "Fetch all tags",
+        "operationId" : "getTags",
         "produces" : [ "application/json" ],
+        "parameters" : [ ],
         "responses" : {
           "200" : {
             "description" : "all tags",
@@ -380,14 +361,15 @@
       "post" : {
         "tags" : [ "admins" ],
         "summary" : "adds a Tag",
-        "operationId" : "addTag",
         "description" : "Adds a Tag to the system",
+        "operationId" : "addTag",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "Tag",
           "description" : "Tag to add",
+          "required" : false,
           "schema" : {
             "$ref" : "#/definitions/Tag"
           }
@@ -400,7 +382,7 @@
             "description" : "invalid input, object invalid"
           },
           "409" : {
-            "description" : "an existing item already exists"
+            "description" : "an existing item already exist"
           }
         }
       }
@@ -413,8 +395,8 @@
         "operationId" : "getTagById",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "Id of the Tag that needs to be fetched",
           "required" : true,
           "type" : "string"
@@ -437,13 +419,13 @@
       "put" : {
         "tags" : [ "admins" ],
         "summary" : "updates a Tag",
-        "operationId" : "updateTag",
         "description" : "Updates a Tag in the system",
+        "operationId" : "updateTag",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "id of the Tag to be updated",
           "required" : true,
           "type" : "string"
@@ -451,6 +433,7 @@
           "in" : "body",
           "name" : "Tag",
           "description" : "Tag to update",
+          "required" : false,
           "schema" : {
             "$ref" : "#/definitions/Tag"
           }
@@ -494,35 +477,37 @@
       "get" : {
         "tags" : [ "clients" ],
         "summary" : "searches for activities",
-        "operationId" : "searchActivity",
         "description" : "By passing in the appropriate options, you can search for\navailable activity in the system\n",
+        "operationId" : "searchActivity",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "query",
           "name" : "id",
+          "in" : "query",
           "description" : "fetch a specific ToDo",
           "required" : false,
           "type" : "string"
         }, {
-          "in" : "query",
           "name" : "category",
+          "in" : "query",
           "description" : "fetch activities with a specific category",
           "required" : false,
           "type" : "string"
         }, {
-          "in" : "query",
           "name" : "skip",
-          "description" : "number of records to skip for pagination",
-          "type" : "integer",
-          "format" : "int32",
-          "minimum" : 0
-        }, {
           "in" : "query",
-          "name" : "limit",
-          "description" : "maximum number of records to return",
+          "description" : "number of records to skip for pagination",
+          "required" : false,
           "type" : "integer",
-          "format" : "int32",
-          "minimum" : 0
+          "minimum" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "maximum number of records to return",
+          "required" : false,
+          "type" : "integer",
+          "minimum" : 0,
+          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -540,16 +525,17 @@
         }
       },
       "post" : {
-        "tags" : [ "admins" ],
+        "tags" : [ "clients" ],
         "summary" : "adds an Activity",
-        "operationId" : "addActivity",
         "description" : "Adds an activity to the system",
+        "operationId" : "addActivity",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "Activity",
           "description" : "Activity to add",
+          "required" : false,
           "schema" : {
             "$ref" : "#/definitions/Activity"
           }
@@ -575,8 +561,8 @@
         "operationId" : "getActivityById",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "Id of the activity that needs to be fetched",
           "required" : true,
           "type" : "string"
@@ -597,15 +583,15 @@
         }
       },
       "put" : {
-        "tags" : [ "admins" ],
+        "tags" : [ "clients" ],
         "summary" : "updates an activity item",
-        "operationId" : "updateActivity",
         "description" : "Updates an activity item in the system",
+        "operationId" : "updateActivity",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "id of the Activity item to be updated",
           "required" : true,
           "type" : "string"
@@ -613,8 +599,9 @@
           "in" : "body",
           "name" : "ActivityItem",
           "description" : "Activity item to update",
+          "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/TodoItem"
+            "$ref" : "#/definitions/Activity"
           }
         } ],
         "responses" : {
@@ -633,8 +620,8 @@
         "operationId" : "deleteActivity",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "ID of the activity that needs to be deleted",
           "required" : true,
           "type" : "string"
@@ -652,58 +639,27 @@
         }
       }
     },
-    "/activities/{id}/createTodoForUser" : {
+    "/activities/{id}/instantiateTodo" : {
       "post" : {
         "tags" : [ "clients" ],
-        "summary" : "Creates a todo based on the activity",
-        "operationId" : "createTodoForUserFromActivity",
-        "description" : "Creates a todo assiged to a user based on the activity",
+        "summary" : "Creates a todo",
+        "description" : "Creates a Todo based on the Activity",
+        "operationId" : "createTodoFromActivity",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "path",
           "name" : "id",
+          "in" : "path",
           "description" : "ID of the activity that the todo will be created from",
           "required" : true,
           "type" : "string"
         }, {
           "in" : "body",
-          "name" : "User",
-          "description" : "Properties of the user to assign the todo to",
+          "name" : "todo",
+          "description" : "fields needed for instantiation of Todo",
+          "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/User"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "item created"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          }
-        }
-      }
-    },
-    "/activities/{id}/createTodoForDepartment" : {
-      "post" : {
-        "tags" : [ "clients" ],
-        "summary" : "Creates a todo based on the activity",
-        "operationId" : "createTodoForDepartmentFromActivity",
-        "description" : "Creates a todo assiged to a department based on the activity",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "description" : "ID of the activity that the todo will be created from",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "Department",
-          "description" : "Properties of the department to assign the todo to",
-          "schema" : {
-            "$ref" : "#/definitions/Department"
+            "$ref" : "#/definitions/TodoInstantiate"
           }
         } ],
         "responses" : {
@@ -719,146 +675,200 @@
   },
   "definitions" : {
     "TodoItem" : {
-      "allOf" : [ {
-        "$ref" : "#/definitions/BaseTable"
-      }, {
-        "type" : "object",
-        "required" : [ "title" ],
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "example" : 123456
-          },
-          "title" : {
-            "type" : "string",
-            "example" : "Städa charken"
-          },
-          "todoType" : {
-            "type" : "string",
-            "description" : "Must be one of \"basic\", \"measure\", \"yesno\"",
-            "example" : "basic"
-          },
-          "note" : {
-            "type" : "string",
-            "example" : "Gör så här"
-          },
-          "contentUrl" : {
-            "type" : "string",
-            "format" : "url",
-            "example" : "https://episerver.ica.se/getContent?id=4711"
-          },
-          "createdAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2018-03-14 15:22"
-          },
-          "dueAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2018-04-12 12:00"
-          },
-          "assignedTo" : {
-            "$ref" : "#/definitions/Assignee"
-          },
-          "isCompleted" : {
-            "type" : "boolean",
-            "example" : true
-          },
-          "completedBy" : {
-            "$ref" : "#/definitions/User"
-          },
-          "completedAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2018-04-12 12:00"
-          },
-          "priority" : {
-            "type" : "integer",
-            "format" : "int32",
-            "example" : 1
-          },
-          "category" : {
-            "$ref" : "#/definitions/Category"
-          },
-          "tags" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/definitions/Tag"
-            }
-          }
-        }
-      } ]
-    },
-    "Tag" : {
-      "allOf" : [ {
-        "$ref" : "#/definitions/BaseTable"
-      }, {
-        "type" : "object",
-        "required" : [ "title" ],
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "example" : 123456
-          },
-          "title" : {
-            "type" : "string",
-            "example" : "Rengöring"
-          },
-          "sortId" : {
-            "type" : "integer",
-            "format" : "int32",
-            "example" : 1
-          }
-        }
-      } ]
-    },
-    "Category" : {
-      "allOf" : [ {
-        "$ref" : "#/definitions/BaseTable"
-      }, {
-        "type" : "object",
-        "required" : [ "title" ],
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "example" : 123456
-          },
-          "title" : {
-            "type" : "string",
-            "example" : "HACCP"
-          },
-          "sortId" : {
-            "type" : "integer",
-            "format" : "int32",
-            "example" : 1
-          }
-        }
-      } ]
-    },
-    "User" : {
-      "required" : [ "id", "username" ],
+      "required" : [ "title" ],
       "properties" : {
         "id" : {
           "type" : "string",
-          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          "example" : "123456"
         },
-        "username" : {
+        "title" : {
           "type" : "string",
-          "example" : "segorros"
+          "example" : "Städa charken"
+        },
+        "todoType" : {
+          "type" : "string",
+          "example" : "basic",
+          "description" : "Must be one of \"basic\", \"measure\", \"yesno\""
+        },
+        "note" : {
+          "type" : "string",
+          "example" : "Gör så här"
+        },
+        "contentUrl" : {
+          "type" : "string",
+          "format" : "url",
+          "example" : "https://episerver.ica.se/getContent?id=4711"
+        },
+        "createdAt" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-03-14 15:22"
+        },
+        "dueAt" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-04-12 12:00"
+        },
+        "assignedTo" : {
+          "$ref" : "#/definitions/Assignee"
+        },
+        "isCompleted" : {
+          "type" : "boolean",
+          "example" : true
+        },
+        "completedBy" : {
+          "$ref" : "#/definitions/User"
+        },
+        "completedAt" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-04-12 12:00"
+        },
+        "priority" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 1
+        },
+        "category" : {
+          "$ref" : "#/definitions/Category"
+        },
+        "tags" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Tag"
+          }
+        },
+        "modifiedOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-03-14 15:22"
+        }
+      },
+      "example" : {
+        "note" : "Gör så här",
+        "completedAt" : "2018-04-12 12:00",
+        "todoType" : "basic",
+        "title" : "Städa charken",
+        "priority" : 1,
+        "assignedTo" : {
+          "name" : "Frukt & Grönt",
+          "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "objectType" : "Group"
+        },
+        "tags" : [ {
+          "modifiedOn" : "2018-03-14 15:22",
+          "sortId" : 1,
+          "id" : "123456",
+          "title" : "Rengöring"
+        }, {
+          "modifiedOn" : "2018-03-14 15:22",
+          "sortId" : 1,
+          "id" : "123456",
+          "title" : "Rengöring"
+        } ],
+        "dueAt" : "2018-04-12 12:00",
+        "createdAt" : "2018-03-14 15:22",
+        "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
+        "modifiedOn" : "2018-03-14 15:22",
+        "id" : "123456",
+        "category" : {
+          "modifiedOn" : "2018-03-14 15:22",
+          "sortId" : 1,
+          "id" : "123456",
+          "title" : "HACCP"
+        },
+        "completedBy" : {
+          "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "fullname" : "Göran Roseen"
+        },
+        "isCompleted" : true
+      }
+    },
+    "Tag" : {
+      "type" : "object",
+      "required" : [ "title" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "123456"
+        },
+        "title" : {
+          "type" : "string",
+          "example" : "Rengöring"
+        },
+        "sortId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 1
+        },
+        "modifiedOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-03-14 15:22"
+        }
+      },
+      "example" : {
+        "modifiedOn" : "2018-03-14 15:22",
+        "sortId" : 1,
+        "id" : "123456",
+        "title" : "Rengöring"
+      }
+    },
+    "Category" : {
+      "type" : "object",
+      "required" : [ "title" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "123456"
+        },
+        "title" : {
+          "type" : "string",
+          "example" : "HACCP"
+        },
+        "sortId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 1
+        },
+        "modifiedOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-03-14 15:22"
+        }
+      },
+      "example" : {
+        "modifiedOn" : "2018-03-14 15:22",
+        "sortId" : 1,
+        "id" : "123456",
+        "title" : "HACCP"
+      }
+    },
+    "User" : {
+      "required" : [ "fullname", "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "id is the user identity from SIA"
         },
         "fullname" : {
           "type" : "string",
           "example" : "Göran Roseen"
         }
+      },
+      "example" : {
+        "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        "fullname" : "Göran Roseen"
       }
     },
     "Assignee" : {
       "properties" : {
         "objectType" : {
           "type" : "string",
+          "example" : "Group",
           "description" : "Must be one of User or Group",
-          "enum" : [ "User", "Group" ],
-          "example" : "Group"
+          "enum" : [ "User", "Group" ]
         },
         "id" : {
           "type" : "string",
@@ -868,58 +878,91 @@
           "type" : "string",
           "example" : "Frukt & Grönt"
         }
+      },
+      "example" : {
+        "name" : "Frukt & Grönt",
+        "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        "objectType" : "Group"
       }
     },
     "Activity" : {
-      "allOf" : [ {
-        "$ref" : "#/definitions/BaseTable"
-      }, {
-        "type" : "object",
-        "required" : [ "title" ],
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "example" : 123456
-          },
-          "title" : {
-            "type" : "string",
-            "example" : "Städa charken"
-          },
-          "activityType" : {
-            "type" : "string",
-            "description" : "Must be one of \"basic\", \"measure\", \"yesno\"",
-            "example" : "basic"
-          },
-          "note" : {
-            "type" : "string",
-            "example" : "Gör så här"
-          },
-          "contentUrl" : {
-            "type" : "string",
-            "format" : "url",
-            "example" : "https://episerver.ica.se/getContent?id=4711"
-          },
-          "createdAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2018-03-14 15:22"
-          },
-          "priority" : {
-            "type" : "integer",
-            "format" : "int32",
-            "example" : 1
-          },
-          "category" : {
-            "$ref" : "#/definitions/Category"
-          },
-          "tags" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/definitions/Tag"
-            }
+      "type" : "object",
+      "required" : [ "title" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "123456"
+        },
+        "title" : {
+          "type" : "string",
+          "example" : "Städa charken"
+        },
+        "activityType" : {
+          "type" : "string",
+          "example" : "basic",
+          "description" : "Must be one of \"basic\", \"measure\", \"yesno\""
+        },
+        "note" : {
+          "type" : "string",
+          "example" : "Gör så här"
+        },
+        "contentUrl" : {
+          "type" : "string",
+          "format" : "url",
+          "example" : "https://episerver.ica.se/getContent?id=4711"
+        },
+        "createdAt" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-03-14 15:22"
+        },
+        "priority" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 1
+        },
+        "category" : {
+          "$ref" : "#/definitions/Category"
+        },
+        "tags" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Tag"
           }
+        },
+        "modifiedOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-03-14 15:22"
         }
-      } ]
+      },
+      "example" : {
+        "note" : "Gör så här",
+        "createdAt" : "2018-03-14 15:22",
+        "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
+        "modifiedOn" : "2018-03-14 15:22",
+        "id" : "123456",
+        "title" : "Städa charken",
+        "activityType" : "basic",
+        "priority" : 1,
+        "category" : {
+          "modifiedOn" : "2018-03-14 15:22",
+          "sortId" : 1,
+          "id" : "123456",
+          "title" : "HACCP"
+        },
+        "tags" : [ {
+          "modifiedOn" : "2018-03-14 15:22",
+          "sortId" : 1,
+          "id" : "123456",
+          "title" : "Rengöring"
+        }, {
+          "modifiedOn" : "2018-03-14 15:22",
+          "sortId" : 1,
+          "id" : "123456",
+          "title" : "Rengöring"
+        } ]
+      }
     },
     "BaseTable" : {
       "type" : "object",
@@ -932,22 +975,28 @@
         }
       }
     },
-    "Department" : {
-      "required" : [ "id", "name" ],
+    "TodoInstantiate" : {
+      "type" : "object",
+      "required" : [ "assignee", "dueAt" ],
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "example" : 123456
+        "assignee" : {
+          "$ref" : "#/definitions/Assignee"
         },
-        "name" : {
+        "dueAt" : {
           "type" : "string",
-          "example" : "Frukt & Grönt"
+          "format" : "date-time",
+          "example" : "2018-04-24 14:41"
+        }
+      },
+      "example" : {
+        "dueAt" : "2018-04-24 14:41",
+        "assignee" : {
+          "name" : "Frukt & Grönt",
+          "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "objectType" : "Group"
         }
       }
     }
   },
-  "host" : "virtserver.swaggerhub.com",
-  "schemes" : [ "https" ],
-  "basePath" : "/ica-egenkontroll/todo/1.0.0",
   "x-azure-api-id" : "sh-1523977537155"
 }

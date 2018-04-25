@@ -75,7 +75,7 @@ paths:
       - clients
       summary: Find Todo by Id
       description: Find a Todo by Id
-      operationId: getTodDoById
+      operationId: getTodoById
       produces:
       - application/json
       parameters:
@@ -114,13 +114,13 @@ paths:
           description: Invalid ID supplied
         404:
           description: Todo not found
-  /todos/{id}/assignUser:
+  /todos/{id}/assign:
     post:
       tags:
       - clients
-      summary: assigns the todo to a user
-      description: Assigns a user to the todo
-      operationId: todoAssignUser
+      summary: assigns the todo
+      description: Assigns a user or department to the todo
+      operationId: todoAssign
       consumes:
       - application/json
       produces:
@@ -132,45 +132,19 @@ paths:
         required: true
         type: string
       - in: body
-        name: User
-        description: Properties of the User to assign to
+        name: assignee
+        description: User or Department to assign to
         required: false
         schema:
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/Assignee'
       responses:
         200:
-          description: item updated
+          description: Item Updated
+          schema:
+            $ref: '#/definitions/TodoItem'
         400:
           description: invalid input, object invalid
-  /todos/{id}/assignDepartment:
-    post:
-      tags:
-      - clients
-      summary: assigns the todo to a department
-      description: Assigns a department to the todo
-      operationId: todoAssignDepartment
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        description: ID of the todo to change the assignee for
-        required: true
-        type: string
-      - in: body
-        name: Department
-        description: Properties of the Department to assign to
-        required: false
-        schema:
-          $ref: '#/definitions/Department'
-      responses:
-        201:
-          description: item updated
-        400:
-          description: invalid input, object invalid
-  /todos/{id}/closeTodo:
+  /todos/{id}/close:
     post:
       tags:
       - clients
@@ -349,7 +323,7 @@ paths:
         400:
           description: invalid input, object invalid
         409:
-          description: an existing item already exists
+          description: an existing item already exist
   /tags/{id}:
     get:
       tags:
@@ -469,7 +443,7 @@ paths:
           description: bad input parameter
     post:
       tags:
-      - admins
+      - clients
       summary: adds an Activity
       description: Adds an activity to the system
       operationId: addActivity
@@ -517,7 +491,7 @@ paths:
           description: Todo not found
     put:
       tags:
-      - admins
+      - clients
       summary: updates an activity item
       description: Updates an activity item in the system
       operationId: updateActivity
@@ -536,7 +510,7 @@ paths:
         description: Activity item to update
         required: false
         schema:
-          $ref: '#/definitions/TodoItem'
+          $ref: '#/definitions/Activity'
       responses:
         200:
           description: item updated
@@ -563,13 +537,13 @@ paths:
           description: Invalid ID supplied
         404:
           description: Todo not found
-  /activities/{id}/createTodoForUser:
+  /activities/{id}/instantiateTodo:
     post:
       tags:
       - clients
-      summary: Creates a todo based on the activity
-      description: Creates a todo assiged to a user based on the activity
-      operationId: createTodoForUserFromActivity
+      summary: Creates a todo
+      description: Creates a Todo based on the Activity
+      operationId: createTodoFromActivity
       consumes:
       - application/json
       produces:
@@ -581,39 +555,11 @@ paths:
         required: true
         type: string
       - in: body
-        name: User
-        description: Properties of the user to assign the todo to
+        name: todo
+        description: fields needed for instantiation of Todo
         required: false
         schema:
-          $ref: '#/definitions/User'
-      responses:
-        201:
-          description: item created
-        400:
-          description: invalid input, object invalid
-  /activities/{id}/createTodoForDepartment:
-    post:
-      tags:
-      - clients
-      summary: Creates a todo based on the activity
-      description: Creates a todo assiged to a department based on the activity
-      operationId: createTodoForDepartmentFromActivity
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        description: ID of the activity that the todo will be created from
-        required: true
-        type: string
-      - in: body
-        name: Department
-        description: Properties of the department to assign the todo to
-        required: false
-        schema:
-          $ref: '#/definitions/Department'
+          $ref: '#/definitions/TodoInstantiate'
       responses:
         201:
           description: item created
@@ -621,110 +567,155 @@ paths:
           description: invalid input, object invalid
 definitions:
   TodoItem:
-    allOf:
-    - $ref: '#/definitions/BaseTable'
-    - type: object
-      required:
-      - title
-      properties:
-        id:
-          type: string
-          example: "123456"
-        title:
-          type: string
-          example: Städa charken
-        todoType:
-          type: string
-          example: basic
-          description: Must be one of "basic", "measure", "yesno"
-        note:
-          type: string
-          example: Gör så här
-        contentUrl:
-          type: string
-          format: url
-          example: https://episerver.ica.se/getContent?id=4711
-        createdAt:
-          type: string
-          format: date-time
-          example: 2018-03-14 15:22
-        dueAt:
-          type: string
-          format: date-time
-          example: 2018-04-12 12:00
-        assignedTo:
-          $ref: '#/definitions/Assignee'
-        isCompleted:
-          type: boolean
-          example: true
-        completedBy:
-          $ref: '#/definitions/User'
-        completedAt:
-          type: string
-          format: date-time
-          example: 2018-04-12 12:00
-        priority:
-          type: integer
-          format: int32
-          example: 1
-        category:
-          $ref: '#/definitions/Category'
-        tags:
-          type: array
-          items:
-            $ref: '#/definitions/Tag'
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        example: "123456"
+      title:
+        type: string
+        example: Städa charken
+      todoType:
+        type: string
+        example: basic
+        description: Must be one of "basic", "measure", "yesno"
+      note:
+        type: string
+        example: Gör så här
+      contentUrl:
+        type: string
+        format: url
+        example: https://episerver.ica.se/getContent?id=4711
+      createdAt:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+      dueAt:
+        type: string
+        format: date-time
+        example: 2018-04-12 12:00
+      assignedTo:
+        $ref: '#/definitions/Assignee'
+      isCompleted:
+        type: boolean
+        example: true
+      completedBy:
+        $ref: '#/definitions/User'
+      completedAt:
+        type: string
+        format: date-time
+        example: 2018-04-12 12:00
+      priority:
+        type: integer
+        format: int32
+        example: 1
+      category:
+        $ref: '#/definitions/Category'
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+      modifiedOn:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+    example:
+      note: Gör så här
+      completedAt: 2018-04-12 12:00
+      todoType: basic
+      title: Städa charken
+      priority: 1
+      assignedTo:
+        name: Frukt & Grönt
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        objectType: Group
+      tags:
+      - modifiedOn: 2018-03-14 15:22
+        sortId: 1
+        id: "123456"
+        title: Rengöring
+      - modifiedOn: 2018-03-14 15:22
+        sortId: 1
+        id: "123456"
+        title: Rengöring
+      dueAt: 2018-04-12 12:00
+      createdAt: 2018-03-14 15:22
+      contentUrl: https://episerver.ica.se/getContent?id=4711
+      modifiedOn: 2018-03-14 15:22
+      id: "123456"
+      category:
+        modifiedOn: 2018-03-14 15:22
+        sortId: 1
+        id: "123456"
+        title: HACCP
+      completedBy:
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        fullname: Göran Roseen
+      isCompleted: true
   Tag:
-    allOf:
-    - $ref: '#/definitions/BaseTable'
-    - type: object
-      required:
-      - title
-      properties:
-        id:
-          type: string
-          example: "123456"
-        title:
-          type: string
-          example: Rengöring
-        sortId:
-          type: integer
-          format: int32
-          example: 1
+    type: object
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        example: "123456"
+      title:
+        type: string
+        example: Rengöring
+      sortId:
+        type: integer
+        format: int32
+        example: 1
+      modifiedOn:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+    example:
+      modifiedOn: 2018-03-14 15:22
+      sortId: 1
+      id: "123456"
+      title: Rengöring
   Category:
-    allOf:
-    - $ref: '#/definitions/BaseTable'
-    - type: object
-      required:
-      - title
-      properties:
-        id:
-          type: string
-          example: "123456"
-        title:
-          type: string
-          example: HACCP
-        sortId:
-          type: integer
-          format: int32
-          example: 1
+    type: object
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        example: "123456"
+      title:
+        type: string
+        example: HACCP
+      sortId:
+        type: integer
+        format: int32
+        example: 1
+      modifiedOn:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+    example:
+      modifiedOn: 2018-03-14 15:22
+      sortId: 1
+      id: "123456"
+      title: HACCP
   User:
     required:
+    - fullname
     - id
-    - username
     properties:
       id:
         type: string
         example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      username:
-        type: string
-        example: segorros
+        description: id is the user identity from SIA
       fullname:
         type: string
         example: Göran Roseen
     example:
       id: d290f1ee-6c54-4b01-90e6-d701748f0851
       fullname: Göran Roseen
-      username: segorros
   Assignee:
     properties:
       objectType:
@@ -740,44 +731,73 @@ definitions:
       name:
         type: string
         example: Frukt & Grönt
+    example:
+      name: Frukt & Grönt
+      id: d290f1ee-6c54-4b01-90e6-d701748f0851
+      objectType: Group
   Activity:
-    allOf:
-    - $ref: '#/definitions/BaseTable'
-    - type: object
-      required:
-      - title
-      properties:
-        id:
-          type: string
-          example: "123456"
-        title:
-          type: string
-          example: Städa charken
-        activityType:
-          type: string
-          example: basic
-          description: Must be one of "basic", "measure", "yesno"
-        note:
-          type: string
-          example: Gör så här
-        contentUrl:
-          type: string
-          format: url
-          example: https://episerver.ica.se/getContent?id=4711
-        createdAt:
-          type: string
-          format: date-time
-          example: 2018-03-14 15:22
-        priority:
-          type: integer
-          format: int32
-          example: 1
-        category:
-          $ref: '#/definitions/Category'
-        tags:
-          type: array
-          items:
-            $ref: '#/definitions/Tag'
+    type: object
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        example: "123456"
+      title:
+        type: string
+        example: Städa charken
+      activityType:
+        type: string
+        example: basic
+        description: Must be one of "basic", "measure", "yesno"
+      note:
+        type: string
+        example: Gör så här
+      contentUrl:
+        type: string
+        format: url
+        example: https://episerver.ica.se/getContent?id=4711
+      createdAt:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+      priority:
+        type: integer
+        format: int32
+        example: 1
+      category:
+        $ref: '#/definitions/Category'
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+      modifiedOn:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+    example:
+      note: Gör så här
+      createdAt: 2018-03-14 15:22
+      contentUrl: https://episerver.ica.se/getContent?id=4711
+      modifiedOn: 2018-03-14 15:22
+      id: "123456"
+      title: Städa charken
+      activityType: basic
+      priority: 1
+      category:
+        modifiedOn: 2018-03-14 15:22
+        sortId: 1
+        id: "123456"
+        title: HACCP
+      tags:
+      - modifiedOn: 2018-03-14 15:22
+        sortId: 1
+        id: "123456"
+        title: Rengöring
+      - modifiedOn: 2018-03-14 15:22
+        sortId: 1
+        id: "123456"
+        title: Rengöring
   BaseTable:
     type: object
     required:
@@ -787,18 +807,22 @@ definitions:
         type: string
         format: date-time
         example: 2018-04-24 14:41
-  Department:
+  TodoInstantiate:
+    type: object
     required:
-    - id
-    - name
+    - assignee
+    - dueAt
     properties:
-      id:
+      assignee:
+        $ref: '#/definitions/Assignee'
+      dueAt:
         type: string
-        example: "123456"
-      name:
-        type: string
-        example: Frukt & Grönt
+        format: date-time
+        example: 2018-04-24 14:41
     example:
-      name: Frukt & Grönt
-      id: "123456"
+      dueAt: 2018-04-24 14:41
+      assignee:
+        name: Frukt & Grönt
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        objectType: Group
 x-azure-api-id: sh-1523977537155
