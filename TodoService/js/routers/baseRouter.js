@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const h = require("../helpers/misc");
 const dbg = require("debug");
 const express = require("express");
-class RouterBase {
+class BaseRouter {
     // debug: ('todo:categoriesRouter');
     constructor(table, disableGetAll) {
         const debug = dbg('todo:categoriesRouter');
@@ -189,5 +189,5 @@ class RouterBase {
         res.status(405).send(message);
     }
 }
-exports.RouterBase = RouterBase;
-//# sourceMappingURL=routerBase.js.map
+exports.BaseRouter = BaseRouter;
+//# sourceMappingURL=baseRouter.js.map

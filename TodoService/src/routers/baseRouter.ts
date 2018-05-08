@@ -1,9 +1,9 @@
-import routerBase = require('./routerBase');
 import h = require('../helpers/misc');
 import dbg = require('debug');
 import express = require('express');
 import http = require('http');
-export class RouterBase {
+
+export class BaseRouter {
   table: h.Helpers.TableType;
   router: express.Router; //this is the property that should be returned to the express app as a middleware that handles the routes 
   // debug: ('todo:categoriesRouter');
