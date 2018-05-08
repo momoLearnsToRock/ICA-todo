@@ -15,12 +15,13 @@ export module Helpers{
   }
   export class SqlField {
     public name: string;
-    public type: string;
-    constructor({name, type}: {name: string, type: string}) {
+    public type: sql.ISqlTypeFactory;
+    constructor({name, type}: {name: string, type: sql.ISqlTypeFactory}) {
       this.name = name;
       this.type = type;
     }
   }
+
   export class TableType{
     public tableName: string;
     constructor(name: string){
@@ -52,32 +53,47 @@ export module Helpers{
       return fieldsString;
     }
 
-    createInsertIntoStatement(includeId: boolean, jsonBody: JSON, sqlReq: sql.Request) {
-      const fields = this.getFieldNames(includeId);
-      const values: string[] = [];
+    parseFieldsInJsonBody({includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, sqlReq}: {includeId: boolean, jsonBody: JSON, throwOnMissingFields: boolean, throwOnMissingModifiedOn: boolean, sqlReq: sql.Request}) :string[]{
+      const parsedFieldsList: string[]= [];
       this.fields.forEach((item, index) => {
         if (includeId || item.name.toLowerCase() !== 'id') {
-          if (item.name === 'ModifiedOn') {
-            values.push('GETDATE()');
+          if (item.name === 'modifiedOn') {
+            if( throwOnMissingModifiedOn && typeof jsonBody[item.name] == 'undefined'){
+              throw new Error(`Body is missing the field '${item.name}'.`);
+            }
           } else {
-            values.push(`@${item.name}`);
-            sqlReq.input(`${item.name}`, jsonBody[item.name]);
+            if( throwOnMissingFields && typeof jsonBody[item.name] == 'undefined'){
+              throw new Error(`Body is missing the field '${item.name}'.`);
+            }
+            sqlReq.input(item.name, item.type as sql.ISqlType, jsonBody[item.name]);
           }
+          parsedFieldsList.push(item.name);
         }
       });
-      const PKType = 'nvarchar(MAX)';// 'bigint'; // the sql datatype of the table's PK. Todo: get this value on instantiation of the tables in future
+      if(parsedFieldsList.length==0){
+        throw new Error('No fields could be parsed from body.')
+      }
+      return parsedFieldsList;
+    }
+
+    createInsertIntoStatement(includeId: boolean, jsonBody: JSON, sqlReq: sql.Request) {
+      const parsedFieldsList: string[] = this.parseFieldsInJsonBody({includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq});
+
+      const indexOfId: number = this.fields.map((f) => { return f.name; }).indexOf('id');
+      const PKType: sql.ISqlTypeFactory = this.fields[indexOfId].type;
+
       const query =
-        `DECLARE @_keys table([Id] ${PKType})
+        `DECLARE @_keys table([Id] ${PKType.declaration})
   
-       INSERT INTO ${this.tableName} (${fields}) 
+       INSERT INTO ${this.tableName} (${parsedFieldsList.map((f) => { return `[${f}]`; }).join(', ')}) 
        OUTPUT inserted.Id INTO @_keys
-       VALUES (${values.join(', ')})
+       VALUES (${parsedFieldsList.map((f) => { return f == 'modifiedOn' ? 'GETDATE()' : `@${f}` }).join(', ')})
   
        SELECT t.*
        FROM @_keys AS g 
        JOIN dbo.${this.tableName} AS t 
        ON g.Id = t.Id`;
-      // note to developers: SCOPE_IDENTITY() would have been a good option but we have nvarchar ids. this method is a copy of what EF does
+      // this method is a copy of what EF does
       return query;
     }
 
@@ -92,27 +108,23 @@ export module Helpers{
         const requ = new sql.Request(this.connectionPool);
         result = await requ.query(`select * from ${this.tableName}`);
         debug(result.toString());
-        return (new ResponseDTO({message: '', data: result}));
+        return result;
       } catch (er) {
         debug(er);
-        return (new ResponseDTO({message: 'error', data: result}));
+        throw er;
       }
     }
 
     createUpdateStatement(includeId: boolean, jsonBody: JSON, id: any, sqlReq: sql.Request) {
-      let setValuesArray: SqlField[] = [];
-      this.fields.forEach((item) => {
-        if (typeof jsonBody[item.name] !== 'undefined') {
-          if ((includeId || item.name.toLowerCase() !== 'id') && item.name !== 'ModifiedOn') {
-            setValuesArray.push(` ${item.name} = @${item.name}`);
-            sqlReq.input(`${item.name}`, jsonBody[item.name]);
-          }
-        }
-      });
+      const parsedFieldsList: string[] = this.parseFieldsInJsonBody({includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq});
+
       sqlReq.input('id', id);
       const query =
         `UPDATE ${this.tableName}
-        SET ModifiedOn = GETDATE(), ${setValuesArray.join(', ')} 
+        SET ${parsedFieldsList.map((f)=>{let str: string= `[${f}]= `;
+        str +=f!='modifiedOn'?`@${f}`:'GETDATE()';
+        return str;
+      }).join(', ')} 
         WHERE Id = @id
         SELECT * from ${this.tableName}
         WHERE Id = @id
@@ -132,10 +144,10 @@ export module Helpers{
           msg = 'item created';
         }
         debug('return of insert', result);
-        return new ResponseDTO({message:msg, data:result});
+        return result;
       } catch (err) {
         debug(err);
-        return new ResponseDTO({message:'error', data:result});
+        throw err;
       }
     }
 
@@ -149,7 +161,7 @@ export module Helpers{
       if (!!result.recordset && result.recordset.length === 1) {
         item = result.recordset[0];
       }
-      return new ResponseDTO({ message: '', data: item });
+      return item;
     }
 
     async delete(id: any) {
@@ -173,4 +185,3 @@ export module Helpers{
     }    
   }
 }
-

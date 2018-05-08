@@ -53,32 +53,44 @@ var Helpers;
             });
             return fieldsString;
         }
-        createInsertIntoStatement(includeId, jsonBody, sqlReq) {
-            const fields = this.getFieldNames(includeId);
-            const values = [];
+        parseFieldsInJsonBody({ includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, sqlReq }) {
+            const parsedFieldsList = [];
             this.fields.forEach((item, index) => {
                 if (includeId || item.name.toLowerCase() !== 'id') {
-                    if (item.name === 'ModifiedOn') {
-                        values.push('GETDATE()');
+                    if (item.name === 'modifiedOn') {
+                        if (throwOnMissingModifiedOn && typeof jsonBody[item.name] == 'undefined') {
+                            throw new Error(`Body is missing the field '${item.name}'.`);
+                        }
                     }
                     else {
-                        values.push(`@${item.name}`);
-                        sqlReq.input(`${item.name}`, jsonBody[item.name]);
+                        if (throwOnMissingFields && typeof jsonBody[item.name] == 'undefined') {
+                            throw new Error(`Body is missing the field '${item.name}'.`);
+                        }
+                        sqlReq.input(item.name, item.type, jsonBody[item.name]);
                     }
+                    parsedFieldsList.push(item.name);
                 }
             });
-            const PKType = 'nvarchar(MAX)'; // 'bigint'; // the sql datatype of the table's PK. Todo: get this value on instantiation of the tables in future
-            const query = `DECLARE @_keys table([Id] ${PKType})
+            if (parsedFieldsList.length == 0) {
+                throw new Error('No fields could be parsed from body.');
+            }
+            return parsedFieldsList;
+        }
+        createInsertIntoStatement(includeId, jsonBody, sqlReq) {
+            const parsedFieldsList = this.parseFieldsInJsonBody({ includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq });
+            const indexOfId = this.fields.map((f) => { return f.name; }).indexOf('id');
+            const PKType = this.fields[indexOfId].type;
+            const query = `DECLARE @_keys table([Id] ${PKType.declaration})
   
-       INSERT INTO ${this.tableName} (${fields}) 
+       INSERT INTO ${this.tableName} (${parsedFieldsList.map((f) => { return `[${f}]`; }).join(', ')}) 
        OUTPUT inserted.Id INTO @_keys
-       VALUES (${values.join(', ')})
+       VALUES (${parsedFieldsList.map((f) => { return f == 'modifiedOn' ? 'GETDATE()' : `@${f}`; }).join(', ')})
   
        SELECT t.*
        FROM @_keys AS g 
        JOIN dbo.${this.tableName} AS t 
        ON g.Id = t.Id`;
-            // note to developers: SCOPE_IDENTITY() would have been a good option but we have nvarchar ids. this method is a copy of what EF does
+            // this method is a copy of what EF does
             return query;
         }
         createDeleteStatement(id, sqlReq) {
@@ -92,27 +104,23 @@ var Helpers;
                     const requ = new sql.Request(this.connectionPool);
                     result = yield requ.query(`select * from ${this.tableName}`);
                     debug(result.toString());
-                    return (new ResponseDTO({ message: '', data: result }));
+                    return result;
                 }
                 catch (er) {
                     debug(er);
-                    return (new ResponseDTO({ message: 'error', data: result }));
+                    throw er;
                 }
             });
         }
         createUpdateStatement(includeId, jsonBody, id, sqlReq) {
-            let setValuesArray = [];
-            this.fields.forEach((item) => {
-                if (typeof jsonBody[item.name] !== 'undefined') {
-                    if ((includeId || item.name.toLowerCase() !== 'id') && item.name !== 'ModifiedOn') {
-                        setValuesArray.push(` ${item.name} = @${item.name}`);
-                        sqlReq.input(`${item.name}`, jsonBody[item.name]);
-                    }
-                }
-            });
+            const parsedFieldsList = this.parseFieldsInJsonBody({ includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq });
             sqlReq.input('id', id);
             const query = `UPDATE ${this.tableName}
-        SET ModifiedOn = GETDATE(), ${setValuesArray.join(', ')} 
+        SET ${parsedFieldsList.map((f) => {
+                let str = `[${f}]= `;
+                str += f != 'modifiedOn' ? `@${f}` : 'GETDATE()';
+                return str;
+            }).join(', ')} 
         WHERE Id = @id
         SELECT * from ${this.tableName}
         WHERE Id = @id
@@ -132,11 +140,11 @@ var Helpers;
                         msg = 'item created';
                     }
                     debug('return of insert', result);
-                    return new ResponseDTO({ message: msg, data: result });
+                    return result;
                 }
                 catch (err) {
                     debug(err);
-                    return new ResponseDTO({ message: 'error', data: result });
+                    throw err;
                 }
             });
         }
@@ -151,7 +159,7 @@ var Helpers;
                 if (!!result.recordset && result.recordset.length === 1) {
                     item = result.recordset[0];
                 }
-                return new ResponseDTO({ message: '', data: item });
+                return item;
             });
         }
         delete(id) {
