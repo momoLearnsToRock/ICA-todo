@@ -53,7 +53,7 @@ var Helpers;
             });
             return fieldsString;
         }
-        parseFieldsInJsonBody({ includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, sqlReq }) {
+        parseFieldsInJsonBody({ includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, throwOnExtraFields, sqlReq }) {
             const parsedFieldsList = [];
             this.fields.forEach((item, index) => {
                 if (includeId || item.name.toLowerCase() !== 'id') {
@@ -74,10 +74,18 @@ var Helpers;
             if (parsedFieldsList.length == 0) {
                 throw new Error('No fields could be parsed from body.');
             }
+            if (throwOnExtraFields) {
+                let bodyKeys = Object.keys(jsonBody);
+                bodyKeys.forEach((item, index) => {
+                    if (this.fields.map((f) => { return f.name; }).indexOf(item) < 0) {
+                        throw new Error(`The field '${item}' does not exist on the '${this.tableName}' entity.`);
+                    }
+                });
+            }
             return parsedFieldsList;
         }
         createInsertIntoStatement(includeId, jsonBody, sqlReq) {
-            const parsedFieldsList = this.parseFieldsInJsonBody({ includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq });
+            const parsedFieldsList = this.parseFieldsInJsonBody({ includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnExtraFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq });
             const indexOfId = this.fields.map((f) => { return f.name; }).indexOf('id');
             const PKType = this.fields[indexOfId].type;
             const query = `DECLARE @_keys table([Id] ${PKType.declaration})
@@ -113,7 +121,7 @@ var Helpers;
             });
         }
         createUpdateStatement(includeId, jsonBody, id, sqlReq) {
-            const parsedFieldsList = this.parseFieldsInJsonBody({ includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq });
+            const parsedFieldsList = this.parseFieldsInJsonBody({ includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, throwOnExtraFields: true, sqlReq: sqlReq });
             sqlReq.input('id', id);
             const query = `UPDATE ${this.tableName}
         SET ${parsedFieldsList.map((f) => {

@@ -53,7 +53,8 @@ export module Helpers{
       return fieldsString;
     }
 
-    parseFieldsInJsonBody({includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, sqlReq}: {includeId: boolean, jsonBody: JSON, throwOnMissingFields: boolean, throwOnMissingModifiedOn: boolean, sqlReq: sql.Request}) :string[]{
+    parseFieldsInJsonBody({includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, throwOnExtraFields, sqlReq}: 
+      {includeId: boolean, jsonBody: JSON, throwOnMissingFields: boolean, throwOnMissingModifiedOn: boolean, throwOnExtraFields: boolean, sqlReq: sql.Request}) :string[]{
       const parsedFieldsList: string[]= [];
       this.fields.forEach((item, index) => {
         if (includeId || item.name.toLowerCase() !== 'id') {
@@ -71,13 +72,21 @@ export module Helpers{
         }
       });
       if(parsedFieldsList.length==0){
-        throw new Error('No fields could be parsed from body.')
+        throw new Error('No fields could be parsed from body.');
+      }
+      if (throwOnExtraFields) {
+        let bodyKeys: string[] = Object.keys(jsonBody);
+        bodyKeys.forEach((item, index) => {
+          if (this.fields.map((f: SqlField) => { return f.name }).indexOf(item) < 0) {
+            throw new Error(`The field '${item}' does not exist on the '${this.tableName}' entity.`);
+          }
+        });
       }
       return parsedFieldsList;
     }
 
     createInsertIntoStatement(includeId: boolean, jsonBody: JSON, sqlReq: sql.Request) {
-      const parsedFieldsList: string[] = this.parseFieldsInJsonBody({includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq});
+      const parsedFieldsList: string[] = this.parseFieldsInJsonBody({includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnExtraFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq});
 
       const indexOfId: number = this.fields.map((f) => { return f.name; }).indexOf('id');
       const PKType: sql.ISqlTypeFactory = this.fields[indexOfId].type;
@@ -116,7 +125,7 @@ export module Helpers{
     }
 
     createUpdateStatement(includeId: boolean, jsonBody: JSON, id: any, sqlReq: sql.Request) {
-      const parsedFieldsList: string[] = this.parseFieldsInJsonBody({includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, sqlReq: sqlReq});
+      const parsedFieldsList: string[] = this.parseFieldsInJsonBody({includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, throwOnExtraFields: true, sqlReq: sqlReq});
 
       sqlReq.input('id', id);
       const query =
