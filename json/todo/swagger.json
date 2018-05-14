@@ -31,39 +31,29 @@
         "operationId" : "searchTodo",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "id",
+          "name" : "$top",
           "in" : "query",
-          "description" : "fetch a specific ToDo",
+          "description" : "Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported",
           "required" : false,
           "type" : "string"
         }, {
-          "name" : "assignedTo",
+          "name" : "$select",
           "in" : "query",
-          "description" : "fetch ToDos for a specific user or group",
+          "description" : "Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported",
           "required" : false,
           "type" : "string"
-        }, {
-          "name" : "category",
-          "in" : "query",
-          "description" : "fetch ToDos with a specific category",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "skip",
-          "in" : "query",
-          "description" : "number of records to skip for pagination",
-          "required" : false,
-          "type" : "integer",
-          "minimum" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "maximum number of records to return",
-          "required" : false,
-          "type" : "integer",
-          "minimum" : 0,
-          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -204,7 +194,31 @@
         "description" : "Fetch all categories",
         "operationId" : "getCategories",
         "produces" : [ "application/json" ],
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "$top",
+          "in" : "query",
+          "description" : "Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "$select",
+          "in" : "query",
+          "description" : "Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
             "description" : "all categories",
@@ -342,7 +356,31 @@
         "description" : "Fetch all tags",
         "operationId" : "getTags",
         "produces" : [ "application/json" ],
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "$top",
+          "in" : "query",
+          "description" : "Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "$select",
+          "in" : "query",
+          "description" : "Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
             "description" : "all tags",
@@ -481,33 +519,29 @@
         "operationId" : "searchActivity",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "id",
+          "name" : "$top",
           "in" : "query",
-          "description" : "fetch a specific ToDo",
+          "description" : "Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported",
           "required" : false,
           "type" : "string"
         }, {
-          "name" : "category",
+          "name" : "$select",
           "in" : "query",
-          "description" : "fetch activities with a specific category",
+          "description" : "Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported",
           "required" : false,
           "type" : "string"
-        }, {
-          "name" : "skip",
-          "in" : "query",
-          "description" : "number of records to skip for pagination",
-          "required" : false,
-          "type" : "integer",
-          "minimum" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "maximum number of records to return",
-          "required" : false,
-          "type" : "integer",
-          "minimum" : 0,
-          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -997,6 +1031,36 @@
           "objectType" : "Group"
         }
       }
+    }
+  },
+  "parameters" : {
+    "top" : {
+      "name" : "$top",
+      "in" : "query",
+      "description" : "Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)",
+      "required" : false,
+      "type" : "integer"
+    },
+    "skip" : {
+      "name" : "$skip",
+      "in" : "query",
+      "description" : "Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)",
+      "required" : false,
+      "type" : "integer"
+    },
+    "filter" : {
+      "name" : "$filter",
+      "in" : "query",
+      "description" : "Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported",
+      "required" : false,
+      "type" : "string"
+    },
+    "select" : {
+      "name" : "$select",
+      "in" : "query",
+      "description" : "Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported",
+      "required" : false,
+      "type" : "string"
     }
   },
   "x-azure-api-id" : "sh-1523977537155"
