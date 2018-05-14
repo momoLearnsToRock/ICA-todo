@@ -3,7 +3,7 @@ info:
   description: Ica MinButik - Metadata about Users
   version: 1.0.0
   title: User API
-  # put the contact info for your development or API team
+  # put the contact info for your development or API team.
   contact:
     email: goran.roseen@acando.com
 
@@ -17,10 +17,27 @@ tags:
   description: Secured Admin-only calls
 - name: developers
   description: Operations available to regular developers
-- name: others
-  description: Operations available to nobody
+- name: everyone
+  description: Operations available to the entire world
 
 paths:
+  /whoami:
+    get:
+      tags:
+      - everyone
+      summary: Who is the current user
+      operationId: WhoAmI
+      description: |
+        return a User object with the current user
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Current user
+          schema:
+            $ref: '#/definitions/User'
+        500:
+          description: Internal server error
   /users:
     get:
       tags:
