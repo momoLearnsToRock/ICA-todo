@@ -1,9 +1,8 @@
 import sql = require('mssql');
 import dbg =require('debug');
+import odataV4Sql = require('odata-v4-sql');
+
 const debug = dbg('todo:helpers');
-
-
-
 export module Helpers{
   export class ResponseDTO {
     public message: string;
@@ -115,7 +114,17 @@ export module Helpers{
       return `DELETE FROM ${this.tableName} WHERE Id = @id`; 
     }
 
-    async getAll() {
+    async getAll(q: string) {
+      if(!q || q == '/' || q =='/?'){
+        q='$top=100'
+      }
+      const query = odataV4Sql.createQuery(q);
+      if(!query.limit){
+        query.limit=1000;
+      }
+      if(query.limit>1000){
+        throw new Error(`Parse error: max number of rows returned can be 1000. please adjust query to 'top=1000'`);
+      }
       let result = null;
       try {
         const requ = new sql.Request(this.connectionPool);

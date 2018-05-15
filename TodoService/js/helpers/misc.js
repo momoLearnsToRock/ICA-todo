@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const sql = require("mssql");
 const dbg = require("debug");
+const odataV4Sql = require("odata-v4-sql");
 const debug = dbg('todo:helpers');
 var Helpers;
 (function (Helpers) {
@@ -107,8 +108,18 @@ var Helpers;
             sqlReq.input('id', id);
             return `DELETE FROM ${this.tableName} WHERE Id = @id`;
         }
-        getAll() {
+        getAll(q) {
             return __awaiter(this, void 0, void 0, function* () {
+                if (!q || q == '/' || q == '/?') {
+                    q = '$top=100';
+                }
+                const query = odataV4Sql.createQuery(q);
+                if (!query.limit) {
+                    query.limit = 1000;
+                }
+                if (query.limit > 1000) {
+                    throw new Error(`Parse error: max number of rows returned can be 1000. please adjust query to 'top=1000'`);
+                }
                 let result = null;
                 try {
                     const requ = new sql.Request(this.connectionPool);

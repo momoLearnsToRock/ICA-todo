@@ -5,18 +5,23 @@ import sql = require('mssql');
 import config = require('../config/sql.js');
 import categoriesRouter = require('./routers/categoriesRouter.js');
 import bodyParser = require('body-parser');
-import baseRouter = require('./routers/baseRouter.js')
+import baseRouter = require('./routers/baseRouter.js');
+import odataV4Sql= require('odata-v4-sql');
 
-// import tempTests = require('./tempTesting');
 const debug = dbg('todo:api');
 
 class main {
   public run(): void {
     debug.enabled = true;
 
-    let monField = new h.Helpers.SqlField({type: "nvarchar(100)", name: "momo"});
-    debug(monField.name);
+    let reqUrl = `/?$filter=(Name%20eq%20%27John%27%20and%20LastName%20lt%20%27Doe%27)%20or%20(adress%20eq%20%27Skondalsvag%201%27%20and%20postnummer%20gt%2012868%20and%20postort%20eq%20%27Skondal%27)`;
+    reqUrl='$top=100';
+    reqUrl=reqUrl.substring(reqUrl.indexOf('$'),reqUrl.length);
+    debug(reqUrl);
+    const filter= odataV4Sql.createQuery(reqUrl);
+    debug(filter.where);    
 
+    
     process.on('unhandledRejection', (err) => {
       debug('unhandledRejection ', err);
     });
