@@ -69,7 +69,10 @@ export module Helpers {
             if (throwOnMissingFields && typeof jsonBody[item.name] == 'undefined') {
               throw new Error(`Body is missing the field '${item.name}'.`);
             }
-            sqlReq.input(item.name, item.type as sql.ISqlType, !jsonBody[item.name] ? null : item.type == sql.DateTime ? new Date(jsonBody[item.name]) : jsonBody[item.name]);
+            if(!jsonBody[item.name]){
+              return;
+            }
+            sqlReq.input(item.name, item.type as sql.ISqlType, item.type == sql.DateTime ? new Date(jsonBody[item.name]) : jsonBody[item.name]);
           }
           parsedFieldsList.push(item.name);
         }
@@ -104,23 +107,23 @@ export module Helpers {
       const PKType: sql.ISqlTypeFactory = this.fields[indexOfId].type;
 
       const query =
-        `DECLARE @_keys table([Id] ${PKType.declaration})
+        `DECLARE @_keys table([id] ${PKType.declaration})
   
        INSERT INTO ${this.tableName} (${parsedFieldsList.map((f) => { return `[${f}]`; }).join(', ')}) 
-       OUTPUT inserted.Id INTO @_keys
+       OUTPUT inserted.id INTO @_keys
        VALUES (${parsedFieldsList.map((f) => { return f == 'modifiedOn' ? 'GETDATE()' : `@${f}` }).join(', ')})
   
        SELECT t.*
        FROM @_keys AS g 
        JOIN dbo.${this.viewName} AS t 
-       ON g.Id = t.Id`;
+       ON g.id = t.id`;
       // this method is a copy of what EF does
       return query;
     }
 
     createDeleteStatement(id: any, sqlReq: sql.Request) {
       sqlReq.input('id', id);
-      return `DELETE FROM ${this.tableName} WHERE Id = @id`;
+      return `DELETE FROM ${this.tableName} WHERE id = @id`;
     }
 
     async getAll(q: string) {
@@ -185,15 +188,16 @@ export module Helpers {
           str += f != 'modifiedOn' ? `@${f}` : 'GETDATE()';
           return str;
         }).join(', ')} 
-        WHERE Id = @id
+        WHERE id = @id
         SELECT * from ${this.viewName}
-        WHERE Id = @id
+        WHERE id = @id
         `;
       debug(query);
       return query;
     }
 
     async insert(jsonBody: JSON, throwOnMissingFields: boolean) {
+      this.customInsertChecks(jsonBody);
       let result = null;
       let msg = '';
       try {
@@ -213,9 +217,9 @@ export module Helpers {
 
     async getById(id: any) {
       const requ = new sql.Request(this.connectionPool);
-      debug('select by id: ', `select * from ${this.viewName} where Id= @id`);
+      debug('select by id: ', `select * from ${this.viewName} where id= @id`);
       requ.input('id', id);
-      let result = await requ.query(`select * from ${this.viewName} where Id= @id`);
+      let result = await requ.query(`select * from ${this.viewName} where id= @id`);
       debug('return of check for the same id', result);
       let item = null;
       if (!!result.recordset && result.recordset.length === 1) {
@@ -233,6 +237,7 @@ export module Helpers {
     }
 
     async update(jsonBody: JSON, id: any, throwOnMissingFields: boolean) {
+      this.customUpdateChecks(jsonBody);
       let result = null;
       let requ = new sql.Request(this.connectionPool);
       debug('update query');
@@ -242,6 +247,16 @@ export module Helpers {
         throw new Error('server error');
       }
       return result.recordset[0];
+    }
+
+    customUpdateChecks(jsonBody: JSON){
+      //custom checks here. can be overriden in children. if you find an error throw!
+      return;
+    }
+
+    customInsertChecks(jsonBody: JSON){
+      //custom checks here. can be overriden in children. if you find an error throw!
+      return;
     }
   }
 }

@@ -69,7 +69,10 @@ var Helpers;
                         if (throwOnMissingFields && typeof jsonBody[item.name] == 'undefined') {
                             throw new Error(`Body is missing the field '${item.name}'.`);
                         }
-                        sqlReq.input(item.name, item.type, !jsonBody[item.name] ? null : item.type == sql.DateTime ? new Date(jsonBody[item.name]) : jsonBody[item.name]);
+                        if (!jsonBody[item.name]) {
+                            return;
+                        }
+                        sqlReq.input(item.name, item.type, item.type == sql.DateTime ? new Date(jsonBody[item.name]) : jsonBody[item.name]);
                     }
                     parsedFieldsList.push(item.name);
                 }
@@ -99,22 +102,22 @@ var Helpers;
             });
             const indexOfId = this.fields.map((f) => { return f.name; }).indexOf('id');
             const PKType = this.fields[indexOfId].type;
-            const query = `DECLARE @_keys table([Id] ${PKType.declaration})
+            const query = `DECLARE @_keys table([id] ${PKType.declaration})
   
        INSERT INTO ${this.tableName} (${parsedFieldsList.map((f) => { return `[${f}]`; }).join(', ')}) 
-       OUTPUT inserted.Id INTO @_keys
+       OUTPUT inserted.id INTO @_keys
        VALUES (${parsedFieldsList.map((f) => { return f == 'modifiedOn' ? 'GETDATE()' : `@${f}`; }).join(', ')})
   
        SELECT t.*
        FROM @_keys AS g 
        JOIN dbo.${this.viewName} AS t 
-       ON g.Id = t.Id`;
+       ON g.id = t.id`;
             // this method is a copy of what EF does
             return query;
         }
         createDeleteStatement(id, sqlReq) {
             sqlReq.input('id', id);
-            return `DELETE FROM ${this.tableName} WHERE Id = @id`;
+            return `DELETE FROM ${this.tableName} WHERE id = @id`;
         }
         getAll(q) {
             return __awaiter(this, void 0, void 0, function* () {
@@ -177,15 +180,16 @@ var Helpers;
                 str += f != 'modifiedOn' ? `@${f}` : 'GETDATE()';
                 return str;
             }).join(', ')} 
-        WHERE Id = @id
+        WHERE id = @id
         SELECT * from ${this.viewName}
-        WHERE Id = @id
+        WHERE id = @id
         `;
             debug(query);
             return query;
         }
         insert(jsonBody, throwOnMissingFields) {
             return __awaiter(this, void 0, void 0, function* () {
+                this.customInsertChecks(jsonBody);
                 let result = null;
                 let msg = '';
                 try {
@@ -207,9 +211,9 @@ var Helpers;
         getById(id) {
             return __awaiter(this, void 0, void 0, function* () {
                 const requ = new sql.Request(this.connectionPool);
-                debug('select by id: ', `select * from ${this.viewName} where Id= @id`);
+                debug('select by id: ', `select * from ${this.viewName} where id= @id`);
                 requ.input('id', id);
-                let result = yield requ.query(`select * from ${this.viewName} where Id= @id`);
+                let result = yield requ.query(`select * from ${this.viewName} where id= @id`);
                 debug('return of check for the same id', result);
                 let item = null;
                 if (!!result.recordset && result.recordset.length === 1) {
@@ -229,6 +233,7 @@ var Helpers;
         }
         update(jsonBody, id, throwOnMissingFields) {
             return __awaiter(this, void 0, void 0, function* () {
+                this.customUpdateChecks(jsonBody);
                 let result = null;
                 let requ = new sql.Request(this.connectionPool);
                 debug('update query');
@@ -239,6 +244,14 @@ var Helpers;
                 }
                 return result.recordset[0];
             });
+        }
+        customUpdateChecks(jsonBody) {
+            //custom checks here. can be overriden in children. if you find an error throw!
+            return;
+        }
+        customInsertChecks(jsonBody) {
+            //custom checks here. can be overriden in children. if you find an error throw!
+            return;
         }
     }
     Helpers.SqlTableType = SqlTableType;

@@ -103,9 +103,9 @@ export class TodosTable extends h.Helpers.SqlTableType {
 
   async getById(id: any) {
     const requ = new sql.Request(this.connectionPool);
-    debug('select by id: ', `select * from ${this.viewName} where Id= @id`);
+    debug('select by id: ', `select * from ${this.viewName} where id= @id`);
     requ.input('id', id);
-    let result = await requ.query(`select * from ${this.viewName} where Id= @id`);
+    let result = await requ.query(`select * from ${this.viewName} where id= @id`);
     debug('return of check for the same id', result);
     let item = null;
     if (!!result.recordset && result.recordset.length === 1) {
@@ -115,5 +115,16 @@ export class TodosTable extends h.Helpers.SqlTableType {
     return item;
   }
 
-  // async instntiateTodo(jsonBody)
+  customUpdateChecks(jsonBody: JSON){
+    if((jsonBody.completedAt || jsonBody.completedById || jsonBody.completedByName) && (!jsonBody.completedAt || !jsonBody.completedById || !jsonBody.completedByName)) { //all or none
+      throw new Error(`Body is missing the fields för closing todo. all the fields 'completedAt' and 'completedById' and 'completedByName' must be present.`);
+    }
+    if((jsonBody.assignedToId || jsonBody.assignedToName || jsonBody.assignedToObjectType) && (!jsonBody.assignedToId || !jsonBody.assignedToName || !jsonBody.assignedToObjectType)) { //all or none
+      throw new Error(`Body is missing the fields för assigning todo. all the fields 'assignedToId' and 'assignedToName' and 'assignedToObjectType' must be present.`);
+    }
+    return;
+  }
+  customInsertChecks(jsonBody: JSON){
+    this.customUpdateChecks(jsonBody);
+  }
 }

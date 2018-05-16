@@ -107,9 +107,9 @@ class ActivitiesTable extends h.Helpers.SqlTableType {
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const requ = new sql.Request(this.connectionPool);
-            debug('select by id: ', `select * from ${this.viewName} where Id= @id`);
+            debug('select by id: ', `select * from ${this.viewName} where id= @id`);
             requ.input('id', id);
-            let result = yield requ.query(`select * from ${this.viewName} where Id= @id`);
+            let result = yield requ.query(`select * from ${this.viewName} where id= @id`);
             debug('return of check for the same id', result);
             let item = null;
             if (!!result.recordset && result.recordset.length === 1) {
@@ -136,9 +136,28 @@ class ActivitiesTable extends h.Helpers.SqlTableType {
             activity.assignedToObjectType = jsonBody.assignedToObjectType;
             activity.dueAt = !jsonBody.dueAt ? null : jsonBody.dueAt;
             // activity.startsAt = !jsonBody.startsAt?null:jsonBody.startsAt;
-            let result = this.todosTable.insert(activity, false);
-            //TODO: add the tags
-            return result;
+            let todo = yield this.todosTable.insert(activity, false);
+            let activityTags = yield this.getTags(activity.activityId);
+            yield activityTags.forEach(function (at) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    delete at.title;
+                    at.tagId = at.id;
+                    delete at.id;
+                    at.todoId = todo.id;
+                    const todostag = yield this.todosTable.todosTagsTable.insert(at, false);
+                    debug(todostag);
+                });
+            });
+            // for (let i = 0; i < activityTags.length; i++) {
+            //   let at = activityTags[i];
+            //   delete at.title;
+            //   at.tagId = at.id;
+            //   delete at.id;
+            //   at.todoId = todo.id;
+            //   const todostag = await this.todosTable.todosTagsTable.insert(at, false);
+            //   debug(todostag);
+            // }
+            return todo;
         });
     }
 }

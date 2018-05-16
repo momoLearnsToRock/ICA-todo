@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const baseRouter = require("./baseRouter");
 class ActivitiesRouter extends baseRouter.BaseRouter {
-    constructor(table, disableGetAll) {
-        super(table, disableGetAll);
+    constructor({ table, disableGetAll, disablePost, disablePut, disablePatch, disableDelete }) {
+        super({ table: table, disableGetAll: disableGetAll, disablePost: disablePost, disablePut: disablePut, disablePatch: disablePatch, disableDelete: disableDelete });
         this.router.route('/:id/instantiateTodo')
             .get((req, res) => {
             res.send('try using the post verb');
