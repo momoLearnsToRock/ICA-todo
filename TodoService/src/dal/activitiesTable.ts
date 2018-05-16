@@ -7,8 +7,8 @@ import todosT = require('./todosTable');
 const debug= dbg('todo:activitiesTable');
 
 export class ActivitiesTable extends h.Helpers.SqlTableType {
-  private activitiesTagsTable: h.Helpers.SqlTableType;
-  private todosTable: todosT;
+  public activitiesTagsTable: h.Helpers.SqlTableType;
+  public todosTable: todosT.TodosTable;
   constructor(connectionPool: sql.ConnectionPool){
     const activityFields: h.Helpers.SqlField[] = [
       new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),

@@ -43,6 +43,9 @@ class BaseRouter {
                     return __awaiter(this, void 0, void 0, function* () {
                         try {
                             let rslt = yield this.table.getById(req.params.id);
+                            if (!rslt) {
+                                throw new Error(`Could not find an entry with the given id.`);
+                            }
                             req.itemById = rslt;
                             next();
                         }
@@ -50,6 +53,7 @@ class BaseRouter {
                             let code = 500;
                             switch (err.message) {
                                 case 'error':
+                                case 'Could not find an entry with the given id.':
                                     code = 400;
                                     break;
                             }

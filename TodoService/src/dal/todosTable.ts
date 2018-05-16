@@ -6,7 +6,7 @@ import odataV4Sql= require('odata-v4-sql');
 const debug= dbg('todo:todosTable');
 
 export class TodosTable extends h.Helpers.SqlTableType {
-  private todosTagsTable: h.Helpers.SqlTableType;
+  public todosTagsTable: h.Helpers.SqlTableType;
   constructor(connectionPool: sql.ConnectionPool){
     const todoFields: h.Helpers.SqlField[] = [
       new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),

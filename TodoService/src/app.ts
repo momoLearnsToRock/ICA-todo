@@ -56,7 +56,7 @@ class main {
       app.use('/activities', activitiesRouter.router)
 
       const todosTable: tdsTable.TodosTable = new tdsTable.TodosTable(pool);
-      const todosRouter: baseRouter.BaseRouter = new baseRouter.BaseRouter({table: todosTable, disableGetAll: false, disablePost: false, disablePut: false, disablePatch: false, disableDelete: false});
+      const todosRouter: baseRouter.BaseRouter = new baseRouter.BaseRouter({table: todosTable, disableGetAll: false, disablePost: true, disablePut: false, disablePatch: false, disableDelete: true});
       app.use('/todos', todosRouter.router)
     });
     

@@ -50,7 +50,7 @@ class main {
             const activitiesRouter = new acRouter.ActivitiesRouter({ table: activitiesTable, disableGetAll: false, disablePost: false, disablePut: false, disablePatch: true, disableDelete: false });
             app.use('/activities', activitiesRouter.router);
             const todosTable = new tdsTable.TodosTable(pool);
-            const todosRouter = new baseRouter.BaseRouter({ table: todosTable, disableGetAll: false, disablePost: false, disablePut: false, disablePatch: false, disableDelete: false });
+            const todosRouter = new baseRouter.BaseRouter({ table: todosTable, disableGetAll: false, disablePost: true, disablePut: false, disablePatch: false, disableDelete: true });
             app.use('/todos', todosRouter.router);
         });
         const port = process.env.PORT || 3000;
