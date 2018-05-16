@@ -98,6 +98,75 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
                 });
             }.bind(this)());
         });
+        this.router.use('/:activityId/tags/:activitiestagId', (req, res, next) => {
+            if (req.body.id && req.body.id !== req.params.id) {
+                res.status(400).send('Wrong id was passed as part of the request body.');
+            }
+            else {
+                (function query() {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        try {
+                            let rslt = yield this.table.activitiesTagsTable.getById(req.params.activitiestagId);
+                            if (!rslt) {
+                                throw new Error(`Could not find an entry with the given id.`);
+                            }
+                            req.itemById = rslt;
+                            next();
+                        }
+                        catch (err) {
+                            let code = 500;
+                            switch (err.message) {
+                                case 'error':
+                                case 'Could not find an entry with the given id.':
+                                    code = 400;
+                                    break;
+                            }
+                            res.status(code).send(err.message);
+                        }
+                    });
+                }.bind(this)());
+            }
+        });
+        this.router.route('/:activityId/tags/:activitiestagId')
+            .get((req, res) => {
+            // if (req.itemById == null) {
+            //   res.status(204).send({});
+            // } else {
+            res.send(req.itemById);
+            // }      
+        })
+            .post((req, res) => {
+            this.methodNotAvailable(res, `"post"`, `try using "post" on the address "/:activityId/tags" instead of "/:activityId/tags/${req.params.activitiestagId}"`);
+        })
+            .put((req, res) => {
+            this.methodNotAvailable(res, "put", "");
+        })
+            .patch((req, res) => {
+            this.methodNotAvailable(res, "patch", "");
+        })
+            .delete((req, res) => {
+            (function query() {
+                return __awaiter(this, void 0, void 0, function* () {
+                    try {
+                        if (req.itemById == null) {
+                            throw new Error('no data available');
+                        }
+                        yield this.table.activitiesTagsTable.delete(req.params.activitiestagId);
+                        res.status(204).send();
+                    }
+                    catch (err) {
+                        let code = 500;
+                        switch (err.message) {
+                            case 'no data available':
+                            case 'error':
+                                code = 400;
+                                break;
+                        }
+                        res.status(code).send(err.message);
+                    }
+                });
+            }.bind(this)());
+        });
     }
 }
 exports.ActivitiesRouter = ActivitiesRouter;
