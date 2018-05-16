@@ -75,6 +75,7 @@ export class BaseRouter {
       try {
         let reqUrl=req.url;
         reqUrl=reqUrl.substring(reqUrl.indexOf('$'),reqUrl.length);
+        reqUrl=decodeURI(reqUrl);
     
         let rslt = await this.table.getAll(reqUrl);
         res.send(rslt);
@@ -105,7 +106,7 @@ export class BaseRouter {
               throw new Error('an existing item already exists');
             }
           }
-          let insResult = await this.table.insert(req.body);
+          let insResult = await this.table.insert(req.body, true);// the second parameter makes sure all the needed fields are passed
           res.status(201).send(insResult);
         } catch(err){
           let code: number= 500;
@@ -137,7 +138,7 @@ export class BaseRouter {
         if (req.itemById == null) {
           throw new Error('no data available');
         }
-        result= await this.table.update(req.body, req.params.id);
+        result= await this.table.update(req.body, req.params.id, true);// the last argument makes sure to throw an error if there is a field missing (otherwise it should be patch)
         res.send(result);
       } catch (err) {
         let code: number = 500;

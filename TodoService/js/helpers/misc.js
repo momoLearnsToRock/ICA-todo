@@ -56,9 +56,9 @@ var Helpers;
             });
             return fieldsString;
         }
-        parseFieldsInJsonBody({ includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, throwOnExtraFields, sqlReq }) {
+        parseFieldsInJsonBody({ includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, throwOnExtraFields, sqlReq, queryFields }) {
             const parsedFieldsList = [];
-            this.fields.forEach((item, index) => {
+            queryFields.forEach((item, index) => {
                 if (includeId || item.name.toLowerCase() !== 'id') {
                     if (item.name === 'modifiedOn') {
                         if (throwOnMissingModifiedOn && typeof jsonBody[item.name] == 'undefined') {
@@ -69,7 +69,7 @@ var Helpers;
                         if (throwOnMissingFields && typeof jsonBody[item.name] == 'undefined') {
                             throw new Error(`Body is missing the field '${item.name}'.`);
                         }
-                        sqlReq.input(item.name, item.type, item.type == sql.DateTime ? new Date(jsonBody[item.name]) : jsonBody[item.name]);
+                        sqlReq.input(item.name, item.type, !jsonBody[item.name] ? null : item.type == sql.DateTime ? new Date(jsonBody[item.name]) : jsonBody[item.name]);
                     }
                     parsedFieldsList.push(item.name);
                 }
@@ -80,15 +80,23 @@ var Helpers;
             if (throwOnExtraFields) {
                 let bodyKeys = Object.keys(jsonBody);
                 bodyKeys.forEach((item, index) => {
-                    if (this.fields.map((f) => { return f.name; }).indexOf(item) < 0) {
+                    if (queryFields.map((f) => { return f.name; }).indexOf(item) < 0) {
                         throw new Error(`The field '${item}' does not exist on the '${this.tableName}' entity. Try removing it from the body.`);
                     }
                 });
             }
             return parsedFieldsList;
         }
-        createInsertIntoStatement(includeId, jsonBody, sqlReq) {
-            const parsedFieldsList = this.parseFieldsInJsonBody({ includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, throwOnExtraFields: this.throwOnExtraFields, sqlReq: sqlReq });
+        createInsertIntoStatement(includeId, jsonBody, sqlReq, throwOnMissingFields) {
+            const parsedFieldsList = this.parseFieldsInJsonBody({
+                includeId: includeId,
+                jsonBody: jsonBody,
+                throwOnMissingFields: throwOnMissingFields,
+                throwOnMissingModifiedOn: false,
+                throwOnExtraFields: this.throwOnExtraFields,
+                sqlReq: sqlReq,
+                queryFields: this.fields
+            });
             const indexOfId = this.fields.map((f) => { return f.name; }).indexOf('id');
             const PKType = this.fields[indexOfId].type;
             const query = `DECLARE @_keys table([Id] ${PKType.declaration})
@@ -123,9 +131,28 @@ var Helpers;
                 let result = null;
                 try {
                     const requ = new sql.Request(this.connectionPool);
-                    result = yield requ.query(`select * from ${this.viewName}`);
+                    let sqlQuery = `select ${query.select} from ${this.viewName}`;
+                    let where = query.where;
+                    if (where) {
+                        for (let p of query.parameters) {
+                            if (where.indexOf('?') < 0) {
+                                throw new Error(`Parse error: could not parse near '${p[1]}'`);
+                            }
+                            requ.input(`${p[0]}`, `${p[1]}`);
+                            where = where.replace('?', `@${p[0]}`);
+                        }
+                        sqlQuery += ` WHERE ${where}`;
+                    }
+                    //TODO: Proper order by here
+                    sqlQuery += ` 
+        ORDER BY CURRENT_TIMESTAMP`;
+                    sqlQuery += ` 
+        OFFSET ${query.skip || 0} ROWS`;
+                    sqlQuery += ` 
+        FETCH NEXT ${query.limit} ROWS ONLY`;
+                    result = yield requ.query(sqlQuery);
                     debug(result.toString());
-                    return result;
+                    return result.recordset;
                 }
                 catch (er) {
                     debug(er);
@@ -133,8 +160,16 @@ var Helpers;
                 }
             });
         }
-        createUpdateStatement(includeId, jsonBody, id, sqlReq) {
-            const parsedFieldsList = this.parseFieldsInJsonBody({ includeId: includeId, jsonBody: jsonBody, throwOnMissingFields: true, throwOnMissingModifiedOn: false, throwOnExtraFields: true, sqlReq: sqlReq });
+        createUpdateStatement(includeId, jsonBody, id, sqlReq, throwOnMissingFields) {
+            const parsedFieldsList = this.parseFieldsInJsonBody({
+                includeId: includeId,
+                jsonBody: jsonBody,
+                throwOnMissingFields: throwOnMissingFields,
+                throwOnMissingModifiedOn: false,
+                throwOnExtraFields: true,
+                sqlReq: sqlReq,
+                queryFields: this.fields
+            });
             sqlReq.input('id', id);
             const query = `UPDATE ${this.tableName}
         SET ${parsedFieldsList.map((f) => {
@@ -149,19 +184,19 @@ var Helpers;
             debug(query);
             return query;
         }
-        insert(jsonBody) {
+        insert(jsonBody, throwOnMissingFields) {
             return __awaiter(this, void 0, void 0, function* () {
                 let result = null;
                 let msg = '';
                 try {
                     // note that the check for existing id must already be done.
                     const requestIns = new sql.Request(this.connectionPool);
-                    result = yield requestIns.query(this.createInsertIntoStatement(!this.autoGeneratedPrimaryKey, jsonBody, requestIns));
+                    result = yield requestIns.query(this.createInsertIntoStatement(!this.autoGeneratedPrimaryKey, jsonBody, requestIns, throwOnMissingFields));
                     if (result.rowsAffected[0] != 0) {
                         msg = 'item created';
                     }
                     debug('return of insert', result);
-                    return result;
+                    return result.recordset[0];
                 }
                 catch (err) {
                     debug(err);
@@ -192,12 +227,12 @@ var Helpers;
                 return true;
             });
         }
-        update(jsonBody, id) {
+        update(jsonBody, id, throwOnMissingFields) {
             return __awaiter(this, void 0, void 0, function* () {
                 let result = null;
                 let requ = new sql.Request(this.connectionPool);
                 debug('update query');
-                result = yield requ.query(this.createUpdateStatement(!this.autoGeneratedPrimaryKey, jsonBody, id, requ));
+                result = yield requ.query(this.createUpdateStatement(!this.autoGeneratedPrimaryKey, jsonBody, id, requ, throwOnMissingFields));
                 debug('result of update ', result);
                 if (typeof result.recordset[0] == 'undefined') {
                     throw new Error('server error');
