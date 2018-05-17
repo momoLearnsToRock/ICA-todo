@@ -53,8 +53,9 @@ class BaseRouter {
                             let code = 500;
                             switch (err.message) {
                                 case 'error':
-                                case 'Could not find an entry with the given id.':
                                     code = 400;
+                                case 'Could not find an entry with the given id.':
+                                    code = 404;
                                     break;
                             }
                             res.status(code).send(err.message);
