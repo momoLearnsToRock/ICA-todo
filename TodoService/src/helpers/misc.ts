@@ -197,7 +197,7 @@ export module Helpers {
     }
 
     async insert(jsonBody: JSON, throwOnMissingFields: boolean) {
-      this.customInsertChecks(jsonBody);
+      await this.customInsertChecks(jsonBody);
       let result = null;
       let msg = '';
       try {
@@ -237,7 +237,7 @@ export module Helpers {
     }
 
     async update(jsonBody: JSON, id: any, throwOnMissingFields: boolean) {
-      this.customUpdateChecks(jsonBody);
+      await this.customUpdateChecks(jsonBody);
       let result = null;
       let requ = new sql.Request(this.connectionPool);
       debug('update query');
@@ -249,12 +249,12 @@ export module Helpers {
       return result.recordset[0];
     }
 
-    customUpdateChecks(jsonBody: JSON){
+    async customUpdateChecks(jsonBody: JSON){
       //custom checks here. can be overriden in children. if you find an error throw!
       return;
     }
 
-    customInsertChecks(jsonBody: JSON){
+    async customInsertChecks(jsonBody: JSON){
       //custom checks here. can be overriden in children. if you find an error throw!
       return;
     }

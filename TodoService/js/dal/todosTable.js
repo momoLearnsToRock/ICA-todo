@@ -119,16 +119,20 @@ class TodosTable extends h.Helpers.SqlTableType {
         });
     }
     customUpdateChecks(jsonBody) {
-        if ((jsonBody.completedAt || jsonBody.completedById || jsonBody.completedByName) && (!jsonBody.completedAt || !jsonBody.completedById || !jsonBody.completedByName)) { //all or none
-            throw new Error(`Body is missing the fields för closing todo. all the fields 'completedAt' and 'completedById' and 'completedByName' must be present.`);
-        }
-        if ((jsonBody.assignedToId || jsonBody.assignedToName || jsonBody.assignedToObjectType) && (!jsonBody.assignedToId || !jsonBody.assignedToName || !jsonBody.assignedToObjectType)) { //all or none
-            throw new Error(`Body is missing the fields för assigning todo. all the fields 'assignedToId' and 'assignedToName' and 'assignedToObjectType' must be present.`);
-        }
-        return;
+        return __awaiter(this, void 0, void 0, function* () {
+            if ((jsonBody.completedAt || jsonBody.completedById || jsonBody.completedByName) && (!jsonBody.completedAt || !jsonBody.completedById || !jsonBody.completedByName)) { //all or none
+                throw new Error(`Body is missing the fields för closing todo. all the fields 'completedAt' and 'completedById' and 'completedByName' must be present.`);
+            }
+            if ((jsonBody.assignedToId || jsonBody.assignedToName || jsonBody.assignedToObjectType) && (!jsonBody.assignedToId || !jsonBody.assignedToName || !jsonBody.assignedToObjectType)) { //all or none
+                throw new Error(`Body is missing the fields för assigning todo. all the fields 'assignedToId' and 'assignedToName' and 'assignedToObjectType' must be present.`);
+            }
+            return;
+        });
     }
     customInsertChecks(jsonBody) {
-        this.customUpdateChecks(jsonBody);
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.customUpdateChecks(jsonBody);
+        });
     }
 }
 exports.TodosTable = TodosTable;

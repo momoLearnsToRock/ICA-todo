@@ -115,7 +115,7 @@ export class TodosTable extends h.Helpers.SqlTableType {
     return item;
   }
 
-  customUpdateChecks(jsonBody: JSON){
+  async customUpdateChecks(jsonBody: JSON){
     if((jsonBody.completedAt || jsonBody.completedById || jsonBody.completedByName) && (!jsonBody.completedAt || !jsonBody.completedById || !jsonBody.completedByName)) { //all or none
       throw new Error(`Body is missing the fields för closing todo. all the fields 'completedAt' and 'completedById' and 'completedByName' must be present.`);
     }
@@ -124,7 +124,7 @@ export class TodosTable extends h.Helpers.SqlTableType {
     }
     return;
   }
-  customInsertChecks(jsonBody: JSON){
-    this.customUpdateChecks(jsonBody);
+  async customInsertChecks(jsonBody: JSON){
+    await this.customUpdateChecks(jsonBody);
   }
 }

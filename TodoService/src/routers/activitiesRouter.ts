@@ -83,6 +83,8 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
               case /^Body is missing the field/.test(err.message):
               case /^No fields could be parsed from body./.test(err.message):
               case /^The field '.*' entity.$/.test(err.message):
+              case /^Could not find '.*' with the id: '.*'./.test(err.message):
+              case /^An item with given identifier already exists.$/.test(err.message):
                 code = 400;
                 break;
             }
@@ -91,18 +93,20 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
         }.bind(this)());
       })
 
-      this.router.use('/:activityId/tags/:activitiestagId', (req, res, next) => {
+      this.router.use('/:activityId/tags/:tagId', (req, res, next) => {
         if (req.body.id && req.body.id !== req.params.id) {
           res.status(400).send('Wrong id was passed as part of the request body.');
         }
         else {
           (async function query() {
             try {
-              let rslt = await this.table.activitiesTagsTable.getById(req.params.activitiestagId);
-              if(!rslt){
+              let reqUrl = `$filter=(activityId eq ${req.params.activityId} and tagId eq ${req.params.tagId})`;
+
+              let rslt = await this.table.activitiesTagsTable.getAll(reqUrl);
+              if(!rslt || rslt.length==0){
                 throw new Error(`Could not find an entry with the given id.`);
               }
-              req.itemById = rslt;
+              req.activityTagById = rslt[0];
               next();
             } catch (err) {
               let code: number = 500;
@@ -118,18 +122,18 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
         }
       });
   
-      this.router.route('/:activityId/tags/:activitiestagId')
+      this.router.route('/:activityId/tags/:tagId')
         .get((req, res) => {
           // if (req.itemById == null) {
           //   res.status(204).send({});
           // } else {
-            res.send(req.itemById);
+            res.send(req.activityTagById);
           // }      
         })
         .post((req, res) => {
-          this.methodNotAvailable(res, `"post"`, `try using "post" on the address "/:activityId/tags" instead of "/:activityId/tags/${req.params.activitiestagId}"`);
+          this.methodNotAvailable(res, `"post"`, `try using "post" on the address "activities/${req.params.activityId}/tags/:tagId" instead of "activities/${req.params.activityId}/tags/${req.params.tagId}"`);
         })
-        .put((req, res) => {
+          .put((req, res) => {
           this.methodNotAvailable(res, "put","")
         })
         .patch((req, res) => {
@@ -138,10 +142,10 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
         .delete((req, res) => {
           (async function query() {
             try {
-              if (req.itemById == null) {
+              if (req.activityTagById == null) {
                 throw new Error('no data available');
               }
-              await this.table.activitiesTagsTable.delete(req.params.activitiestagId);
+              await this.table.activitiesTagsTable.delete(req.activityTagById.id);
               res.status(204).send();
             } catch (err) {
               let code: number = 500;

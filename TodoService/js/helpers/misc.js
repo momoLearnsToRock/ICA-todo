@@ -189,7 +189,7 @@ var Helpers;
         }
         insert(jsonBody, throwOnMissingFields) {
             return __awaiter(this, void 0, void 0, function* () {
-                this.customInsertChecks(jsonBody);
+                yield this.customInsertChecks(jsonBody);
                 let result = null;
                 let msg = '';
                 try {
@@ -233,7 +233,7 @@ var Helpers;
         }
         update(jsonBody, id, throwOnMissingFields) {
             return __awaiter(this, void 0, void 0, function* () {
-                this.customUpdateChecks(jsonBody);
+                yield this.customUpdateChecks(jsonBody);
                 let result = null;
                 let requ = new sql.Request(this.connectionPool);
                 debug('update query');
@@ -246,12 +246,16 @@ var Helpers;
             });
         }
         customUpdateChecks(jsonBody) {
-            //custom checks here. can be overriden in children. if you find an error throw!
-            return;
+            return __awaiter(this, void 0, void 0, function* () {
+                //custom checks here. can be overriden in children. if you find an error throw!
+                return;
+            });
         }
         customInsertChecks(jsonBody) {
-            //custom checks here. can be overriden in children. if you find an error throw!
-            return;
+            return __awaiter(this, void 0, void 0, function* () {
+                //custom checks here. can be overriden in children. if you find an error throw!
+                return;
+            });
         }
     }
     Helpers.SqlTableType = SqlTableType;

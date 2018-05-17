@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const dbg = require("debug");
-const h = require("./helpers/misc.js");
+const h = require("./helpers/misc");
 const sql = require("mssql");
 const config = require("../config/sql.js");
 const bodyParser = require("body-parser");
-const baseRouter = require("./routers/baseRouter.js");
+const baseRouter = require("./routers/baseRouter");
 const acsTable = require("./dal/activitiesTable");
 const acRouter = require("./routers/activitiesRouter");
 const tdsTable = require("./dal/todosTable");
