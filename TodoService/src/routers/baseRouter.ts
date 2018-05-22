@@ -2,6 +2,7 @@ import h = require('../helpers/misc');
 import dbg = require('debug');
 import express = require('express');
 import http = require('http');
+import {SqlTableType} from '../dal/sqlTableType';
 
 export class BaseRouter {
   table: h.Helpers.TableType;
@@ -12,7 +13,7 @@ export class BaseRouter {
   disablePatch: boolean;
   disableDelete: boolean;
   constructor({table, disableGetAll, disablePost, disablePut, disablePatch, disableDelete}
-    : {table: h.Helpers.SqlTableType, disableGetAll: boolean, disablePost: boolean, disablePut: boolean, disablePatch: boolean, disableDelete: boolean}) {
+    : {table: SqlTableType, disableGetAll: boolean, disablePost: boolean, disablePut: boolean, disablePatch: boolean, disableDelete: boolean}) {
     const debug = dbg('todo:baseRouter');
     debug.enabled = true;
     this.table = table;

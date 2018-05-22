@@ -4,11 +4,12 @@ import h = require('../helpers/misc');
 import odataV4Sql= require('odata-v4-sql');
 import todosT = require('./todosTable');
 import activtiesTagsT = require('./activitiesTagsTable');
+import { SqlTableType } from './sqlTableType';
 
 const debug= dbg('todo:activitiesTable');
 
-export class ActivitiesTable extends h.Helpers.SqlTableType {
-  public activitiesTagsTable: h.Helpers.SqlTableType;
+export class ActivitiesTable extends SqlTableType {
+  public activitiesTagsTable: SqlTableType;
   public todosTable: todosT.TodosTable;
   constructor(connectionPool: sql.ConnectionPool){
     const activityFields: h.Helpers.SqlField[] = [

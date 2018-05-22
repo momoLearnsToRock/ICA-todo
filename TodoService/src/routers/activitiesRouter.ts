@@ -3,10 +3,11 @@ import h = require('../helpers/misc');
 import dbg = require('debug');
 import express = require('express');
 import http = require('http');
+import {SqlTableType} from '../dal/sqlTableType';
 
 export class ActivitiesRouter extends baseRouter.BaseRouter {
   constructor({ table, disableGetAll, disablePost, disablePut, disablePatch, disableDelete }
-    : { table: h.Helpers.SqlTableType, disableGetAll: boolean, disablePost: boolean, disablePut: boolean, disablePatch: boolean, disableDelete: boolean }) {
+    : { table: SqlTableType, disableGetAll: boolean, disablePost: boolean, disablePut: boolean, disablePatch: boolean, disableDelete: boolean }) {
     super({ table: table, disableGetAll: disableGetAll, disablePost: disablePost, disablePut: disablePut, disablePatch: disablePatch, disableDelete: disableDelete });
 
     this.router.route('/:id/instantiateTodo')

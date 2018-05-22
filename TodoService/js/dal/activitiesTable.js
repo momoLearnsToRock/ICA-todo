@@ -14,8 +14,9 @@ const h = require("../helpers/misc");
 const odataV4Sql = require("odata-v4-sql");
 const todosT = require("./todosTable");
 const activtiesTagsT = require("./activitiesTagsTable");
+const sqlTableType_1 = require("./sqlTableType");
 const debug = dbg('todo:activitiesTable');
-class ActivitiesTable extends h.Helpers.SqlTableType {
+class ActivitiesTable extends sqlTableType_1.SqlTableType {
     constructor(connectionPool) {
         const activityFields = [
             new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),
