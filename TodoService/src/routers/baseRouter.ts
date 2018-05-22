@@ -243,7 +243,7 @@ export class BaseRouter {
     }.bind(this)());
   }
 
-  private methodNotAvailable(res: any, verb: string, suggestion: string){
+  public methodNotAvailable(res: any, verb: string, suggestion: string){
     const message = `The ${verb} verb is not available. ${suggestion || ''}`;
     res.status(405).send(message);
   }

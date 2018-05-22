@@ -45,7 +45,20 @@ export class ActivitiesTable extends h.Helpers.SqlTableType {
     let result = null;
     try {
       const requ = new sql.Request(this.connectionPool);
-      let sqlQuery = `select ${query.select} from ${this.viewName}`;
+      let sqlQuery = //`select ${query.select} from ${this.viewName}`;
+  `
+SELECT baseTable.id, baseTable.note, baseTable.createdAt, 
+baseTable.contentUrl, baseTable.modifiedOn, baseTable.title, 
+baseTable.activityType, baseTable.[priority], 
+baseTable.categoryId AS [category.id], dbo.Categories.title AS [category.title], 
+ISNULL((SELECT at.tagid AS [id], at.tagtitle AS [title]
+      FROM ActivitiesTags AS at
+      WHERE baseTable.id = at.activityId
+      FOR JSON PATH), '[]') as tags
+FROM dbo.ActivitiesBase AS baseTable
+INNER JOIN dbo.Categories ON baseTable.categoryId = dbo.Categories.id
+
+`
       let where = query.where;
       if (where) {
         for (let p of query.parameters) {
@@ -54,23 +67,21 @@ export class ActivitiesTable extends h.Helpers.SqlTableType {
           }
           requ.input(`${p[0]}`, `${p[1]}`);
           where = where.replace('?', `@${p[0]}`);
+          where = where.replace('[', 'baseTable.[');
         }
 
-        sqlQuery += ` WHERE ${where}`;
+        sqlQuery += `
+WHERE ${where}`;
       }
       //TODO: Proper order by here
       sqlQuery += ` 
-      ORDER BY CURRENT_TIMESTAMP`;
-      sqlQuery += ` 
-      OFFSET ${query.skip || 0} ROWS`;
-      sqlQuery += ` 
-      FETCH NEXT ${query.limit} ROWS ONLY`;
+ORDER BY CURRENT_TIMESTAMP
+OFFSET ${query.skip || 0} ROWS
+FETCH NEXT ${query.limit} ROWS ONLY
+FOR JSON PATH`;
       result = await requ.query(sqlQuery);
-      result = result.recordset;
+      result = result.recordset[0]["JSON_F52E2B61-18A1-11d1-B105-00805F49916B"];// the special name of the json column
       debug(result);
-      for (let i = 0; i < result.length; i++) {
-        result[i].tags = await this.getTags(result[i].id);
-      }
       return result;
     } catch (er) {
       debug(er);
@@ -78,30 +89,15 @@ export class ActivitiesTable extends h.Helpers.SqlTableType {
     }
   }
 
-  async getTags(id) {
-    let tagsArr: tagsType[]= new Array();
-    let tags = await this.activitiesTagsTable.getAll(`$filter=activityId eq ${id}`);
-    tags.forEach((t)=>{
-      tagsArr.push({'id': t.tagId, 'title': t.tagTitle})
-    });
-    return tagsArr;
-  }
-
   async getById(id: any) {
-    const requ = new sql.Request(this.connectionPool);
-    debug('select by id: ', `select * from ${this.viewName} where id= @id`);
-    requ.input('id', id);
-    let result = await requ.query(`select * from ${this.viewName} where id= @id`);
+    let result = await this.getAll(`$filter=id eq ${id}`);
     debug('return of check for the same id', result);
-    let item = null;
-    if (!!result.recordset && result.recordset.length === 1) {
-      item = result.recordset[0];
-      item.tags = await this.getTags(item.id);
-    }
-    return item;
+    result = result != "" ? JSON.parse(result)[0] : null;
+    return result;
   }
 
   async instantiateTodo(jsonBody: JSON, activity: any) {
+    jsonBody = this.preParseJson(jsonBody);
     if (!jsonBody.assignedToId) throw new Error(`Body is missing the field 'assignedToId'`);
     if (!jsonBody.assignedToName) throw new Error(`Body is missing the field 'assignedToName'`);
     if (!jsonBody.assignedToObjectType) throw new Error(`Body is missing the field 'assignedToObjectType'`);
@@ -117,25 +113,43 @@ export class ActivitiesTable extends h.Helpers.SqlTableType {
     // activity.startsAt = !jsonBody.startsAt?null:jsonBody.startsAt;
     let todo = await this.todosTable.insert(activity, false);
 
-    let activityTags = await this.getTags(activity.activityId);
-    await activityTags.forEach(async function (at) {
+    let activityTags = activity.tags;//JSON.parse(activity.tags);//await this.getTags(activity.activityId);
+    // await activityTags.forEach(async function (at) {
+    for(let i: number = 0; i < activityTags.length; i++){
+      let at: any = activityTags[i];
       delete at.title;
       at.tagId = at.id;
       delete at.id;
       at.todoId = todo.id;
       const todostag = await this.todosTable.todosTagsTable.insert(at, false);
       debug(todostag);
-    }.bind(this));
-    // for (let i = 0; i < activityTags.length; i++) {
-    //   let at = activityTags[i];
-    //   delete at.title;
-    //   at.tagId = at.id;
-    //   delete at.id;
-    //   at.todoId = todo.id;
-    //   const todostag = await this.todosTable.todosTagsTable.insert(at, false);
-    //   debug(todostag);
-
-    // }
+    }// .bind(this));
+    todo = await this.todosTable.getById(todo.id);
     return todo;
+  }
+  async customUpdateChecks(jsonBody: JSON){
+    jsonBody = this.preParseJson(jsonBody);
+  }
+  async customInsertChecks(jsonBody: JSON){
+    jsonBody = this.preParseJson(jsonBody);
+    jsonBody.createdAt = new Date();
+  }
+  preParseJson(jsonBody: JSON): JSON {
+    if (jsonBody.completedBy) {
+      jsonBody.completedById = jsonBody.completedBy.id;
+      jsonBody.completedByName = jsonBody.completedBy.name;
+      delete jsonBody.completedBy;
+    }
+    if (jsonBody.assignedTo) {
+      jsonBody.assignedToId = jsonBody.assignedTo.id;
+      jsonBody.assignedToName = jsonBody.assignedTo.name;
+      jsonBody.assignedToObjectType = jsonBody.assignedTo.objectType;
+      delete jsonBody.assignedTo;
+    }
+    if (jsonBody.category) {
+      jsonBody.categoryId = jsonBody.category.id;
+      delete jsonBody.category;
+    }
+    return jsonBody;
   }
 }

@@ -38,7 +38,6 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
         }.bind(this)());
       })
 
-
     this.router.route('/:activityId/tags')
       .get((req, res) => {
         (async function query() {
