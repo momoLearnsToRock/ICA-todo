@@ -19,13 +19,13 @@ export class ActivitiesTagsTable extends SqlTableType {
     debug.enabled = true;
   }
 
-  async customUpdateChecks(jsonBody: JSON) {
+  async customUpdateChecks(jsonBody: any) {
     if (!jsonBody.activityId || !jsonBody.tagId) { //all or none
       throw new Error(`Body is missing the fields. all the fields 'activityId' and 'tagId' must be present.`);
     }
     return;
   }
-  async customInsertChecks(jsonBody: JSON, table) {
+  async customInsertChecks(jsonBody: any) {
     await this.customUpdateChecks(jsonBody);
     const tagFields: h.Helpers.SqlField[] = [
       new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),

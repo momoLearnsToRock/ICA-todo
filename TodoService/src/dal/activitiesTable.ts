@@ -97,8 +97,8 @@ FOR JSON PATH`;
     return result;
   }
 
-  async instantiateTodo(jsonBody: JSON, activity: any) {
-    jsonBody = this.preParseJson(jsonBody);
+  async instantiateTodo(jsonBody: any, activity: any) {
+    jsonBody = ActivitiesTable.preParseJson(jsonBody);
     if (!jsonBody.assignedToId) throw new Error(`Body is missing the field 'assignedToId'`);
     if (!jsonBody.assignedToName) throw new Error(`Body is missing the field 'assignedToName'`);
     if (!jsonBody.assignedToObjectType) throw new Error(`Body is missing the field 'assignedToObjectType'`);
@@ -128,14 +128,14 @@ FOR JSON PATH`;
     todo = await this.todosTable.getById(todo.id);
     return todo;
   }
-  async customUpdateChecks(jsonBody: JSON){
-    jsonBody = this.preParseJson(jsonBody);
+  async customUpdateChecks(jsonBody: any){
+    jsonBody = ActivitiesTable.preParseJson(jsonBody);
   }
-  async customInsertChecks(jsonBody: JSON){
-    jsonBody = this.preParseJson(jsonBody);
+  async customInsertChecks(jsonBody: any){
+    jsonBody = ActivitiesTable.preParseJson(jsonBody);
     jsonBody.createdAt = new Date();
   }
-  preParseJson(jsonBody: JSON): JSON {
+  static preParseJson(jsonBody: any): any {
     if (jsonBody.completedBy) {
       jsonBody.completedById = jsonBody.completedBy.id;
       jsonBody.completedByName = jsonBody.completedBy.name;
