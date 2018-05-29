@@ -22,7 +22,7 @@ class main {
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
         app.get(['/get', '/'], (req, res) => {
-            res.send('Todo service apis 2.');
+            res.send('Todo service apis.');
         });
         const pool = new sql.ConnectionPool(config, (err) => {
             if (err) {
