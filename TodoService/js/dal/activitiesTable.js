@@ -104,7 +104,7 @@ FOR JSON PATH`;
     }
     instantiateTodo(jsonBody, activity) {
         return __awaiter(this, void 0, void 0, function* () {
-            jsonBody = this.preParseJson(jsonBody);
+            jsonBody = ActivitiesTable.preParseJson(jsonBody);
             if (!jsonBody.assignedToId)
                 throw new Error(`Body is missing the field 'assignedToId'`);
             if (!jsonBody.assignedToName)
@@ -138,16 +138,16 @@ FOR JSON PATH`;
     }
     customUpdateChecks(jsonBody) {
         return __awaiter(this, void 0, void 0, function* () {
-            jsonBody = this.preParseJson(jsonBody);
+            jsonBody = ActivitiesTable.preParseJson(jsonBody);
         });
     }
     customInsertChecks(jsonBody) {
         return __awaiter(this, void 0, void 0, function* () {
-            jsonBody = this.preParseJson(jsonBody);
+            jsonBody = ActivitiesTable.preParseJson(jsonBody);
             jsonBody.createdAt = new Date();
         });
     }
-    preParseJson(jsonBody) {
+    static preParseJson(jsonBody) {
         if (jsonBody.completedBy) {
             jsonBody.completedById = jsonBody.completedBy.id;
             jsonBody.completedByName = jsonBody.completedBy.name;

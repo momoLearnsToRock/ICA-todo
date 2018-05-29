@@ -49,13 +49,13 @@
     /* Experimental Options */
     // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
-
+  },
     /* For the tests, in case i decided to put the tests in the same folder as the TS source files*/
-    // ,"include": [
-    //   "src/**/*"
-    // ],
-    // "exclude": [
-    //   "src/**/*.spec.ts"
-    // ]
-  }
+    "include": [
+      "src/**/*"
+    ]
+    ,
+    "exclude": [
+      "src/**/*.spec.ts"
+    ]
 }

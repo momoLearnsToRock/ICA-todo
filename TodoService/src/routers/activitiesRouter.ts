@@ -19,14 +19,14 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
           let result = null;
           try {
             if ((req as any).itemById == null) {
-              throw new Error('no data available');
+              throw new Error('Could not find an entry with the given id.');
             }
             result = await this.table.instantiateTodo(req.body, (req as any).itemById);
             res.send(result);
           } catch (err) {
             let code: number = 500;
             switch (true) {
-              case 'no data available' == err.message:
+              case 'Could not find an entry with the given id.' == err.message:
               case 'error' == err.message:
               case /^Body is missing the field/.test(err.message):
               case /^No fields could be parsed from body./.test(err.message):
@@ -144,14 +144,14 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
           (async function query(this: any) {
             try {
               if ((req as any).activityTagById == null) {
-                throw new Error('no data available');
+                throw new Error('Could not find an entry with the given id.');
               }
               await this.table.activitiesTagsTable.delete((req as any).activityTagById.id);
               res.status(204).send();
             } catch (err) {
               let code: number = 500;
               switch (err.message) {
-                case 'no data available':
+                case 'Could not find an entry with the given id.':
                 case 'error':
                   code = 400;
                   break;

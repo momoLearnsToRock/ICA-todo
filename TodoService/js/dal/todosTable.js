@@ -115,7 +115,7 @@ FOR JSON PATH`;
     }
     customUpdateChecks(jsonBody) {
         return __awaiter(this, void 0, void 0, function* () {
-            jsonBody = this.preParseJson(jsonBody);
+            jsonBody = TodosTable.preParseJson(jsonBody);
             if ((jsonBody.completedAt || jsonBody.completedById || jsonBody.completedByName) && (!jsonBody.completedAt || !jsonBody.completedById || !jsonBody.completedByName)) { //all or none
                 throw new Error(`Body is missing the fields för closing todo. all the fields 'completedAt' and 'completedById' and 'completedByName' must be present.`);
             }
@@ -131,7 +131,7 @@ FOR JSON PATH`;
             jsonBody.createdAt = new Date();
         });
     }
-    preParseJson(jsonBody) {
+    static preParseJson(jsonBody) {
         if (jsonBody.completedBy) {
             jsonBody.completedById = jsonBody.completedBy.id;
             jsonBody.completedByName = jsonBody.completedBy.name;
