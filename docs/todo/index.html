@@ -199,6 +199,7 @@ font-style: italic;
   <li><a href="#addCategory"><code><span class="http-method">post</span> /categories</code></a></li>
   <li><a href="#addTag"><code><span class="http-method">post</span> /tags</code></a></li>
   <li><a href="#deleteActivity"><code><span class="http-method">delete</span> /activities/{id}</code></a></li>
+  <li><a href="#deleteActivityTag"><code><span class="http-method">delete</span> /activities/{id}/tags/{tagId}</code></a></li>
   <li><a href="#deleteCategory"><code><span class="http-method">delete</span> /categories/{id}</code></a></li>
   <li><a href="#deleteTag"><code><span class="http-method">delete</span> /tags/{id}</code></a></li>
   <li><a href="#deleteTodo"><code><span class="http-method">delete</span> /todos/{id}</code></a></li>
@@ -208,14 +209,17 @@ font-style: italic;
   <h4><a href="#Clients">Clients</a></h4>
   <ul>
   <li><a href="#addActivity"><code><span class="http-method">post</span> /activities</code></a></li>
+  <li><a href="#addActivityTag"><code><span class="http-method">post</span> /activities/{id}/tags</code></a></li>
   <li><a href="#createTodoFromActivity"><code><span class="http-method">post</span> /activities/{id}/instantiateTodo</code></a></li>
   <li><a href="#getActivityById"><code><span class="http-method">get</span> /activities/{id}</code></a></li>
+  <li><a href="#getActivityTagById"><code><span class="http-method">get</span> /activities/{id}/tags/{tagId}</code></a></li>
   <li><a href="#getCategories"><code><span class="http-method">get</span> /categories</code></a></li>
   <li><a href="#getCategoryById"><code><span class="http-method">get</span> /categories/{id}</code></a></li>
   <li><a href="#getTagById"><code><span class="http-method">get</span> /tags/{id}</code></a></li>
   <li><a href="#getTags"><code><span class="http-method">get</span> /tags</code></a></li>
   <li><a href="#getTodoById"><code><span class="http-method">get</span> /todos/{id}</code></a></li>
   <li><a href="#searchActivity"><code><span class="http-method">get</span> /activities</code></a></li>
+  <li><a href="#searchActivityTag"><code><span class="http-method">get</span> /activities/{id}/tags</code></a></li>
   <li><a href="#searchTodo"><code><span class="http-method">get</span> /todos</code></a></li>
   <li><a href="#todoAssign"><code><span class="http-method">post</span> /todos/{id}/assign</code></a></li>
   <li><a href="#todoClose"><code><span class="http-method">post</span> /todos/{id}/close</code></a></li>
@@ -354,10 +358,54 @@ font-style: italic;
     Delete successful
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Invalid ID supplied
+    error
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Todo not found
+    Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteActivityTag"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /activities/{id}/tags/{tagId}</code></pre></div>
+    <div class="method-summary">Delete ActivityTag by TagId (<span class="nickname">deleteActivityTag</span>)</div>
+    <div class="method-notes">Deletes an activityTag item in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that has a specific tag </div><div class="param">tagId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the tag that needs to be deleted </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delete successful
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    error
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Could not find an entry with the given id.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -396,10 +444,10 @@ font-style: italic;
     Delete successful
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Invalid ID supplied
+    error
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Todo not found
+    Could not find an entry with the given id.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -438,10 +486,10 @@ font-style: italic;
     Delete successful
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Invalid ID supplied
+    error
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Todo not found
+    Could not find an entry with the given id.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -480,10 +528,10 @@ font-style: italic;
     Delete successful
         <a href="#"></a>
     <h4 class="field-label">400</h4>
-    Invalid ID supplied
+    error
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Todo not found
+    Could not find an entry with the given id.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -638,6 +686,60 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="addActivityTag"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /activities/{id}/tags</code></pre></div>
+    <div class="method-summary">adds an ActivityTag (<span class="nickname">addActivityTag</span>)</div>
+    <div class="method-notes">Adds an activityTag to the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ActivityTag <a href="#Tag">Tag</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; ActivityTag to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="createTodoFromActivity"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -727,12 +829,8 @@ font-style: italic;
   "title" : "Städa charken",
   "activityType" : "basic",
   "priority" : 1,
-  "category" : {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "HACCP"
-  },
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
   "tags" : [ {
     "modifiedOn" : "2018-03-14 15:22",
     "sortId" : 1,
@@ -758,10 +856,67 @@ font-style: italic;
     successful operation
         <a href="#Activity">Activity</a>
     <h4 class="field-label">400</h4>
-    Invalid ID supplied
+    error
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Todo not found
+    Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getActivityTagById"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities/{id}/tags/{tagId}</code></pre></div>
+    <div class="method-summary">Find activityTag by tag Id (<span class="nickname">getActivityTagById</span>)</div>
+    <div class="method-notes">Find an activityTag by Tag Id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that needs to be fetched </div><div class="param">tagId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the tag that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Tag">Tag</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "modifiedOn" : "2018-03-14 15:22",
+  "sortId" : 1,
+  "id" : "123456",
+  "title" : "Rengöring"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#Tag">Tag</a>
+    <h4 class="field-label">400</h4>
+    error
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Could not find an entry with the given id.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -876,10 +1031,10 @@ font-style: italic;
     successful operation
         <a href="#Category">Category</a>
     <h4 class="field-label">400</h4>
-    Invalid ID supplied
+    error
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Todo not found
+    Could not find an entry with the given id.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -931,10 +1086,10 @@ font-style: italic;
     successful operation
         <a href="#Tag">Tag</a>
     <h4 class="field-label">400</h4>
-    Invalid ID supplied
+    error
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Todo not found
+    Could not find an entry with the given id.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -1036,11 +1191,9 @@ font-style: italic;
   "todoType" : "basic",
   "title" : "Städa charken",
   "priority" : 1,
-  "assignedTo" : {
-    "name" : "Frukt & Grönt",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "objectType" : "Group"
-  },
+  "assignedToId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+  "assignedToName" : "Frukt & Grönt",
+  "assignedToObjectType" : "Group",
   "tags" : [ {
     "modifiedOn" : "2018-03-14 15:22",
     "sortId" : 1,
@@ -1057,12 +1210,8 @@ font-style: italic;
   "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
   "modifiedOn" : "2018-03-14 15:22",
   "id" : "123456",
-  "category" : {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "HACCP"
-  },
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
   "completedBy" : {
     "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
     "fullname" : "Göran Roseen"
@@ -1082,10 +1231,10 @@ font-style: italic;
     successful operation
         <a href="#TodoItem">TodoItem</a>
     <h4 class="field-label">400</h4>
-    Invalid ID supplied
+    error
         <a href="#"></a>
     <h4 class="field-label">404</h4>
-    Todo not found
+    Could not find an entry with the given id.
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -1134,12 +1283,8 @@ available activity in the system</div>
   "title" : "Städa charken",
   "activityType" : "basic",
   "priority" : 1,
-  "category" : {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "HACCP"
-  },
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
   "tags" : [ {
     "modifiedOn" : "2018-03-14 15:22",
     "sortId" : 1,
@@ -1160,12 +1305,112 @@ available activity in the system</div>
   "title" : "Städa charken",
   "activityType" : "basic",
   "priority" : 1,
-  "category" : {
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
+  "tags" : [ {
     "modifiedOn" : "2018-03-14 15:22",
     "sortId" : 1,
     "id" : "123456",
-    "title" : "HACCP"
-  },
+    "title" : "Rengöring"
+  }, {
+    "modifiedOn" : "2018-03-14 15:22",
+    "sortId" : 1,
+    "id" : "123456",
+    "title" : "Rengöring"
+  } ]
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results matching criteria
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="searchActivityTag"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities/{id}/tags</code></pre></div>
+    <div class="method-summary">shows for tags belonging to the activity (<span class="nickname">searchActivityTag</span>)</div>
+    <div class="method-notes">By passing in the appropriate options, you can search for
+available activity in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">$top (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Show only the first n items, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630">OData Paging - Top</a> </div><div class="param">$skip (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Skip the first n items, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631">OData Paging - Skip</a> </div><div class="param">$filter (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Filter items by property values, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625">OData Filtering</a>, note that expand is not supported </div><div class="param">$select (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Select properties to be returned, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620">OData Select</a>, note that expand is not supported </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Activity">Activity</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "note" : "Gör så här",
+  "createdAt" : "2018-03-14 15:22",
+  "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
+  "modifiedOn" : "2018-03-14 15:22",
+  "id" : "123456",
+  "title" : "Städa charken",
+  "activityType" : "basic",
+  "priority" : 1,
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
+  "tags" : [ {
+    "modifiedOn" : "2018-03-14 15:22",
+    "sortId" : 1,
+    "id" : "123456",
+    "title" : "Rengöring"
+  }, {
+    "modifiedOn" : "2018-03-14 15:22",
+    "sortId" : 1,
+    "id" : "123456",
+    "title" : "Rengöring"
+  } ]
+}, {
+  "note" : "Gör så här",
+  "createdAt" : "2018-03-14 15:22",
+  "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
+  "modifiedOn" : "2018-03-14 15:22",
+  "id" : "123456",
+  "title" : "Städa charken",
+  "activityType" : "basic",
+  "priority" : 1,
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
   "tags" : [ {
     "modifiedOn" : "2018-03-14 15:22",
     "sortId" : 1,
@@ -1237,11 +1482,9 @@ available todos in the system</div>
   "todoType" : "basic",
   "title" : "Städa charken",
   "priority" : 1,
-  "assignedTo" : {
-    "name" : "Frukt & Grönt",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "objectType" : "Group"
-  },
+  "assignedToId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+  "assignedToName" : "Frukt & Grönt",
+  "assignedToObjectType" : "Group",
   "tags" : [ {
     "modifiedOn" : "2018-03-14 15:22",
     "sortId" : 1,
@@ -1258,12 +1501,8 @@ available todos in the system</div>
   "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
   "modifiedOn" : "2018-03-14 15:22",
   "id" : "123456",
-  "category" : {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "HACCP"
-  },
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
   "completedBy" : {
     "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
     "fullname" : "Göran Roseen"
@@ -1275,11 +1514,9 @@ available todos in the system</div>
   "todoType" : "basic",
   "title" : "Städa charken",
   "priority" : 1,
-  "assignedTo" : {
-    "name" : "Frukt & Grönt",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "objectType" : "Group"
-  },
+  "assignedToId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+  "assignedToName" : "Frukt & Grönt",
+  "assignedToObjectType" : "Group",
   "tags" : [ {
     "modifiedOn" : "2018-03-14 15:22",
     "sortId" : 1,
@@ -1296,12 +1533,8 @@ available todos in the system</div>
   "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
   "modifiedOn" : "2018-03-14 15:22",
   "id" : "123456",
-  "category" : {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "HACCP"
-  },
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
   "completedBy" : {
     "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
     "fullname" : "Göran Roseen"
@@ -1372,11 +1605,9 @@ available todos in the system</div>
   "todoType" : "basic",
   "title" : "Städa charken",
   "priority" : 1,
-  "assignedTo" : {
-    "name" : "Frukt & Grönt",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "objectType" : "Group"
-  },
+  "assignedToId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+  "assignedToName" : "Frukt & Grönt",
+  "assignedToObjectType" : "Group",
   "tags" : [ {
     "modifiedOn" : "2018-03-14 15:22",
     "sortId" : 1,
@@ -1393,12 +1624,8 @@ available todos in the system</div>
   "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
   "modifiedOn" : "2018-03-14 15:22",
   "id" : "123456",
-  "category" : {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "HACCP"
-  },
+  "categoryId" : "123",
+  "categoryTitle" : "HACCP",
   "completedBy" : {
     "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
     "fullname" : "Göran Roseen"
@@ -1524,10 +1751,12 @@ available todos in the system</div>
   <h3>Table of Contents</h3>
   <ol>
     <li><a href="#Activity"><code>Activity</code> - </a></li>
+    <li><a href="#ActivityCard"><code>ActivityCard</code> - </a></li>
     <li><a href="#Assignee"><code>Assignee</code> - </a></li>
     <li><a href="#BaseTable"><code>BaseTable</code> - </a></li>
     <li><a href="#Category"><code>Category</code> - </a></li>
     <li><a href="#Tag"><code>Tag</code> - </a></li>
+    <li><a href="#TodoCard"><code>TodoCard</code> - </a></li>
     <li><a href="#TodoInstantiate"><code>TodoInstantiate</code> - </a></li>
     <li><a href="#TodoItem"><code>TodoItem</code> - </a></li>
     <li><a href="#User"><code>User</code> - </a></li>
@@ -1544,8 +1773,22 @@ available todos in the system</div>
 <div class="param">contentUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: url</div>
 <div class="param">createdAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
 <div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
-<div class="param">category </div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
+<div class="param">categoryId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">categoryTitle (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#Tag">array[Tag]</a></span>  </div>
+<div class="param">modifiedOn (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ActivityCard"><code>ActivityCard</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">activityId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">cardType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">temp</div><div class="param-enum">timer</div><div class="param-enum">yesNo</div><div class="param-enum">text</div><div class="param-enum">media</div>
+<div class="param">cardData (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">modifiedOn (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
     </div>  <!-- field-items -->
   </div>
@@ -1588,10 +1831,28 @@ available todos in the system</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
+    <h3><a name="TodoCard"><code>TodoCard</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">todoId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">activityCardId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">cardType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">temp</div><div class="param-enum">timer</div><div class="param-enum">yesNo</div><div class="param-enum">text</div><div class="param-enum">media</div>
+<div class="param">input (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">outputText (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">outputMedia (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">modifiedOn (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="TodoInstantiate"><code>TodoInstantiate</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
-      <div class="param">assignee </div><div class="param-desc"><span class="param-type"><a href="#Assignee">Assignee</a></span>  </div>
+      <div class="param">assignedToId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">assignedToName </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">assignedToObjectType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">dueAt </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
     </div>  <!-- field-items -->
   </div>
@@ -1606,12 +1867,15 @@ available todos in the system</div>
 <div class="param">contentUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: url</div>
 <div class="param">createdAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
 <div class="param">dueAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
-<div class="param">assignedTo (optional)</div><div class="param-desc"><span class="param-type"><a href="#Assignee">Assignee</a></span>  </div>
+<div class="param">assignedToId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">assignedToName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">assignedToObjectType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">isCompleted (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
 <div class="param">completedBy (optional)</div><div class="param-desc"><span class="param-type"><a href="#User">User</a></span>  </div>
 <div class="param">completedAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
 <div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
-<div class="param">category </div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
+<div class="param">categoryId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">categoryTitle (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#Tag">array[Tag]</a></span>  </div>
 <div class="param">modifiedOn (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
     </div>  <!-- field-items -->

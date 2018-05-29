@@ -196,19 +196,121 @@ font-style: italic;
   <div class="method-summary"></div>
   <h4><a href="#Admins">Admins</a></h4>
   <ul>
+  <li><a href="#addGroup"><code><span class="http-method">post</span> /groups</code></a></li>
+  <li><a href="#addRole"><code><span class="http-method">post</span> /roles</code></a></li>
   <li><a href="#addUser"><code><span class="http-method">post</span> /users</code></a></li>
+  <li><a href="#updateGroup"><code><span class="http-method">put</span> /groups</code></a></li>
+  <li><a href="#updateRole"><code><span class="http-method">put</span> /roles</code></a></li>
   <li><a href="#updateUser"><code><span class="http-method">put</span> /users</code></a></li>
-  </ul>
-  <h4><a href="#Developers">Developers</a></h4>
-  <ul>
-  <li><a href="#searchUsers"><code><span class="http-method">get</span> /users</code></a></li>
   </ul>
   <h4><a href="#Everyone">Everyone</a></h4>
   <ul>
   <li><a href="#whoAmI"><code><span class="http-method">get</span> /whoami</code></a></li>
   </ul>
+  <h4><a href="#Users">Users</a></h4>
+  <ul>
+  <li><a href="#searchGroups"><code><span class="http-method">get</span> /groups</code></a></li>
+  <li><a href="#searchRoles"><code><span class="http-method">get</span> /roles</code></a></li>
+  <li><a href="#searchUsers"><code><span class="http-method">get</span> /users</code></a></li>
+  </ul>
 
   <h1><a name="Admins">Admins</a></h1>
+  <div class="method"><a name="addGroup"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /groups</code></pre></div>
+    <div class="method-summary">adds a group (<span class="nickname">addGroup</span>)</div>
+    <div class="method-notes">Adds a group to the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">group <a href="#Group">Group</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Inventory item to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addRole"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /roles</code></pre></div>
+    <div class="method-summary">adds a role (<span class="nickname">addRole</span>)</div>
+    <div class="method-notes">Adds a role to the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">role <a href="#Role">Role</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Inventory item to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="addUser"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -257,6 +359,96 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="updateGroup"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /groups</code></pre></div>
+    <div class="method-summary">updates a group (<span class="nickname">updateGroup</span>)</div>
+    <div class="method-notes">Updates a group in the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">group <a href="#Group">Group</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Inventory item to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateRole"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /roles</code></pre></div>
+    <div class="method-summary">updates a role (<span class="nickname">updateRole</span>)</div>
+    <div class="method-notes">Updates a role in the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">group <a href="#Role">Role</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Inventory item to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="updateUser"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -302,7 +494,182 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <h1><a name="Developers">Developers</a></h1>
+  <h1><a name="Everyone">Everyone</a></h1>
+  <div class="method"><a name="whoAmI"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /whoami</code></pre></div>
+    <div class="method-summary">Who is the current user (<span class="nickname">whoAmI</span>)</div>
+    <div class="method-notes">return a User object with the current user</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "roles" : [ {
+    "name" : "Marknadsansvarig",
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+  }, {
+    "name" : "Marknadsansvarig",
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+  } ],
+  "name" : "Carl von Linné",
+  "groups" : [ {
+    "name" : "Frukt & Grönt",
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+  }, {
+    "name" : "Frukt & Grönt",
+    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+  } ],
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Current user
+        <a href="#User">User</a>
+    <h4 class="field-label">500</h4>
+    Internal server error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Users">Users</a></h1>
+  <div class="method"><a name="searchGroups"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /groups</code></pre></div>
+    <div class="method-summary">searches for groups (<span class="nickname">searchGroups</span>)</div>
+    <div class="method-notes">By passing in the appropriate options, you can search for
+available groups in the system</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; find a group by Id </div><div class="param">skip (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; number of records to skip for pagination format: int32</div><div class="param">limit (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; maximum number of records to return format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Group">Group</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Frukt & Grönt",
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+}, {
+  "name" : "Frukt & Grönt",
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results matching criteria
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="searchRoles"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /roles</code></pre></div>
+    <div class="method-summary">searches for roles (<span class="nickname">searchRoles</span>)</div>
+    <div class="method-notes">By passing in the appropriate options, you can search for
+available roles in the system</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; find a role by Id </div><div class="param">skip (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; number of records to skip for pagination format: int32</div><div class="param">limit (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; maximum number of records to return format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Role">Role</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Marknadsansvarig",
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+}, {
+  "name" : "Marknadsansvarig",
+  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results matching criteria
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="searchUsers"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -388,65 +755,6 @@ available users in the system</div>
         
     <h4 class="field-label">400</h4>
     bad input parameter
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <h1><a name="Everyone">Everyone</a></h1>
-  <div class="method"><a name="whoAmI"/>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /whoami</code></pre></div>
-    <div class="method-summary">Who is the current user (<span class="nickname">whoAmI</span>)</div>
-    <div class="method-notes">return a User object with the current user</div>
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#User">User</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "roles" : [ {
-    "name" : "Marknadsansvarig",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
-  }, {
-    "name" : "Marknadsansvarig",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
-  } ],
-  "name" : "Carl von Linné",
-  "groups" : [ {
-    "name" : "Frukt & Grönt",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
-  }, {
-    "name" : "Frukt & Grönt",
-    "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
-  } ],
-  "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    Current user
-        <a href="#User">User</a>
-    <h4 class="field-label">500</h4>
-    Internal server error
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>

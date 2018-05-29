@@ -16,8 +16,8 @@
     "name" : "admins",
     "description" : "Secured Admin-only calls"
   }, {
-    "name" : "developers",
-    "description" : "Operations available to regular developers"
+    "name" : "users",
+    "description" : "Operations available to regular users"
   }, {
     "name" : "everyone",
     "description" : "Operations available to the entire world"
@@ -45,7 +45,7 @@
     },
     "/users" : {
       "get" : {
-        "tags" : [ "developers" ],
+        "tags" : [ "users" ],
         "summary" : "searches for users",
         "operationId" : "searchUsers",
         "description" : "By passing in the appropriate options, you can search for\navailable users in the system\n",
@@ -134,6 +134,200 @@
           "description" : "Inventory item to add",
           "schema" : {
             "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "item updated"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          }
+        }
+      }
+    },
+    "/groups" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "searches for groups",
+        "operationId" : "searchGroups",
+        "description" : "By passing in the appropriate options, you can search for\navailable groups in the system\n",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "id",
+          "description" : "find a group by Id",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "skip",
+          "description" : "number of records to skip for pagination",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0
+        }, {
+          "in" : "query",
+          "name" : "limit",
+          "description" : "maximum number of records to return",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Group"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "admins" ],
+        "summary" : "adds a group",
+        "operationId" : "addGroup",
+        "description" : "Adds a group to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "group",
+          "description" : "Inventory item to add",
+          "schema" : {
+            "$ref" : "#/definitions/Group"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "item created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "admins" ],
+        "summary" : "updates a group",
+        "operationId" : "updateGroup",
+        "description" : "Updates a group in the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "group",
+          "description" : "Inventory item to add",
+          "schema" : {
+            "$ref" : "#/definitions/Group"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "item updated"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          }
+        }
+      }
+    },
+    "/roles" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "searches for roles",
+        "operationId" : "searchRoles",
+        "description" : "By passing in the appropriate options, you can search for\navailable roles in the system\n",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "id",
+          "description" : "find a role by Id",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "skip",
+          "description" : "number of records to skip for pagination",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0
+        }, {
+          "in" : "query",
+          "name" : "limit",
+          "description" : "maximum number of records to return",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Role"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "admins" ],
+        "summary" : "adds a role",
+        "operationId" : "addRole",
+        "description" : "Adds a role to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "role",
+          "description" : "Inventory item to add",
+          "schema" : {
+            "$ref" : "#/definitions/Role"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "item created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "admins" ],
+        "summary" : "updates a role",
+        "operationId" : "updateRole",
+        "description" : "Updates a role in the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "group",
+          "description" : "Inventory item to add",
+          "schema" : {
+            "$ref" : "#/definitions/Role"
           }
         } ],
         "responses" : {
