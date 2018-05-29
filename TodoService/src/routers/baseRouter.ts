@@ -43,13 +43,13 @@ export class BaseRouter {
         res.status(400).send('Wrong id was passed as part of the request body.');
       }
       else {
-        (async function query() {
+        (async function query(this: any) {
           try {
             let rslt = await this.table.getById(req.params.id);
             if(!rslt){
               throw new Error(`Could not find an entry with the given id.`);
             }
-            req.itemById = rslt;
+            (<any>req).itemById = rslt;
             next();
           } catch (err) {
             let code: number = 500;
@@ -75,7 +75,7 @@ export class BaseRouter {
         // if (req.itemById == null) {
         //   res.status(204).send({});
         // } else {
-          res.send(req.itemById);
+          res.send((<any>req).itemById);
         // }      
       })
       .post((req, res) => {
@@ -93,7 +93,7 @@ export class BaseRouter {
   }
 
   private get(req: any, res: any): void {
-    (async function query() {
+    (async function query(this: any) {
       try {
         if (!!this.disableGetAll) {
           this.methodNotAvailable(res, 'Get', '');
@@ -121,7 +121,7 @@ export class BaseRouter {
   }
 
   private post(req: any, res: any): void {
-      (async function query() {
+      (async function query(this: any) {
         try {
           if (!!this.disablePost) {
             this.methodNotAvailable(res, 'Post', '');
@@ -158,7 +158,7 @@ export class BaseRouter {
   }
 
   private put(req: any, res: any): void {
-    (async function query() {
+    (async function query(this: any) {
       let result = null;
       try {
         if (!!this.disablePut) {
@@ -191,7 +191,7 @@ export class BaseRouter {
       this.methodNotAvailable(res, 'Patch', '');
       return;
     }
-    (async function query() {
+    (async function query(this: any) {
       let result = null;
       try {
         if (!!this.disablePut) {
@@ -220,7 +220,7 @@ export class BaseRouter {
   }
 
   private delete(req: any, res: any): void {
-    (async function query() {
+    (async function query(this: any) {
       try {
         if (!!this.disableDelete) {
           this.methodNotAvailable(res, 'Delete', '');

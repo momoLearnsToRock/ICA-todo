@@ -12,6 +12,20 @@
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
-    }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Mocha Tests",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        // "--timeout",
+        // "1000000",
+        "-r",
+        "ts-node/register",
+        "${workspaceRoot}\\test\\*.spec.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart"
+    },
   ]
 }

@@ -31,7 +31,7 @@ export class SqlTableType extends h.Helpers.TableType {
   }
 
   parseFieldsInJsonBody({ includeId, jsonBody, throwOnMissingFields, throwOnMissingModifiedOn, throwOnExtraFields, sqlReq, queryFields }:
-    { includeId: boolean, jsonBody: JSON, throwOnMissingFields: boolean, throwOnMissingModifiedOn: boolean, throwOnExtraFields: boolean, sqlReq: sql.Request, queryFields: h.Helpers.SqlField[] }): string[] {
+    { includeId: boolean, jsonBody: any, throwOnMissingFields: boolean, throwOnMissingModifiedOn: boolean, throwOnExtraFields: boolean, sqlReq: sql.Request, queryFields: h.Helpers.SqlField[] }): string[] {
     const parsedFieldsList: string[] = [];
     queryFields.forEach((item, index) => {
       if (includeId || item.name.toLowerCase() !== 'id') {
@@ -78,7 +78,7 @@ export class SqlTableType extends h.Helpers.TableType {
     });
 
     const indexOfId: number = this.fields.map((f) => { return f.name; }).indexOf('id');
-    const PKType: sql.ISqlTypeFactory = this.fields[indexOfId].type;
+    const PKType: any = this.fields[indexOfId].type;
 
     const query =
       `DECLARE @_keys table([id] ${PKType.declaration})
@@ -223,12 +223,12 @@ export class SqlTableType extends h.Helpers.TableType {
     return result.recordset[0];
   }
 
-  async customUpdateChecks(jsonBody: JSON){
+  async customUpdateChecks(jsonBody: any){
     //custom checks here. can be overriden in children. if you find an error throw!
     return;
   }
 
-  async customInsertChecks(jsonBody: JSON){
+  async customInsertChecks(jsonBody: any){
     //custom checks here. can be overriden in children. if you find an error throw!
     return;
   }
