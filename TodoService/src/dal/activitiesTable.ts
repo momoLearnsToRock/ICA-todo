@@ -32,70 +32,70 @@ export class ActivitiesTable extends SqlTableType {
     this.todosTable=new todosT.TodosTable(connectionPool);
   }
     
-  async getAll(q: string) {
-    if(!q || q == '/' || q =='/?'){
-      q='$top=100'
-    }
-    const query = odataV4Sql.createQuery(q);
-    if(!query.limit){
-      query.limit=1000;
-    }
-    if(query.limit>1000){
-      throw new Error(`Parse error: max number of rows returned can be 1000. please adjust query to 'top=1000'`);
-    }
-    let result = null;
-    try {
-      const requ = new sql.Request(this.connectionPool);
-      let sqlQuery = //`select ${query.select} from ${this.viewName}`;
-  `
-SELECT baseTable.id, baseTable.note, baseTable.createdAt, 
-baseTable.contentUrl, baseTable.modifiedOn, baseTable.title, 
-baseTable.activityType, baseTable.[priority], 
-baseTable.categoryId AS [category.id], dbo.Categories.title AS [category.title], 
-ISNULL((SELECT at.tagid AS [id], at.tagtitle AS [title]
-      FROM ActivitiesTags AS at
-      WHERE baseTable.id = at.activityId
-      FOR JSON PATH), '[]') as tags
-FROM dbo.ActivitiesBase AS baseTable
-INNER JOIN dbo.Categories ON baseTable.categoryId = dbo.Categories.id
+//   async getAll(q: string) {
+//     if(!q || q == '/' || q =='/?'){
+//       q='$top=100'
+//     }
+//     const query = odataV4Sql.createQuery(q);
+//     if(!query.limit){
+//       query.limit=1000;
+//     }
+//     if(query.limit>1000){
+//       throw new Error(`Parse error: max number of rows returned can be 1000. please adjust query to 'top=1000'`);
+//     }
+//     let result = null;
+//     try {
+//       const requ = new sql.Request(this.connectionPool);
+//       let sqlQuery = //`select ${query.select} from ${this.viewName}`;
+//   `
+// SELECT baseTable.id, baseTable.note, baseTable.createdAt, 
+// baseTable.contentUrl, baseTable.modifiedOn, baseTable.title, 
+// baseTable.activityType, baseTable.[priority], 
+// baseTable.categoryId AS [category.id], dbo.Categories.title AS [category.title], 
+// ISNULL((SELECT at.tagid AS [id], at.tagtitle AS [title]
+//       FROM ActivitiesTags AS at
+//       WHERE baseTable.id = at.activityId
+//       FOR JSON PATH), '[]') as tags
+// FROM dbo.ActivitiesBase AS baseTable
+// INNER JOIN dbo.Categories ON baseTable.categoryId = dbo.Categories.id
 
-`
-      let where = query.where;
-      if (where) {
-        for (let p of query.parameters) {
-          if (where.indexOf('?') < 0) {
-            throw new Error(`Parse error: could not parse near '${p[1]}'`);
-          }
-          requ.input(`${p[0]}`, `${p[1]}`);
-          where = where.replace('?', `@${p[0]}`);
-          where = where.replace('[', 'baseTable.[');
-        }
+// `
+//       let where = query.where;
+//       if (where) {
+//         for (let p of query.parameters) {
+//           if (where.indexOf('?') < 0) {
+//             throw new Error(`Parse error: could not parse near '${p[1]}'`);
+//           }
+//           requ.input(`${p[0]}`, `${p[1]}`);
+//           where = where.replace('?', `@${p[0]}`);
+//           where = where.replace('[', 'baseTable.[');
+//         }
 
-        sqlQuery += `
-WHERE ${where}`;
-      }
-      //TODO: Proper order by here
-      sqlQuery += ` 
-ORDER BY CURRENT_TIMESTAMP
-OFFSET ${query.skip || 0} ROWS
-FETCH NEXT ${query.limit} ROWS ONLY
-FOR JSON PATH`;
-      result = await requ.query(sqlQuery);
-      result = result.recordset[0]["JSON_F52E2B61-18A1-11d1-B105-00805F49916B"];// the special name of the json column
-      debug(result);
-      return result;
-    } catch (er) {
-      debug(er);
-      throw er;
-    }
-  }
+//         sqlQuery += `
+// WHERE ${where}`;
+//       }
+//       //TODO: Proper order by here
+//       sqlQuery += ` 
+// ORDER BY CURRENT_TIMESTAMP
+// OFFSET ${query.skip || 0} ROWS
+// FETCH NEXT ${query.limit} ROWS ONLY
+// FOR JSON PATH`;
+//       result = await requ.query(sqlQuery);
+//       result = result.recordset[0]["JSON_F52E2B61-18A1-11d1-B105-00805F49916B"];// the special name of the json column
+//       debug(result);
+//       return result;
+//     } catch (er) {
+//       debug(er);
+//       throw er;
+//     }
+//   }
 
-  async getById(id: any) {
-    let result = await this.getAll(`$filter=id eq ${id}`);
-    debug('return of check for the same id', result);
-    result = result != "" ? JSON.parse(result)[0] : null;
-    return result;
-  }
+  // async getById(id: any) {
+  //   let result = await this.getAll(`$filter=id eq ${id}`);
+  //   debug('return of check for the same id', result);
+  //   result = result != "" ? JSON.parse(result)[0] : null;
+  //   return result;
+  // }
 
   async instantiateTodo(jsonBody: any, activity: any) {
     jsonBody = ActivitiesTable.preParseJson(jsonBody);
