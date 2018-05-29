@@ -25,7 +25,7 @@ class main {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.get(['/get', '/'], (req, res) => {
-      res.send('Todo service apis testing save.');
+      res.send('Todo service apis 2.');
     });
 
     const pool: sql.ConnectionPool = new sql.ConnectionPool(config, (err) => {
