@@ -1,0 +1,447 @@
+swagger: '2.0'
+info:
+  description: Ica MinButik - Metadata about Users
+  version: 1.0.0
+  title: User API
+  # put the contact info for your development or API team.
+  contact:
+    email: goran.roseen@acando.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: users
+  description: Operations available to regular users
+- name: everyone
+  description: Operations available to the entire world
+
+paths:
+  /whoami:
+    get:
+      tags:
+      - everyone
+      summary: Who is the current user
+      operationId: WhoAmI
+      description: |
+        return a User object with the current user
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Current user
+          schema:
+            $ref: '#/definitions/User'
+        500:
+          description: Internal server error
+  /users:
+    get:
+      tags:
+      - users
+      summary: searches for users
+      operationId: searchUsers
+      description: |
+        By passing in the appropriate options, you can search for
+        available users in the system
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        description: find a user by Id
+        required: false
+        type: string
+      - in: query
+        name: group
+        description: find all users in a group
+        required: false
+        type: string
+      - in: query
+        name: skip
+        description: number of records to skip for pagination
+        required: false
+        type: integer
+        format: int32
+        minimum: 0
+      - in: query
+        name: limit
+        description: maximum number of records to return
+        required: false
+        type: integer
+        format: int32
+        minimum: 0
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a user
+      operationId: addUser
+      description: Adds a user to the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /users/{id}:
+    get:
+      tags:
+      - users
+      summary: Find User by Id
+      description: Find a User by Id
+      operationId: getUserById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the User to fetch
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a user
+      operationId: updateUser
+      description: Updates a user in the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the User that needs to be fetched
+        required: true
+        type: string
+      - name: user
+        in: body
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+        404:
+          description: Could not find an entry with the given id.
+  /groups:
+    get:
+      tags:
+      - users
+      summary: searches for groups
+      operationId: searchGroups
+      description: |
+        By passing in the appropriate options, you can search for
+        available groups in the system
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        description: find a group by Id
+        required: false
+        type: string
+      - in: query
+        name: skip
+        description: number of records to skip for pagination
+        required: false
+        type: integer
+        format: int32
+        minimum: 0
+      - in: query
+        name: limit
+        description: maximum number of records to return
+        required: false
+        type: integer
+        format: int32
+        minimum: 0
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Group'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a group
+      operationId: addGroup
+      description: Adds a group to the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: group
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/Group'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /groups/{id}:
+    get:
+      tags:
+      - users
+      summary: Find Group by Id
+      description: Find a Group by Id
+      operationId: getGroupById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the Group to fetch
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Group'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a group
+      operationId: updateGroup
+      description: Updates a group in the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the User to fetch
+        required: true
+        type: string
+      - name: group
+        in: body
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/Group'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+        404:
+          description: Could not find an entry with the given id.
+  /roles:
+    get:
+      tags:
+      - users
+      summary: searches for roles
+      operationId: searchRoles
+      description: |
+        By passing in the appropriate options, you can search for
+        available roles in the system
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        description: find a role by Id
+        required: false
+        type: string
+      - in: query
+        name: skip
+        description: number of records to skip for pagination
+        required: false
+        type: integer
+        format: int32
+        minimum: 0
+      - in: query
+        name: limit
+        description: maximum number of records to return
+        required: false
+        type: integer
+        format: int32
+        minimum: 0
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Role'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a role
+      operationId: addRole
+      description: Adds a role to the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: role
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/Role'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /roles/{id}:
+    get:
+      tags:
+      - users
+      summary: Find Role by Id
+      description: Find a Role by Id
+      operationId: getRoleById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the Role to fetch
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Role'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a role
+      operationId: updateRole
+      description: Updates a role in the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the Role to fetch
+        required: true
+        type: string
+      - name: role
+        in: body
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/Role'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+        404:
+          description: Could not find an entry with the given id.
+definitions:
+  User:
+    type: object
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Carl von Linné
+      groups:
+        type: array
+        items:
+          $ref: '#/definitions/Group'
+      roles:
+        type: array
+        items:
+          $ref: '#/definitions/Role'
+  Group:
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        example: 4711
+      name:
+        type: string
+        example: Frukt & Grönt
+  Role:
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        example: 4712
+      name:
+        type: string
+        example: Marknadsansvarig
+#        
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+# basePath: /roseen/user/1.0.0
+# schemes:
+#  - http
+#  - https
+x-azure-api-id: 'user-api'
+# Added by API Auto Mocking Plugin
+basePath: /ica-egenkontroll/user/1.0.0
+# Added by API Auto Mocking Plugin
+schemes:
+ - https
+ - http

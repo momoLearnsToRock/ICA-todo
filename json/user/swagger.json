@@ -120,6 +120,36 @@
             "description" : "an existing item already exists"
           }
         }
+      }
+    },
+    "/users/{id}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Find User by Id",
+        "description" : "Find a User by Id",
+        "operationId" : "getUserById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the User to fetch",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "400" : {
+            "description" : "error"
+          },
+          "404" : {
+            "description" : "Could not find an entry with the given id."
+          }
+        }
       },
       "put" : {
         "tags" : [ "admins" ],
@@ -129,8 +159,14 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "body",
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the User that needs to be fetched",
+          "required" : true,
+          "type" : "string"
+        }, {
           "name" : "user",
+          "in" : "body",
           "description" : "Inventory item to add",
           "schema" : {
             "$ref" : "#/definitions/User"
@@ -142,6 +178,9 @@
           },
           "400" : {
             "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "Could not find an entry with the given id."
           }
         }
       }
@@ -217,6 +256,36 @@
             "description" : "an existing item already exists"
           }
         }
+      }
+    },
+    "/groups/{id}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Find Group by Id",
+        "description" : "Find a Group by Id",
+        "operationId" : "getGroupById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the Group to fetch",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Group"
+            }
+          },
+          "400" : {
+            "description" : "error"
+          },
+          "404" : {
+            "description" : "Could not find an entry with the given id."
+          }
+        }
       },
       "put" : {
         "tags" : [ "admins" ],
@@ -226,8 +295,14 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "body",
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the User to fetch",
+          "required" : true,
+          "type" : "string"
+        }, {
           "name" : "group",
+          "in" : "body",
           "description" : "Inventory item to add",
           "schema" : {
             "$ref" : "#/definitions/Group"
@@ -239,6 +314,9 @@
           },
           "400" : {
             "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "Could not find an entry with the given id."
           }
         }
       }
@@ -314,6 +392,36 @@
             "description" : "an existing item already exists"
           }
         }
+      }
+    },
+    "/roles/{id}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Find Role by Id",
+        "description" : "Find a Role by Id",
+        "operationId" : "getRoleById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the Role to fetch",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Role"
+            }
+          },
+          "400" : {
+            "description" : "error"
+          },
+          "404" : {
+            "description" : "Could not find an entry with the given id."
+          }
+        }
       },
       "put" : {
         "tags" : [ "admins" ],
@@ -323,8 +431,14 @@
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the Role to fetch",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "role",
           "in" : "body",
-          "name" : "group",
           "description" : "Inventory item to add",
           "schema" : {
             "$ref" : "#/definitions/Role"
@@ -336,6 +450,9 @@
           },
           "400" : {
             "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "Could not find an entry with the given id."
           }
         }
       }
@@ -348,7 +465,6 @@
       "properties" : {
         "id" : {
           "type" : "string",
-          "format" : "uuid",
           "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
         },
         "name" : {
@@ -374,8 +490,7 @@
       "properties" : {
         "id" : {
           "type" : "string",
-          "format" : "uuid",
-          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          "example" : 4711
         },
         "name" : {
           "type" : "string",
@@ -388,8 +503,7 @@
       "properties" : {
         "id" : {
           "type" : "string",
-          "format" : "uuid",
-          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          "example" : 4712
         },
         "name" : {
           "type" : "string",
@@ -399,7 +513,7 @@
     }
   },
   "host" : "virtserver.swaggerhub.com",
-  "schemes" : [ "https" ],
   "x-azure-api-id" : "user-api",
-  "basePath" : "/ica-egenkontroll/user/1.0.0"
+  "basePath" : "/ica-egenkontroll/user/1.0.0",
+  "schemes" : [ "https", "http" ]
 }
