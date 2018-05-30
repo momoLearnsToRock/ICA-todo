@@ -32,7 +32,7 @@ class ActivitiesTagsTable extends sqlTableType_1.SqlTableType {
             return;
         });
     }
-    customInsertChecks(jsonBody, table) {
+    customInsertChecks(jsonBody) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.customUpdateChecks(jsonBody);
             const tagFields = [

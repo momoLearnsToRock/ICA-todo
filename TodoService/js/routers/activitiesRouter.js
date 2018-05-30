@@ -22,7 +22,7 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
                     let result = null;
                     try {
                         if (req.itemById == null) {
-                            throw new Error('no data available');
+                            throw new Error('Could not find an entry with the given id.');
                         }
                         result = yield this.table.instantiateTodo(req.body, req.itemById);
                         res.send(result);
@@ -30,7 +30,7 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
                     catch (err) {
                         let code = 500;
                         switch (true) {
-                            case 'no data available' == err.message:
+                            case 'Could not find an entry with the given id.' == err.message:
                             case 'error' == err.message:
                             case /^Body is missing the field/.test(err.message):
                             case /^No fields could be parsed from body./.test(err.message):
@@ -153,7 +153,7 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
                 return __awaiter(this, void 0, void 0, function* () {
                     try {
                         if (req.activityTagById == null) {
-                            throw new Error('no data available');
+                            throw new Error('Could not find an entry with the given id.');
                         }
                         yield this.table.activitiesTagsTable.delete(req.activityTagById.id);
                         res.status(204).send();
@@ -161,7 +161,7 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
                     catch (err) {
                         let code = 500;
                         switch (err.message) {
-                            case 'no data available':
+                            case 'Could not find an entry with the given id.':
                             case 'error':
                                 code = 400;
                                 break;

@@ -166,14 +166,14 @@ export class BaseRouter {
           return;
         }
         if (req.itemById == null) {
-          throw new Error('no data available');
+          throw new Error('Could not find an entry with the given id.');
         }
         result= await this.table.update(req.body, req.params.id, true);// the last argument makes sure to throw an error if there is a field missing (otherwise it should be patch)
         res.send(result);
       } catch (err) {
         let code: number = 500;
         switch (true) {
-          case 'no data available' == err.message:
+          case 'Could not find an entry with the given id.' == err.message:
           case 'error' == err.message:
           case /^Body is missing the field/.test(err.message):
           case /^No fields could be parsed from body./.test(err.message):
@@ -199,14 +199,14 @@ export class BaseRouter {
           return;
         }
         if (req.itemById == null) {
-          throw new Error('no data available');
+          throw new Error('Could not find an entry with the given id.');
         }
         result= await this.table.update(req.body, req.params.id, false);// the last argument makes sure to throw an error if there is a field missing (otherwise it should be patch)
         res.send(result);
       } catch (err) {
         let code: number = 500;
         switch (true) {
-          case 'no data available' == err.message:
+          case 'Could not find an entry with the given id.' == err.message:
           case 'error' == err.message:
           case /^Body is missing the field/.test(err.message):
           case /^No fields could be parsed from body./.test(err.message):
@@ -227,14 +227,14 @@ export class BaseRouter {
           return;
         }
         if (req.itemById == null) {
-          throw new Error('no data available');
+          throw new Error('Could not find an entry with the given id.');
         }
         await this.table.delete(req.params.id);
         res.status(204).send();
       } catch (err) {
         let code: number = 500;
         switch (err.message) {
-          case 'no data available':
+          case 'Could not find an entry with the given id.':
           case 'error':
             code = 400;
             break;

@@ -16,7 +16,7 @@ const debug = dbg('todo:api');
 class main {
   public run(): void {
     debug.enabled = true;
-    
+
     process.on('unhandledRejection', (err) => {
       debug('unhandledRejection ', err);
     });
