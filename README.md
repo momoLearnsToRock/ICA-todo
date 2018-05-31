@@ -4,12 +4,12 @@ This is the repository of the swagger files for Ica Digital Egenkontroll
 
 ## People
 
-The current team consists of Göran [roseeng](https://github.com/roseeng), Momo [MomoLearnsToRock](https://github.com/momolearnstorock) and Daniel J [skurtbert] (https://github.com/skurtbert).
+The current team consists of Göran [roseeng](https://github.com/roseeng), Momo [MomoLearnsToRock](https://github.com/momolearnstorock) and Daniel J [skurtbert](https://github.com/skurtbert).
 
 ## Input
 
 The files are maintained on Swaggerhub (https://app.swaggerhub.com/apis/ica-egenkontroll/) and there is a github integration
-connected to this repository, which means that most activity in this repo will be automatic. (Swaggerhub pushes to the SWAGGERHUB branch. From there we manually create a merge request with a reasonable description, which we then accept.
+connected to this repository, which means that most activity in this repo will be automatic. Swaggerhub pushes to the SWAGGERHUB branch. From there we manually create a merge request with a nice description, which we then accept.
 
 ## Output
 
