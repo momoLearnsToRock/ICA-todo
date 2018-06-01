@@ -1,6 +1,6 @@
 import baseRouter = require("./baseRouter");
 import h = require("../helpers/misc");
-import dbg = require("debug");
+import dbg from "debug";
 import express = require("express");
 import http = require("http");
 import { SqlTableType } from "../dal/sqlTableType";
@@ -33,7 +33,10 @@ export class TodosRouter extends baseRouter.BaseRouter {
     });
 
     // #region TodoCards
+
+    // ROUTE: /todos/n/cards
     this.router.route("/:todoId/cards")
+    // GET
       .get((req, res) => {
         (async function query(this: any) {
           try {
@@ -53,6 +56,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
           }
         }.bind(this)());
       })
+      // POST
       .post((req, res) => {
         (async function query(this: any) {
           try {
@@ -63,7 +67,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
                 );
               }
             }
-            req.body.activityId = req.params.todoId;
+            req.body.todoId = req.params.todoId;
             let insResult = await this.table.todoCardsTable.insert(
               req.body,
               true
@@ -93,26 +97,154 @@ export class TodosRouter extends baseRouter.BaseRouter {
         }.bind(this)());
       });
 
-      this.router.route("/:todoId/cards/:cardId")
-      .get((req, res) => {
-        (async function query(this: any) {
-          try {
-            let reqUrl = `$filter=todoId eq ${req.params.todoId} and id eq ${req.params.cardId}`;
-            let rslt = await this.table.todoCardsTable.getAll(reqUrl);
-            res.send(rslt);
-          } catch (err) {
-            console.log(err);
-            let code: number = 500;
-            switch (true) {
-              case "error" == err.message:
-              case /^Parse error:/.test(err.message):
-                code = 400;
-                break;
-            }
-            res.status(code).send(err.message);
+    // ROUTE: /todos/n/cards/n
+    // Middle-ware
+    this.router.use("/:todoId/cards/:cardId", (req, res, next) => {
+      (async function query(this: any) {
+        try {
+          let reqUrl = `$filter=(todoId eq ${req.params.todoId} and id eq ${req.params.cardId})`;
+          let rslt = await this.table.todoCardsTable.getAll(reqUrl);
+          if (!rslt || rslt.length == 0) {
+            throw new Error(`Could not find an entry with the given id.`);
           }
-        }.bind(this)());
-      });
+          (<any>req).todoCardById = rslt[0];
+          if (req.body.id && req.body.id !== (<any>req).todoCardById.id) {
+            res
+              .status(400)
+              .send("Wrong id was passed as part of the request body.");
+          }
+          next();
+        } catch (err) {
+          let code: number = 500;
+          switch (err.message) {
+            case "error":
+            case "Wrong id was passed as part of the request body.":
+              code = 400;
+            case "Could not find an entry with the given id.":
+              code = 404;
+              break;
+          }
+          res.status(code).send(err.message);
+        }
+      }.bind(this)());
+    });
+
+    this.router.route("/:todoId/cards/:cardId")
+    
+    // GET
+    .get((req, res) => {
+      (async function query(this: any) {
+        try {
+          let reqUrl = `$filter=todoId eq ${req.params.todoId} and id eq ${req.params.cardId}`;
+          let rslt = await this.table.todoCardsTable.getAll(reqUrl);
+          res.send(rslt);
+        } catch (err) {
+          console.log(err);
+          let code: number = 500;
+          switch (true) {
+            case "error" == err.message:
+            case /^Parse error:/.test(err.message):
+              code = 400;
+              break;
+          }
+          res.status(code).send(err.message);
+        }
+      }.bind(this)());
+    })
+    
+    // POST (not allowed)
+    .post((req, res) => {
+      this.methodNotAvailable(
+        res,
+        `"post"`,
+        `try using "post" on the address "todos/${req.params.todoId}/cards" instead of "todos/${req.params.todoId}/cards/${req.params.cardId}"`
+      );
+    })
+    
+    // PUT
+    .put((req, res) => {
+      (async function query(this: any) {
+        let result = null;
+        try {
+          if ((<any>req).todoCardById == null) {
+            throw new Error("Could not find an entry with the given id.");
+          }
+          result = await this.table.todoCardsTable.update(
+            req.body,
+            req.params.cardId,
+            true
+          ); // the last argument makes sure to throw an error if there is a field missing (otherwise it should be patch)
+          res.send(result);
+        } catch (err) {
+          let code: number = 500;
+          switch (true) {
+            case "Could not find an entry with the given id." == err.message:
+            case "error" == err.message:
+            case /^Body is missing the field/.test(err.message):
+            case /^No fields could be parsed from body./.test(err.message):
+            case /^The field '.*' entity.$/.test(err.message):
+              code = 400;
+              break;
+          }
+          res.status(code).send(err.message);
+        }
+      }.bind(this)());
+    })
+    
+    // PATCH
+    .patch((req, res) => {
+      (async function query(this: any) {
+        let result = null;
+        try {
+          if ((<any>req).todoCardById == null) {
+            throw new Error("Could not find an entry with the given id.");
+          }
+          result = await this.table.todoCardsTable.update(
+            req.body,
+            req.params.cardId,
+            false
+          );
+          res.send(result);
+        } catch (err) {
+          let code: number = 500;
+          switch (true) {
+            case "Could not find an entry with the given id." == err.message:
+            case "error" == err.message:
+            case /^Body is missing the field/.test(err.message):
+            case /^No fields could be parsed from body./.test(err.message):
+            case /^The field '.*' entity.$/.test(err.message):
+              code = 400;
+              break;
+          }
+          res.status(code).send(err.message);
+        }
+      }.bind(this)());
+    })
+
+    // DELETE
+    .delete((req, res) => {
+      (async function query(this: any) {
+        try {
+          if ((req as any).todoCardById == null) {
+            throw new Error("Could not find an entry with the given id.");
+          }
+          await this.table.todoCardsTable.delete(
+            (req as any).todoCardById.id
+          );
+          res.status(204).send();
+        } catch (err) {
+          let code: number = 500;
+          switch (err.message) {
+            case "Could not find an entry with the given id.":
+            case "error":
+              code = 400;
+              break;
+          }
+          res.status(code).send(err.message);
+        }
+      }.bind(this)());
+    });
+
     // #endregion TodoCards
   }
 }
