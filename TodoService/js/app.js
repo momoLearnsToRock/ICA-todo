@@ -11,7 +11,7 @@ const acsTable = require("./dal/activitiesTable");
 const acRouter = require("./routers/activitiesRouter");
 const tdsTable = require("./dal/todosTable");
 const sqlTableType_1 = require("./dal/sqlTableType");
-const CardTypes_1 = require("./dal/CardTypes");
+const cardTypesTable_1 = require("./dal/cardTypesTable");
 const debug = dbg("todo:api");
 class main {
     run() {
@@ -76,7 +76,7 @@ class main {
                 disableDelete: false
             });
             app.use("/tags", tagsRouter.router);
-            const cardTypesTable = new CardTypes_1.CardTypesTable(pool);
+            const cardTypesTable = new cardTypesTable_1.CardTypesTable(pool);
             const cardTypesRouter = new baseRouter.BaseRouter({
                 table: cardTypesTable,
                 disableGetAll: false,

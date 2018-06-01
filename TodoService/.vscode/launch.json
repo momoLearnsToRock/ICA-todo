@@ -10,21 +10,22 @@
       "name": "Launch Program",
       "program": "${workspaceFolder}\\js\\app.js",
       "outFiles": [
-        "${workspaceFolder}/**/*.js"
+        "${workspaceFolder}/src/**/*.js"
       ]
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Mocha Tests",
+      "name": "Mocha Test Current File",
       "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
       "args": [
         // "--timeout",
         // "1000000",
         "-r",
         "ts-node/register",
-        "${workspaceRoot}\\test\\*.spec.ts"
+        "${relativeFile}"
       ],
+      "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart"
     },
   ]

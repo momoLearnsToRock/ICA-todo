@@ -6,7 +6,7 @@
   "scripts": {
     "start-dev": "nodemon ./js/app.js",
     "start": "node ./js/app.js",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts"
+    "test": "mocha -r ts-node/register src/**/*.spec.ts"
   },
   "keywords": [],
   "author": "",

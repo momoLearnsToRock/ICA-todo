@@ -27,4 +27,4 @@ class CardTypesTable extends sqlTableType_1.SqlTableType {
     }
 }
 exports.CardTypesTable = CardTypesTable;
-//# sourceMappingURL=CardTypes.js.map
+//# sourceMappingURL=cardTypesTable.js.map

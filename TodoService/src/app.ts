@@ -10,7 +10,7 @@ import acsTable = require("./dal/activitiesTable");
 import acRouter = require("./routers/activitiesRouter");
 import tdsTable = require("./dal/todosTable");
 import { SqlTableType } from "./dal/sqlTableType";
-import { CardTypesTable } from "./dal/CardTypes";
+import { CardTypesTable } from "./dal/cardTypesTable";
 
 const debug = dbg("todo:api");
 
