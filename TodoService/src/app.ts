@@ -10,6 +10,7 @@ import acsTable = require("./dal/activitiesTable");
 import acRouter = require("./routers/activitiesRouter");
 import tdsTable = require("./dal/todosTable");
 import { SqlTableType } from "./dal/sqlTableType";
+import { CardTypesTable } from "./dal/CardTypes";
 
 const debug = dbg("todo:api");
 
@@ -55,7 +56,6 @@ class main {
         disablePatch: true,
         disableDelete: false
       });
-
       app.use("/categories", cr.router);
 
       const tagFields: h.Helpers.SqlField[] = [
@@ -81,6 +81,18 @@ class main {
         disableDelete: false
       });
       app.use("/tags", tagsRouter.router);
+
+      
+      const cardTypesTable: CardTypesTable = new CardTypesTable(pool);
+      const cardTypesRouter: baseRouter.BaseRouter = new baseRouter.BaseRouter({
+        table: cardTypesTable,
+        disableGetAll: false,
+        disablePost: false,
+        disablePut: false,
+        disablePatch: true,
+        disableDelete: false
+      });
+      app.use("/cardTypes", cardTypesRouter.router);
 
       const activitiesTable: acsTable.ActivitiesTable = new acsTable.ActivitiesTable(
         pool

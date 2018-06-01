@@ -182,6 +182,7 @@ export class BaseRouter {
           case /^Body is missing the field/.test(err.message):
           case /^No fields could be parsed from body./.test(err.message):
           case /^The field '.*' entity.$/.test(err.message):
+          case /^the field '.*' has an invalid value.$/.test(err.message):
             code = 400;
             break;
         }
@@ -211,6 +212,7 @@ export class BaseRouter {
           case /^Body is missing the field/.test(err.message):
           case /^No fields could be parsed from body./.test(err.message):
           case /^The field '.*' entity.$/.test(err.message):
+          case /^the field '.*' has an invalid value.$/.test(err.message):
             code = 400;
             break;
         }
@@ -244,6 +246,7 @@ export class BaseRouter {
           case /^Body is missing the field/.test(err.message):
           case /^No fields could be parsed from body./.test(err.message):
           case /^The field '.*' entity.$/.test(err.message):
+          case /^the field '.*' has an invalid value.$/.test(err.message):
             code = 400;
             break;
         }

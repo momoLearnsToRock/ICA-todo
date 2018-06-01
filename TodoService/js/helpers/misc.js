@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const dbg = require("debug");
-const debug = dbg('todo:helpers');
+const debug = dbg("todo:helpers");
 var Helpers;
 (function (Helpers) {
     class ResponseDTO {

@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const sql = require("mssql");
 const dbg = require("debug");
@@ -107,23 +99,19 @@ class TodosTable extends sqlTableType_1.SqlTableType {
     //   result = result != "" ? JSON.parse(result)[0] : null;
     //   return result;
     // }
-    customUpdateChecks(jsonBody) {
-        return __awaiter(this, void 0, void 0, function* () {
-            jsonBody = TodosTable.preParseJson(jsonBody);
-            if ((jsonBody.completedAt || jsonBody.completedById || jsonBody.completedByName) && (!jsonBody.completedAt || !jsonBody.completedById || !jsonBody.completedByName)) { //all or none
-                throw new Error(`Body is missing the fields för closing todo. all the fields 'completedAt' and 'completedById' and 'completedByName' must be present.`);
-            }
-            if ((jsonBody.assignedToId || jsonBody.assignedToName || jsonBody.assignedToObjectType) && (!jsonBody.assignedToId || !jsonBody.assignedToName || !jsonBody.assignedToObjectType)) { //all or none
-                throw new Error(`Body is missing the fields för assigning todo. all the fields 'assignedToId' and 'assignedToName' and 'assignedToObjectType' must be present.`);
-            }
-            return;
-        });
+    async customUpdateChecks(jsonBody) {
+        jsonBody = TodosTable.preParseJson(jsonBody);
+        if ((jsonBody.completedAt || jsonBody.completedById || jsonBody.completedByName) && (!jsonBody.completedAt || !jsonBody.completedById || !jsonBody.completedByName)) { //all or none
+            throw new Error(`Body is missing the fields för closing todo. all the fields 'completedAt' and 'completedById' and 'completedByName' must be present.`);
+        }
+        if ((jsonBody.assignedToId || jsonBody.assignedToName || jsonBody.assignedToObjectType) && (!jsonBody.assignedToId || !jsonBody.assignedToName || !jsonBody.assignedToObjectType)) { //all or none
+            throw new Error(`Body is missing the fields för assigning todo. all the fields 'assignedToId' and 'assignedToName' and 'assignedToObjectType' must be present.`);
+        }
+        return;
     }
-    customInsertChecks(jsonBody) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.customUpdateChecks(jsonBody);
-            jsonBody.createdAt = new Date();
-        });
+    async customInsertChecks(jsonBody) {
+        await this.customUpdateChecks(jsonBody);
+        jsonBody.createdAt = new Date();
     }
     static preParseJson(jsonBody) {
         if (jsonBody.completedBy) {

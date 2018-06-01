@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const sql = require("mssql");
 const dbg = require("debug");
@@ -97,50 +89,44 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
     //   result = result != "" ? JSON.parse(result)[0] : null;
     //   return result;
     // }
-    instantiateTodo(jsonBody, activity) {
-        return __awaiter(this, void 0, void 0, function* () {
-            jsonBody = ActivitiesTable.preParseJson(jsonBody);
-            if (!jsonBody.assignedToId)
-                throw new Error(`Body is missing the field 'assignedToId'`);
-            if (!jsonBody.assignedToName)
-                throw new Error(`Body is missing the field 'assignedToName'`);
-            if (!jsonBody.assignedToObjectType)
-                throw new Error(`Body is missing the field 'assignedToObjectType'`);
-            activity.activityId = activity.id;
-            delete activity.id;
-            activity.todoType = activity.activityType;
-            delete activity.activityType;
-            activity.assignedToId = jsonBody.assignedToId;
-            activity.assignedToName = jsonBody.assignedToName;
-            activity.assignedToObjectType = jsonBody.assignedToObjectType;
-            activity.dueAt = !jsonBody.dueAt ? null : jsonBody.dueAt;
-            // activity.startsAt = !jsonBody.startsAt?null:jsonBody.startsAt;
-            let todo = yield this.todosTable.insert(activity, false);
-            let activityTags = activity.tags; //JSON.parse(activity.tags);//await this.getTags(activity.activityId);
-            // await activityTags.forEach(async function (at) {
-            for (let i = 0; i < activityTags.length; i++) {
-                let at = activityTags[i];
-                delete at.title;
-                at.tagId = at.id;
-                delete at.id;
-                at.todoId = todo.id;
-                const todostag = yield this.todosTable.todosTagsTable.insert(at, false);
-                debug(todostag);
-            } // .bind(this));
-            todo = yield this.todosTable.getById(todo.id);
-            return todo;
-        });
+    async instantiateTodo(jsonBody, activity) {
+        jsonBody = ActivitiesTable.preParseJson(jsonBody);
+        if (!jsonBody.assignedToId)
+            throw new Error(`Body is missing the field 'assignedToId'`);
+        if (!jsonBody.assignedToName)
+            throw new Error(`Body is missing the field 'assignedToName'`);
+        if (!jsonBody.assignedToObjectType)
+            throw new Error(`Body is missing the field 'assignedToObjectType'`);
+        activity.activityId = activity.id;
+        delete activity.id;
+        activity.todoType = activity.activityType;
+        delete activity.activityType;
+        activity.assignedToId = jsonBody.assignedToId;
+        activity.assignedToName = jsonBody.assignedToName;
+        activity.assignedToObjectType = jsonBody.assignedToObjectType;
+        activity.dueAt = !jsonBody.dueAt ? null : jsonBody.dueAt;
+        // activity.startsAt = !jsonBody.startsAt?null:jsonBody.startsAt;
+        let todo = await this.todosTable.insert(activity, false);
+        let activityTags = activity.tags; //JSON.parse(activity.tags);//await this.getTags(activity.activityId);
+        // await activityTags.forEach(async function (at) {
+        for (let i = 0; i < activityTags.length; i++) {
+            let at = activityTags[i];
+            delete at.title;
+            at.tagId = at.id;
+            delete at.id;
+            at.todoId = todo.id;
+            const todostag = await this.todosTable.todosTagsTable.insert(at, false);
+            debug(todostag);
+        } // .bind(this));
+        todo = await this.todosTable.getById(todo.id);
+        return todo;
     }
-    customUpdateChecks(jsonBody) {
-        return __awaiter(this, void 0, void 0, function* () {
-            jsonBody = ActivitiesTable.preParseJson(jsonBody);
-        });
+    async customUpdateChecks(jsonBody) {
+        jsonBody = ActivitiesTable.preParseJson(jsonBody);
     }
-    customInsertChecks(jsonBody) {
-        return __awaiter(this, void 0, void 0, function* () {
-            jsonBody = ActivitiesTable.preParseJson(jsonBody);
-            jsonBody.createdAt = new Date();
-        });
+    async customInsertChecks(jsonBody) {
+        jsonBody = ActivitiesTable.preParseJson(jsonBody);
+        jsonBody.createdAt = new Date();
     }
     static preParseJson(jsonBody) {
         if (jsonBody.completedBy) {
