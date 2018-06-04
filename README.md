@@ -2,22 +2,22 @@
 
 This is the repository of the swagger files for Ica Digital Egenkontroll
 
-The files are maintained on Swaggerhub (https://app.swaggerhub.com/apis/ica-egenkontroll/) and there is a github integration
-connected to this repository, which means that most activity in this repo will be automatic.
-
 ## People
 
-The current team consists of Göran [roseeng](https://github.com/roseeng) and Momo [MomoLearnsToRock](https://github.com/momolearnstorock)
+The current team consists of Göran [roseeng](https://github.com/roseeng), Momo [MomoLearnsToRock](https://github.com/momolearnstorock) and Daniel J [skurtbert](https://github.com/skurtbert).
 
-## Getting Started
+## Input
 
+The files are maintained on Swaggerhub (https://app.swaggerhub.com/apis/ica-egenkontroll/) and there is a github integration
+connected to this repository, which means that most activity in this repo will be automatic. Swaggerhub pushes to the SWAGGERHUB branch. From there we manually create a merge request with a nice description, which we then accept.
 
-## Deploying
+## Output
 
+The swagger files are stored in both yaml and json format.
+Swaggerhub also creates html documentation. The Master branch of htat is published as Github Pages, that you can look at here:
 
-### Prerequisites
+https://itchdx.github.io/ica-dek-backend/
 
-
-### First time setup (per app service/deployment target)
+The pages there are the recommended contract between frontend and backend.
 
 

@@ -18,8 +18,8 @@ describe('CardTypes table', function () {
   it('insert checks should allow ids that are uppercase', function () {
     (async function () {
       const fakedJsonBody: any = { id: "TEMP", title: 'Temprature' };
-        await ct.customInsertChecks(fakedJsonBody)
-        expect(true).to.equal(true);
+      await ct.customInsertChecks(fakedJsonBody)
+      expect(true).to.equal(true);
     }());
   });
   it('update checks should not allow ids that are lowercase', function () {
@@ -35,8 +35,8 @@ describe('CardTypes table', function () {
   it('update checks should allow ids that are uppercase', function () {
     (async function () {
       const fakedJsonBody: any = { id: "TEMP", title: 'Temprature' };
-        await ct.customUpdateChecks(fakedJsonBody)
-        expect(true).to.equal(true);
+      await ct.customUpdateChecks(fakedJsonBody)
+      expect(true).to.equal(true);
     }());
   });
 });

@@ -15,13 +15,13 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
     disablePatch,
     disableDelete
   }: {
-    table: ActivitiesTable;
-    disableGetAll: boolean;
-    disablePost: boolean;
-    disablePut: boolean;
-    disablePatch: boolean;
-    disableDelete: boolean;
-  }) {
+      table: ActivitiesTable;
+      disableGetAll: boolean;
+      disablePost: boolean;
+      disablePut: boolean;
+      disablePatch: boolean;
+      disableDelete: boolean;
+    }) {
     super({
       table: table,
       disableGetAll: disableGetAll,
@@ -131,7 +131,7 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
         try {
           let reqUrl = `$filter=(activityId eq ${
             req.params.activityId
-          } and tagId eq ${req.params.tagId})`;
+            } and tagId eq ${req.params.tagId})`;
           let rslt = await this.table.activitiesTagsTable.getAll(reqUrl);
           if (!rslt || rslt.length == 0) {
             throw new Error(`Could not find an entry with the given id.`);
@@ -172,9 +172,9 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
           res,
           `"post"`,
           `try using "post" on the address "activities/${
-            req.params.activityId
+          req.params.activityId
           }/tags" instead of "activities/${req.params.activityId}/tags/${
-            req.params.tagId
+          req.params.tagId
           }"`
         );
       })
@@ -269,28 +269,28 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
           }
         }.bind(this)());
       });
-      this.router.route("/:activityId/cards/getCardTypes")
+    this.router.route("/:activityId/cards/getCardTypes")
       .get((req, res) => {
-          try {
-            let rslt = (this.table as any).activityCardsTable.getCardTypes();
-            res.send(rslt);
-          } catch (err) {
-            console.log(err);
-            let code: number = 500;
-            switch (true) {
-              case "error" == err.message:
-                code = 400;
-                break;
-            }
-            res.status(code).send(err.message);
+        try {
+          let rslt = (this.table as any).activityCardsTable.getCardTypes();
+          res.send(rslt);
+        } catch (err) {
+          console.log(err);
+          let code: number = 500;
+          switch (true) {
+            case "error" == err.message:
+              code = 400;
+              break;
           }
+          res.status(code).send(err.message);
+        }
       })
     this.router.use("/:activityId/cards/:cardId", (req, res, next) => {
       (async function query(this: any) {
         try {
           let reqUrl = `$filter=(activityId eq ${
             req.params.activityId
-          } and id eq ${req.params.cardId})`;
+            } and id eq ${req.params.cardId})`;
           let rslt = await this.table.activityCardsTable.getAll(reqUrl);
           if (!rslt || rslt.length == 0) {
             throw new Error(`Could not find an entry with the given id.`);
@@ -331,9 +331,9 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
           res,
           `"post"`,
           `try using "post" on the address "activities/${
-            req.params.activityId
+          req.params.activityId
           }/cards" instead of "activities/${req.params.activityId}/cards/${
-            req.params.cardId
+          req.params.cardId
           }"`
         );
       })

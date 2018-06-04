@@ -93,10 +93,10 @@
             }
           },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "error"
           },
           "404" : {
-            "description" : "Todo not found"
+            "description" : "Could not find an entry with the given id."
           }
         }
       },
@@ -118,10 +118,10 @@
             "description" : "Delete successful"
           },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "error"
           },
           "404" : {
-            "description" : "Todo not found"
+            "description" : "Could not find an entry with the given id."
           }
         }
       }
@@ -285,10 +285,10 @@
             }
           },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "error"
           },
           "404" : {
-            "description" : "Todo not found"
+            "description" : "Could not find an entry with the given id."
           }
         }
       },
@@ -341,10 +341,10 @@
             "description" : "Delete successful"
           },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "error"
           },
           "404" : {
-            "description" : "Todo not found"
+            "description" : "Could not find an entry with the given id."
           }
         }
       }
@@ -447,10 +447,10 @@
             }
           },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "error"
           },
           "404" : {
-            "description" : "Todo not found"
+            "description" : "Could not find an entry with the given id."
           }
         }
       },
@@ -503,10 +503,10 @@
             "description" : "Delete successful"
           },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "error"
           },
           "404" : {
-            "description" : "Todo not found"
+            "description" : "Could not find an entry with the given id."
           }
         }
       }
@@ -609,10 +609,10 @@
             }
           },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "error"
           },
           "404" : {
-            "description" : "Todo not found"
+            "description" : "Could not find an entry with the given id."
           }
         }
       },
@@ -665,10 +665,165 @@
             "description" : "Delete successful"
           },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "error"
           },
           "404" : {
-            "description" : "Todo not found"
+            "description" : "Could not find an entry with the given id."
+          }
+        }
+      }
+    },
+    "/activities/{id}/tags" : {
+      "get" : {
+        "tags" : [ "clients" ],
+        "summary" : "shows for tags belonging to the activity",
+        "description" : "By passing in the appropriate options, you can search for\navailable activity in the system\n",
+        "operationId" : "searchActivityTag",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the activity that needs to be fetched",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "$top",
+          "in" : "query",
+          "description" : "Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$skip",
+          "in" : "query",
+          "description" : "Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "$filter",
+          "in" : "query",
+          "description" : "Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "$select",
+          "in" : "query",
+          "description" : "Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Activity"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "clients" ],
+        "summary" : "adds an ActivityTag",
+        "description" : "Adds an activityTag to the system",
+        "operationId" : "addActivityTag",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the activity that needs to be fetched",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "ActivityTag",
+          "description" : "ActivityTag to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Tag"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "item created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      }
+    },
+    "/activities/{id}/tags/{tagId}" : {
+      "get" : {
+        "tags" : [ "clients" ],
+        "summary" : "Find activityTag by tag Id",
+        "description" : "Find an activityTag by Tag Id",
+        "operationId" : "getActivityTagById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the activity that needs to be fetched",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "tagId",
+          "in" : "path",
+          "description" : "Id of the tag that needs to be fetched",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Tag"
+            }
+          },
+          "400" : {
+            "description" : "error"
+          },
+          "404" : {
+            "description" : "Could not find an entry with the given id."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "admins" ],
+        "summary" : "Delete ActivityTag by TagId",
+        "description" : "Deletes an activityTag item in the system",
+        "operationId" : "deleteActivityTag",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of the activity that has a specific tag",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "tagId",
+          "in" : "path",
+          "description" : "Id of the tag that needs to be deleted",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Delete successful"
+          },
+          "400" : {
+            "description" : "error"
+          },
+          "404" : {
+            "description" : "Could not find an entry with the given id."
           }
         }
       }
@@ -709,7 +864,7 @@
   },
   "definitions" : {
     "TodoItem" : {
-      "required" : [ "category", "title", "todoType" ],
+      "required" : [ "title", "todoType" ],
       "properties" : {
         "id" : {
           "type" : "string",
@@ -743,8 +898,17 @@
           "format" : "date-time",
           "example" : "2018-04-12 12:00"
         },
-        "assignedTo" : {
-          "$ref" : "#/definitions/Assignee"
+        "assignedToId" : {
+          "type" : "string",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "assignedToName" : {
+          "type" : "string",
+          "example" : "Frukt & Grönt"
+        },
+        "assignedToObjectType" : {
+          "type" : "string",
+          "example" : "Group"
         },
         "isCompleted" : {
           "type" : "boolean",
@@ -763,8 +927,13 @@
           "format" : "int32",
           "example" : 1
         },
-        "category" : {
-          "$ref" : "#/definitions/Category"
+        "categoryId" : {
+          "type" : "string",
+          "example" : "123"
+        },
+        "categoryTitle" : {
+          "type" : "string",
+          "example" : "HACCP"
         },
         "tags" : {
           "type" : "array",
@@ -784,11 +953,9 @@
         "todoType" : "basic",
         "title" : "Städa charken",
         "priority" : 1,
-        "assignedTo" : {
-          "name" : "Frukt & Grönt",
-          "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-          "objectType" : "Group"
-        },
+        "assignedToId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        "assignedToName" : "Frukt & Grönt",
+        "assignedToObjectType" : "Group",
         "tags" : [ {
           "modifiedOn" : "2018-03-14 15:22",
           "sortId" : 1,
@@ -805,12 +972,8 @@
         "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
         "modifiedOn" : "2018-03-14 15:22",
         "id" : "123456",
-        "category" : {
-          "modifiedOn" : "2018-03-14 15:22",
-          "sortId" : 1,
-          "id" : "123456",
-          "title" : "HACCP"
-        },
+        "categoryId" : "123",
+        "categoryTitle" : "HACCP",
         "completedBy" : {
           "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
           "fullname" : "Göran Roseen"
@@ -922,7 +1085,7 @@
     },
     "Activity" : {
       "type" : "object",
-      "required" : [ "activityType", "category", "title" ],
+      "required" : [ "activityType", "categoryId", "title" ],
       "properties" : {
         "id" : {
           "type" : "string",
@@ -956,8 +1119,13 @@
           "format" : "int32",
           "example" : 1
         },
-        "category" : {
-          "$ref" : "#/definitions/Category"
+        "categoryId" : {
+          "type" : "string",
+          "example" : "123"
+        },
+        "categoryTitle" : {
+          "type" : "string",
+          "example" : "HACCP"
         },
         "tags" : {
           "type" : "array",
@@ -980,12 +1148,8 @@
         "title" : "Städa charken",
         "activityType" : "basic",
         "priority" : 1,
-        "category" : {
-          "modifiedOn" : "2018-03-14 15:22",
-          "sortId" : 1,
-          "id" : "123456",
-          "title" : "HACCP"
-        },
+        "categoryId" : "123",
+        "categoryTitle" : "HACCP",
         "tags" : [ {
           "modifiedOn" : "2018-03-14 15:22",
           "sortId" : 1,
@@ -1012,10 +1176,19 @@
     },
     "TodoInstantiate" : {
       "type" : "object",
-      "required" : [ "assignee", "dueAt" ],
+      "required" : [ "assignedToId", "assignedToName", "assignedToObjectType", "dueAt" ],
       "properties" : {
-        "assignee" : {
-          "$ref" : "#/definitions/Assignee"
+        "assignedToId" : {
+          "type" : "string",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "assignedToName" : {
+          "type" : "string",
+          "example" : "Frukt & Grönt"
+        },
+        "assignedToObjectType" : {
+          "type" : "string",
+          "example" : "Group"
         },
         "dueAt" : {
           "type" : "string",
@@ -1025,10 +1198,76 @@
       },
       "example" : {
         "dueAt" : "2018-04-24 14:41",
-        "assignee" : {
-          "name" : "Frukt & Grönt",
-          "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
-          "objectType" : "Group"
+        "assignedToId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        "assignedToName" : "Frukt & Grönt",
+        "assignedToObjectType" : "Group"
+      }
+    },
+    "TodoCard" : {
+      "type" : "object",
+      "required" : [ "cardType", "todoId" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "123456"
+        },
+        "todoId" : {
+          "type" : "string",
+          "example" : "123456"
+        },
+        "activityCardId" : {
+          "type" : "string",
+          "example" : "123456"
+        },
+        "cardType" : {
+          "type" : "string",
+          "example" : "temp",
+          "enum" : [ "temp", "timer", "yesNo", "text", "media" ]
+        },
+        "input" : {
+          "type" : "string",
+          "example" : "tempreture must be between -5 and 8"
+        },
+        "outputText" : {
+          "type" : "string",
+          "example" : "8"
+        },
+        "outputMedia" : {
+          "type" : "string",
+          "example" : "{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }"
+        },
+        "modifiedOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-03-14 15:22"
+        }
+      }
+    },
+    "ActivityCard" : {
+      "type" : "object",
+      "required" : [ "cardType" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "123456"
+        },
+        "activityId" : {
+          "type" : "string",
+          "example" : "123456"
+        },
+        "cardType" : {
+          "type" : "string",
+          "example" : "temp",
+          "enum" : [ "temp", "timer", "yesNo", "text", "media" ]
+        },
+        "cardData" : {
+          "type" : "string",
+          "example" : "-5"
+        },
+        "modifiedOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2018-03-14 15:22"
         }
       }
     }
