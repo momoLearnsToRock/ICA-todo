@@ -8,6 +8,7 @@ import baseRouter = require('./routers/baseRouter');
 import odataV4Sql = require('odata-v4-sql');
 import acsTable = require('./dal/activitiesTable');
 import acRouter = require('./routers/activitiesRouter');
+import tdRouter = require('./routers/todosRouter');
 import tdsTable = require('./dal/todosTable');
 import {SqlTableType} from './dal/sqlTableType';
 
@@ -56,7 +57,7 @@ class main {
       app.use('/activities', activitiesRouter.router)
 
       const todosTable: tdsTable.TodosTable = new tdsTable.TodosTable(pool);
-      const todosRouter: baseRouter.BaseRouter = new baseRouter.BaseRouter({table: todosTable, disableGetAll: false, disablePost: true, disablePut: false, disablePatch: false, disableDelete: true});
+      const todosRouter: tdRouter.TodosRouter = new tdRouter.TodosRouter({table: todosTable, disableGetAll: false, disablePost: true, disablePut: false, disablePatch: false, disableDelete: true});
       app.use('/todos', todosRouter.router)
     });
     

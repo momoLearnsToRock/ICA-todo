@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const baseRouter = require("./routers/baseRouter");
 const acsTable = require("./dal/activitiesTable");
 const acRouter = require("./routers/activitiesRouter");
+const tdRouter = require("./routers/todosRouter");
 const tdsTable = require("./dal/todosTable");
 const sqlTableType_1 = require("./dal/sqlTableType");
 const debug = dbg('todo:api');
@@ -51,7 +52,7 @@ class main {
             const activitiesRouter = new acRouter.ActivitiesRouter({ table: activitiesTable, disableGetAll: false, disablePost: false, disablePut: false, disablePatch: true, disableDelete: false });
             app.use('/activities', activitiesRouter.router);
             const todosTable = new tdsTable.TodosTable(pool);
-            const todosRouter = new baseRouter.BaseRouter({ table: todosTable, disableGetAll: false, disablePost: true, disablePut: false, disablePatch: false, disableDelete: true });
+            const todosRouter = new tdRouter.TodosRouter({ table: todosTable, disableGetAll: false, disablePost: true, disablePut: false, disablePatch: false, disableDelete: true });
             app.use('/todos', todosRouter.router);
         });
         const port = process.env.PORT || 3000;
