@@ -1,17 +1,17 @@
-//-------- Mocha options --------
+////-------- Mocha options --------
 
-//mocha view is now shown in the new test view as default it possible to switch it back to the explorer view with this setting
-"mocha.showInExplorer":true,
+////mocha view is now shown in the new test view as default it possible to switch it back to the explorer view with this setting
+//"mocha.showInExplorer":true,
 
-// Mocha: Options to run Mocha
-"mocha.options": {
-    "compilers": "ts:ts-node/register"
-},
+//// Mocha: Options to run Mocha
+//"mocha.options": {
+//    "compilers": "ts:ts-node/register"
+//},
 
-// Mocha: List of files to require before running mocha
-"mocha.requires": [
-    "ts-node/register"
-],
+//// Mocha: List of files to require before running mocha
+//"mocha.requires": [
+//    "ts-node/register"
+//],
 
-// Mocha: Glob to search for test files
-"mocha.files.glob": "test/**/*.spec.ts",
+//// Mocha: Glob to search for test files
+//"mocha.files.glob": "test/**/*.spec.ts",
