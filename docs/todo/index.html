@@ -196,30 +196,47 @@ font-style: italic;
   <div class="method-summary"></div>
   <h4><a href="#Admins">Admins</a></h4>
   <ul>
+  <li><a href="#addCardType"><code><span class="http-method">post</span> /cardTypes</code></a></li>
   <li><a href="#addCategory"><code><span class="http-method">post</span> /categories</code></a></li>
   <li><a href="#addTag"><code><span class="http-method">post</span> /tags</code></a></li>
   <li><a href="#deleteActivity"><code><span class="http-method">delete</span> /activities/{id}</code></a></li>
+  <li><a href="#deleteActivityCard"><code><span class="http-method">delete</span> /activities/{id}/cards/{cardId}</code></a></li>
   <li><a href="#deleteActivityTag"><code><span class="http-method">delete</span> /activities/{id}/tags/{tagId}</code></a></li>
+  <li><a href="#deleteCardType"><code><span class="http-method">delete</span> /cardTypes/{id}</code></a></li>
   <li><a href="#deleteCategory"><code><span class="http-method">delete</span> /categories/{id}</code></a></li>
   <li><a href="#deleteTag"><code><span class="http-method">delete</span> /tags/{id}</code></a></li>
   <li><a href="#deleteTodo"><code><span class="http-method">delete</span> /todos/{id}</code></a></li>
+  <li><a href="#deleteTodoCard"><code><span class="http-method">delete</span> /todos/{id}/cards/{cardId}</code></a></li>
+  <li><a href="#updateActivityCard"><code><span class="http-method">put</span> /activities/{id}/cards/{cardId}</code></a></li>
+  <li><a href="#updateCardType"><code><span class="http-method">put</span> /cardTypes/{id}</code></a></li>
   <li><a href="#updateCategory"><code><span class="http-method">put</span> /categories/{id}</code></a></li>
   <li><a href="#updateTag"><code><span class="http-method">put</span> /tags/{id}</code></a></li>
+  <li><a href="#updateTodoCard"><code><span class="http-method">put</span> /todos/{id}/cards/{cardId}</code></a></li>
   </ul>
   <h4><a href="#Clients">Clients</a></h4>
   <ul>
   <li><a href="#addActivity"><code><span class="http-method">post</span> /activities</code></a></li>
+  <li><a href="#addActivityCard"><code><span class="http-method">post</span> /activities/{id}/cards</code></a></li>
   <li><a href="#addActivityTag"><code><span class="http-method">post</span> /activities/{id}/tags</code></a></li>
+  <li><a href="#addTodoCard"><code><span class="http-method">post</span> /todos/{id}/cards</code></a></li>
+  <li><a href="#addTodoCardAttachment"><code><span class="http-method">post</span> /todos/{id}/cards/{cardId}/attachment</code></a></li>
   <li><a href="#createTodoFromActivity"><code><span class="http-method">post</span> /activities/{id}/instantiateTodo</code></a></li>
   <li><a href="#getActivityById"><code><span class="http-method">get</span> /activities/{id}</code></a></li>
+  <li><a href="#getActivityCardById"><code><span class="http-method">get</span> /activities/{id}/cards/{cardId}</code></a></li>
+  <li><a href="#getActivityCards"><code><span class="http-method">get</span> /activities/{id}/cards</code></a></li>
   <li><a href="#getActivityTagById"><code><span class="http-method">get</span> /activities/{id}/tags/{tagId}</code></a></li>
+  <li><a href="#getActivityTags"><code><span class="http-method">get</span> /activities/{id}/tags</code></a></li>
+  <li><a href="#getCardTypeById"><code><span class="http-method">get</span> /cardTypes/{id}</code></a></li>
+  <li><a href="#getCardTypes"><code><span class="http-method">get</span> /cardTypes</code></a></li>
+  <li><a href="#getCardsAttachment"><code><span class="http-method">get</span> /todos/{id}/cards/{cardId}/attachment/{fileName}</code></a></li>
   <li><a href="#getCategories"><code><span class="http-method">get</span> /categories</code></a></li>
   <li><a href="#getCategoryById"><code><span class="http-method">get</span> /categories/{id}</code></a></li>
   <li><a href="#getTagById"><code><span class="http-method">get</span> /tags/{id}</code></a></li>
   <li><a href="#getTags"><code><span class="http-method">get</span> /tags</code></a></li>
   <li><a href="#getTodoById"><code><span class="http-method">get</span> /todos/{id}</code></a></li>
+  <li><a href="#getTodoCardById"><code><span class="http-method">get</span> /todos/{id}/cards/{cardId}</code></a></li>
+  <li><a href="#getTodoCards"><code><span class="http-method">get</span> /todos/{id}/cards</code></a></li>
   <li><a href="#searchActivity"><code><span class="http-method">get</span> /activities</code></a></li>
-  <li><a href="#searchActivityTag"><code><span class="http-method">get</span> /activities/{id}/tags</code></a></li>
   <li><a href="#searchTodo"><code><span class="http-method">get</span> /todos</code></a></li>
   <li><a href="#todoAssign"><code><span class="http-method">post</span> /todos/{id}/assign</code></a></li>
   <li><a href="#todoClose"><code><span class="http-method">post</span> /todos/{id}/close</code></a></li>
@@ -227,6 +244,54 @@ font-style: italic;
   </ul>
 
   <h1><a name="Admins">Admins</a></h1>
+  <div class="method"><a name="addCardType"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /cardTypes</code></pre></div>
+    <div class="method-summary">adds a CardType (<span class="nickname">addCardType</span>)</div>
+    <div class="method-notes">Adds a CardType to the system</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">CardType <a href="#CardType">CardType</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; CardType to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="addCategory"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -365,6 +430,50 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="deleteActivityCard"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /activities/{id}/cards/{cardId}</code></pre></div>
+    <div class="method-summary">Delete ActivityCard by Id (<span class="nickname">deleteActivityCard</span>)</div>
+    <div class="method-notes">Deletes an activityCard item in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity </div><div class="param">cardId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activityCard that needs to be deleted </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delete successful
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    error
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="deleteActivityTag"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -376,9 +485,51 @@ font-style: italic;
     <div class="field-items">
       <div class="param">id (required)</div>
 
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that has a specific tag </div><div class="param">tagId (required)</div>
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that the tag belongs to </div><div class="param">tagId (required)</div>
 
       <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the tag that needs to be deleted </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delete successful
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    error
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteCardType"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /cardTypes/{id}</code></pre></div>
+    <div class="method-summary">Delete CardType by Id (<span class="nickname">deleteCardType</span>)</div>
+    <div class="method-notes">Deletes a CardType in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the CardType that needs to be deleted </div>
     </div>  <!-- field-items -->
 
 
@@ -535,6 +686,154 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="deleteTodoCard"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /todos/{id}/cards/{cardId}</code></pre></div>
+    <div class="method-summary">Delete TodoCard by Id (<span class="nickname">deleteTodoCard</span>)</div>
+    <div class="method-notes">Deletes a todoCard item in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todo </div><div class="param">cardId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todoCard that needs to be deleted </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delete successful
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    error
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateActivityCard"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /activities/{id}/cards/{cardId}</code></pre></div>
+    <div class="method-summary">updates an activityCard (<span class="nickname">updateActivityCard</span>)</div>
+    <div class="method-notes">Updates an activityCard in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the Activity </div><div class="param">cardId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the ActivityCard to be updated </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ActivityCard <a href="#ActivityCard">ActivityCard</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; ActivityCard to update </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateCardType"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /cardTypes/{id}</code></pre></div>
+    <div class="method-summary">updates a CardType (<span class="nickname">updateCardType</span>)</div>
+    <div class="method-notes">Updates a CardType in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the CardType to be updated </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">CardType <a href="#CardType">CardType</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; CardType to update </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="updateCategory"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -637,6 +936,59 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="updateTodoCard"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /todos/{id}/cards/{cardId}</code></pre></div>
+    <div class="method-summary">updates a todoCard (<span class="nickname">updateTodoCard</span>)</div>
+    <div class="method-notes">Updates a todoCard in the system</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the Todo </div><div class="param">cardId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the TodoCard to be updated </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">TodoCard <a href="#TodoCard">TodoCard</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; TodoCard to update </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item updated
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <h1><a name="Clients">Clients</a></h1>
   <div class="method"><a name="addActivity"/>
     <div class="method-path">
@@ -686,6 +1038,60 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="addActivityCard"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /activities/{id}/cards</code></pre></div>
+    <div class="method-summary">adds an ActivityCard (<span class="nickname">addActivityCard</span>)</div>
+    <div class="method-notes">Adds a card to the activity</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ActivityCard <a href="#ActivityCard">ActivityCard</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; ActivityCard to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="addActivityTag"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -697,7 +1103,7 @@ font-style: italic;
     <div class="field-items">
       <div class="param">id (required)</div>
 
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that needs to be fetched </div>
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that the tag belongs to </div>
     </div>  <!-- field-items -->
 
     <h3 class="field-label">Consumes</h3>
@@ -716,6 +1122,115 @@ font-style: italic;
 
 
 
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addTodoCard"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /todos/{id}/cards</code></pre></div>
+    <div class="method-summary">adds a TodoCard (<span class="nickname">addTodoCard</span>)</div>
+    <div class="method-notes">Adds a card to the todo</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todo </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">TodoCard <a href="#TodoCard">TodoCard</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; TodoCard to add </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    an existing item already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addTodoCardAttachment"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /todos/{id}/cards/{cardId}/attachment</code></pre></div>
+    <div class="method-summary">adds an attachment to a TodoCard (<span class="nickname">addTodoCardAttachment</span>)</div>
+    <div class="method-notes">Adds an attachment to the card belonging to the todo</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todo </div><div class="param">cardId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todoCard </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>multipart/form-data</code></li>
+    </ul>
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">attachmentData (required)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
 
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -802,7 +1317,7 @@ font-style: italic;
     <div class="field-items">
       <div class="param">id (required)</div>
 
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that needs to be fetched </div>
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity </div>
     </div>  <!-- field-items -->
 
 
@@ -863,6 +1378,129 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="getActivityCardById"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities/{id}/cards/{cardId}</code></pre></div>
+    <div class="method-summary">Find activityCard by Id (<span class="nickname">getActivityCardById</span>)</div>
+    <div class="method-notes">Find an activityCard by Id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity </div><div class="param">cardId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activityCard that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ActivityCard">ActivityCard</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "activityId" : "123456",
+  "input" : "tempreture must be between -5 and 8",
+  "modifiedOn" : "2018-03-14 15:22",
+  "notes" : "this is how you measure things",
+  "cardType" : "TEMP",
+  "id" : "123456",
+  "outputText" : "8"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#ActivityCard">ActivityCard</a>
+    <h4 class="field-label">400</h4>
+    error
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getActivityCards"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities/{id}/cards</code></pre></div>
+    <div class="method-summary">shows cards belonging to the activity (<span class="nickname">getActivityCards</span>)</div>
+    <div class="method-notes">returns all cards belonging to a specific activity</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#ActivityCard">ActivityCard</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "activityId" : "123456",
+  "input" : "tempreture must be between -5 and 8",
+  "modifiedOn" : "2018-03-14 15:22",
+  "notes" : "this is how you measure things",
+  "cardType" : "TEMP",
+  "id" : "123456",
+  "outputText" : "8"
+}, {
+  "activityId" : "123456",
+  "input" : "tempreture must be between -5 and 8",
+  "modifiedOn" : "2018-03-14 15:22",
+  "notes" : "this is how you measure things",
+  "cardType" : "TEMP",
+  "id" : "123456",
+  "outputText" : "8"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results matching criteria
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="getActivityTagById"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -874,7 +1512,7 @@ font-style: italic;
     <div class="field-items">
       <div class="param">id (required)</div>
 
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that needs to be fetched </div><div class="param">tagId (required)</div>
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that the tag belongs to </div><div class="param">tagId (required)</div>
 
       <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the tag that needs to be fetched </div>
     </div>  <!-- field-items -->
@@ -917,6 +1555,215 @@ font-style: italic;
         <a href="#"></a>
     <h4 class="field-label">404</h4>
     Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getActivityTags"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities/{id}/tags</code></pre></div>
+    <div class="method-summary">shows tags belonging to the activity (<span class="nickname">getActivityTags</span>)</div>
+    <div class="method-notes">returns all tags belonging to a specific activity</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that the tag belongs to </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Tag">Tag</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "modifiedOn" : "2018-03-14 15:22",
+  "sortId" : 1,
+  "id" : "123456",
+  "title" : "Rengöring"
+}, {
+  "modifiedOn" : "2018-03-14 15:22",
+  "sortId" : 1,
+  "id" : "123456",
+  "title" : "Rengöring"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    search results matching criteria
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getCardTypeById"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /cardTypes/{id}</code></pre></div>
+    <div class="method-summary">Find CardType by Id (<span class="nickname">getCardTypeById</span>)</div>
+    <div class="method-notes">Find a CardType by Id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the CardType that needs to be fetched </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CardType">CardType</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : "TEMP",
+  "title" : "Tempratur",
+  "modifiedOn" : "2018-03-14 15:22"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#CardType">CardType</a>
+    <h4 class="field-label">400</h4>
+    error
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getCardTypes"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /cardTypes</code></pre></div>
+    <div class="method-summary">Fetch all cardTypes (<span class="nickname">getCardTypes</span>)</div>
+    <div class="method-notes">Fetch all cardTypes</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">$top (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Show only the first n items, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630">OData Paging - Top</a> </div><div class="param">$skip (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Skip the first n items, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631">OData Paging - Skip</a> </div><div class="param">$filter (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Filter items by property values, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625">OData Filtering</a>, note that expand is not supported </div><div class="param">$select (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Select properties to be returned, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620">OData Select</a>, note that expand is not supported </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#CardType">CardType</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "id" : "TEMP",
+  "title" : "Tempratur",
+  "modifiedOn" : "2018-03-14 15:22"
+}, {
+  "id" : "TEMP",
+  "title" : "Tempratur",
+  "modifiedOn" : "2018-03-14 15:22"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    all cardTypes
+        
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getCardsAttachment"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /todos/{id}/cards/{cardId}/attachment/{fileName}</code></pre></div>
+    <div class="method-summary">returns the attachment to a card (<span class="nickname">getCardsAttachment</span>)</div>
+    <div class="method-notes">returns an attachment on a card</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todo </div><div class="param">cardId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todoCard </div><div class="param">fileName (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; name of the attachment file </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    the attachement file
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    bad input parameter
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
@@ -1238,35 +2085,90 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="searchActivity"/>
+  <div class="method"><a name="getTodoCardById"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities</code></pre></div>
-    <div class="method-summary">searches for activities (<span class="nickname">searchActivity</span>)</div>
-    <div class="method-notes">By passing in the appropriate options, you can search for
-available activity in the system</div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /todos/{id}/cards/{cardId}</code></pre></div>
+    <div class="method-summary">Find todoCard by Id (<span class="nickname">getTodoCardById</span>)</div>
+    <div class="method-notes">Find an todoCard by Id</div>
 
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
+    <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">$top (optional)</div>
+      <div class="param">id (required)</div>
 
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Show only the first n items, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630">OData Paging - Top</a> </div><div class="param">$skip (optional)</div>
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todo </div><div class="param">cardId (required)</div>
 
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Skip the first n items, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631">OData Paging - Skip</a> </div><div class="param">$filter (optional)</div>
-
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Filter items by property values, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625">OData Filtering</a>, note that expand is not supported </div><div class="param">$select (optional)</div>
-
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Select properties to be returned, see <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620">OData Select</a>, note that expand is not supported </div>
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todoCard that needs to be fetched </div>
     </div>  <!-- field-items -->
+
+
+
+
 
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      array[<a href="#Activity">Activity</a>]
+      <a href="#TodoCard">TodoCard</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "input" : "tempreture must be between -5 and 8",
+  "activityCardId" : "123456",
+  "modifiedOn" : "2018-03-14 15:22",
+  "notes" : "this is how you measure things",
+  "outputMedia" : "{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }",
+  "cardType" : "TEMP",
+  "id" : "123456",
+  "todoId" : "123456",
+  "outputText" : "8"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#TodoCard">TodoCard</a>
+    <h4 class="field-label">400</h4>
+    error
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Could not find an entry with the given id.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTodoCards"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /todos/{id}/cards</code></pre></div>
+    <div class="method-summary">shows cards belonging to the todo (<span class="nickname">getTodoCards</span>)</div>
+    <div class="method-notes">returns all cards belonging to a specific todo</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the todo </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#TodoCard">TodoCard</a>]
       
     </div>
 
@@ -1275,49 +2177,25 @@ available activity in the system</div>
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>[ {
-  "note" : "Gör så här",
-  "createdAt" : "2018-03-14 15:22",
-  "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
+  "input" : "tempreture must be between -5 and 8",
+  "activityCardId" : "123456",
   "modifiedOn" : "2018-03-14 15:22",
+  "notes" : "this is how you measure things",
+  "outputMedia" : "{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }",
+  "cardType" : "TEMP",
   "id" : "123456",
-  "title" : "Städa charken",
-  "activityType" : "basic",
-  "priority" : 1,
-  "categoryId" : "123",
-  "categoryTitle" : "HACCP",
-  "tags" : [ {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "Rengöring"
-  }, {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "Rengöring"
-  } ]
+  "todoId" : "123456",
+  "outputText" : "8"
 }, {
-  "note" : "Gör så här",
-  "createdAt" : "2018-03-14 15:22",
-  "contentUrl" : "https://episerver.ica.se/getContent?id=4711",
+  "input" : "tempreture must be between -5 and 8",
+  "activityCardId" : "123456",
   "modifiedOn" : "2018-03-14 15:22",
+  "notes" : "this is how you measure things",
+  "outputMedia" : "{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }",
+  "cardType" : "TEMP",
   "id" : "123456",
-  "title" : "Städa charken",
-  "activityType" : "basic",
-  "priority" : 1,
-  "categoryId" : "123",
-  "categoryTitle" : "HACCP",
-  "tags" : [ {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "Rengöring"
-  }, {
-    "modifiedOn" : "2018-03-14 15:22",
-    "sortId" : 1,
-    "id" : "123456",
-    "title" : "Rengöring"
-  } ]
+  "todoId" : "123456",
+  "outputText" : "8"
 } ]</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -1336,20 +2214,14 @@ available activity in the system</div>
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="searchActivityTag"/>
+  <div class="method"><a name="searchActivity"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities/{id}/tags</code></pre></div>
-    <div class="method-summary">shows for tags belonging to the activity (<span class="nickname">searchActivityTag</span>)</div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /activities</code></pre></div>
+    <div class="method-summary">searches for activities (<span class="nickname">searchActivity</span>)</div>
     <div class="method-notes">By passing in the appropriate options, you can search for
 available activity in the system</div>
 
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">id (required)</div>
-
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Id of the activity that needs to be fetched </div>
-    </div>  <!-- field-items -->
 
 
 
@@ -1754,6 +2626,7 @@ available todos in the system</div>
     <li><a href="#ActivityCard"><code>ActivityCard</code> - </a></li>
     <li><a href="#Assignee"><code>Assignee</code> - </a></li>
     <li><a href="#BaseTable"><code>BaseTable</code> - </a></li>
+    <li><a href="#CardType"><code>CardType</code> - </a></li>
     <li><a href="#Category"><code>Category</code> - </a></li>
     <li><a href="#Tag"><code>Tag</code> - </a></li>
     <li><a href="#TodoCard"><code>TodoCard</code> - </a></li>
@@ -1785,10 +2658,10 @@ available todos in the system</div>
     <div class="field-items">
       <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">activityId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">cardType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-        <div class="param-enum-header">Enum:</div>
-        <div class="param-enum">temp</div><div class="param-enum">timer</div><div class="param-enum">yesNo</div><div class="param-enum">text</div><div class="param-enum">media</div>
-<div class="param">cardData (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">notes (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">cardType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> the value is a key from the CardTypes entity. note that the key is string. </div>
+<div class="param">input (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">outputText (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">modifiedOn (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
     </div>  <!-- field-items -->
   </div>
@@ -1808,6 +2681,15 @@ available todos in the system</div>
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">modifiedOn </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CardType"><code>CardType</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">modifiedOn (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1836,10 +2718,9 @@ available todos in the system</div>
     <div class="field-items">
       <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">todoId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">activityCardId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">cardType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-        <div class="param-enum-header">Enum:</div>
-        <div class="param-enum">temp</div><div class="param-enum">timer</div><div class="param-enum">yesNo</div><div class="param-enum">text</div><div class="param-enum">media</div>
+<div class="param">activityCardId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">notes (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">cardType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> the value is a key from the CardTypes entity. note that the key is string. </div>
 <div class="param">input (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">outputText (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">outputMedia (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>

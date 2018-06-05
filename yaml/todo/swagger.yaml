@@ -157,6 +157,209 @@ paths:
           description: item updated
         400:
           description: invalid input, object invalid
+  /todos/{id}/cards:
+    get:
+      tags:
+      - clients
+      summary: shows cards belonging to the todo
+      description: |
+        returns all cards belonging to a specific todo
+      operationId: getTodoCards
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the todo
+        required: true
+        type: string
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TodoCard'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - clients
+      summary: adds a TodoCard
+      description: Adds a card to the todo
+      operationId: addTodoCard
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the todo
+        required: true
+        type: string
+      - in: body
+        name: TodoCard
+        description: TodoCard to add
+        required: false
+        schema:
+          $ref: '#/definitions/TodoCard'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /todos/{id}/cards/{cardId}:
+    get:
+      tags:
+      - clients
+      summary: Find todoCard by Id
+      description: Find an todoCard by Id
+      operationId: getTodoCardById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the todo
+        required: true
+        type: string
+      - name: cardId
+        in: path
+        description: Id of the todoCard that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/TodoCard'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a todoCard
+      description: Updates a todoCard in the system
+      operationId: updateTodoCard
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the Todo
+        required: true
+        type: string
+      - name: cardId
+        in: path
+        description: id of the TodoCard to be updated
+        required: true
+        type: string
+      - in: body
+        name: TodoCard
+        description: TodoCard to update
+        required: false
+        schema:
+          $ref: '#/definitions/TodoCard'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete TodoCard by Id
+      description: Deletes a todoCard item in the system
+      operationId: deleteTodoCard
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the todo
+        required: true
+        type: string
+      - name: cardId
+        in: path
+        description: Id of the todoCard that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+  /todos/{id}/cards/{cardId}/attachment/{fileName}:
+    get:
+      tags:
+      - clients
+      summary: returns the attachment to a card
+      description: |
+        returns an attachment on a card
+      operationId: getCardsAttachment
+      parameters:
+      - name: id
+        in: path
+        description: Id of the todo
+        required: true
+        type: string
+      - name: cardId
+        in: path
+        description: Id of the todoCard
+        required: true
+        type: string
+      - name: fileName
+        in: path
+        description: name of the attachment file
+        required: true
+        type: string
+      responses:
+        200:
+          description: the attachement file
+        400:
+          description: bad input parameter
+  /todos/{id}/cards/{cardId}/attachment:
+    post:
+      tags:
+      - clients
+      summary: adds an attachment to a TodoCard
+      description: Adds an attachment to the card belonging to the todo
+      operationId: addTodoCardAttachment
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the todo
+        required: true
+        type: string
+      - name: cardId
+        in: path
+        description: Id of the todoCard
+        required: true
+        type: string
+      - name: attachmentData
+        in: formData
+        required: true
+        type: string
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
   /categories:
     get:
       tags:
@@ -504,7 +707,7 @@ paths:
       parameters:
       - name: id
         in: path
-        description: Id of the activity that needs to be fetched
+        description: Id of the activity
         required: true
         type: string
       responses:
@@ -568,38 +771,17 @@ paths:
     get:
       tags:
       - clients
-      summary: shows for tags belonging to the activity
+      summary: shows tags belonging to the activity
       description: |
-        By passing in the appropriate options, you can search for
-        available activity in the system
-      operationId: searchActivityTag
+        returns all tags belonging to a specific activity
+      operationId: getActivityTags
       produces:
       - application/json
       parameters:
       - name: id
         in: path
-        description: Id of the activity that needs to be fetched
+        description: Id of the activity that the tag belongs to
         required: true
-        type: string
-      - name: $top
-        in: query
-        description: Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)
-        required: false
-        type: integer
-      - name: $skip
-        in: query
-        description: Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)
-        required: false
-        type: integer
-      - name: $filter
-        in: query
-        description: Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported
-        required: false
-        type: string
-      - name: $select
-        in: query
-        description: Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported
-        required: false
         type: string
       responses:
         200:
@@ -607,7 +789,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Activity'
+              $ref: '#/definitions/Tag'
         400:
           description: bad input parameter
     post:
@@ -623,7 +805,7 @@ paths:
       parameters:
       - name: id
         in: path
-        description: Id of the activity that needs to be fetched
+        description: Id of the activity that the tag belongs to
         required: true
         type: string
       - in: body
@@ -651,7 +833,7 @@ paths:
       parameters:
       - name: id
         in: path
-        description: Id of the activity that needs to be fetched
+        description: Id of the activity that the tag belongs to
         required: true
         type: string
       - name: tagId
@@ -679,7 +861,7 @@ paths:
       parameters:
       - name: id
         in: path
-        description: Id of the activity that has a specific tag
+        description: Id of the activity that the tag belongs to
         required: true
         type: string
       - name: tagId
@@ -722,6 +904,282 @@ paths:
           description: item created
         400:
           description: invalid input, object invalid
+  /activities/{id}/cards:
+    get:
+      tags:
+      - clients
+      summary: shows cards belonging to the activity
+      description: |
+        returns all cards belonging to a specific activity
+      operationId: getActivityCards
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the activity
+        required: true
+        type: string
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ActivityCard'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - clients
+      summary: adds an ActivityCard
+      description: Adds a card to the activity
+      operationId: addActivityCard
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the activity
+        required: true
+        type: string
+      - in: body
+        name: ActivityCard
+        description: ActivityCard to add
+        required: false
+        schema:
+          $ref: '#/definitions/ActivityCard'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /activities/{id}/cards/{cardId}:
+    get:
+      tags:
+      - clients
+      summary: Find activityCard by Id
+      description: Find an activityCard by Id
+      operationId: getActivityCardById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the activity
+        required: true
+        type: string
+      - name: cardId
+        in: path
+        description: Id of the activityCard that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ActivityCard'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates an activityCard
+      description: Updates an activityCard in the system
+      operationId: updateActivityCard
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the Activity
+        required: true
+        type: string
+      - name: cardId
+        in: path
+        description: id of the ActivityCard to be updated
+        required: true
+        type: string
+      - in: body
+        name: ActivityCard
+        description: ActivityCard to update
+        required: false
+        schema:
+          $ref: '#/definitions/ActivityCard'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete ActivityCard by Id
+      description: Deletes an activityCard item in the system
+      operationId: deleteActivityCard
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the activity
+        required: true
+        type: string
+      - name: cardId
+        in: path
+        description: Id of the activityCard that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+  /cardTypes:
+    get:
+      tags:
+      - clients
+      summary: Fetch all cardTypes
+      description: Fetch all cardTypes
+      operationId: getCardTypes
+      produces:
+      - application/json
+      parameters:
+      - name: $top
+        in: query
+        description: Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)
+        required: false
+        type: integer
+      - name: $filter
+        in: query
+        description: Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported
+        required: false
+        type: string
+      responses:
+        200:
+          description: all cardTypes
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CardType'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a CardType
+      description: Adds a CardType to the system
+      operationId: addCardType
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: CardType
+        description: CardType to add
+        required: false
+        schema:
+          $ref: '#/definitions/CardType'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /cardTypes/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find CardType by Id
+      description: Find a CardType by Id
+      operationId: getCardTypeById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the CardType that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CardType'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a CardType
+      description: Updates a CardType in the system
+      operationId: updateCardType
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the CardType to be updated
+        required: true
+        type: string
+      - in: body
+        name: CardType
+        description: CardType to update
+        required: false
+        schema:
+          $ref: '#/definitions/CardType'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete CardType by Id
+      description: Deletes a CardType in the system
+      operationId: deleteCardType
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the CardType that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
 definitions:
   TodoItem:
     required:
@@ -1007,6 +1465,7 @@ definitions:
   TodoCard:
     type: object
     required:
+    - activityCardId
     - cardType
     - todoId
     properties:
@@ -1019,15 +1478,13 @@ definitions:
       activityCardId:
         type: string
         example: "123456"
+      notes:
+        type: string
+        example: this is how you measure things
       cardType:
         type: string
-        example: temp
-        enum:
-        - temp
-        - timer
-        - yesNo
-        - text
-        - media
+        example: TEMP
+        description: the value is a key from the CardTypes entity. note that the key is string.
       input:
         type: string
         example: tempreture must be between -5 and 8
@@ -1041,6 +1498,16 @@ definitions:
         type: string
         format: date-time
         example: 2018-03-14 15:22
+    example:
+      input: tempreture must be between -5 and 8
+      activityCardId: "123456"
+      modifiedOn: 2018-03-14 15:22
+      notes: this is how you measure things
+      outputMedia: '{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }'
+      cardType: TEMP
+      id: "123456"
+      todoId: "123456"
+      outputText: "8"
   ActivityCard:
     type: object
     required:
@@ -1052,22 +1519,51 @@ definitions:
       activityId:
         type: string
         example: "123456"
+      notes:
+        type: string
+        example: this is how you measure things
       cardType:
         type: string
-        example: temp
-        enum:
-        - temp
-        - timer
-        - yesNo
-        - text
-        - media
-      cardData:
+        example: TEMP
+        description: the value is a key from the CardTypes entity. note that the key is string.
+      input:
         type: string
-        example: -5
+        example: tempreture must be between -5 and 8
+      outputText:
+        type: string
+        example: "8"
       modifiedOn:
         type: string
         format: date-time
         example: 2018-03-14 15:22
+    example:
+      activityId: "123456"
+      input: tempreture must be between -5 and 8
+      modifiedOn: 2018-03-14 15:22
+      notes: this is how you measure things
+      cardType: TEMP
+      id: "123456"
+      outputText: "8"
+  CardType:
+    type: object
+    required:
+    - id
+    - title
+    properties:
+      id:
+        type: string
+        example: TEMP
+      title:
+        type: string
+        example: Tempratur
+      modifiedOn:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+    example:
+      id: TEMP
+      title: Tempratur
+      modifiedOn: 2018-03-14 15:22
 parameters:
   top:
     name: $top
