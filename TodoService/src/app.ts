@@ -6,6 +6,7 @@ import config = require('../config/sql.js');
 import bodyParser = require('body-parser');
 import baseRouter = require('./routers/baseRouter');
 import odataV4Sql = require('odata-v4-sql');
+import fileUpload = require('express-fileupload');
 import acsTable = require('./dal/activitiesTable');
 import acRouter = require('./routers/activitiesRouter');
 import tdRouter = require('./routers/todosRouter');
@@ -26,6 +27,7 @@ class main {
     const app = express();
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
+    app.use(fileUpload());
     app.get(['/get', '/'], (req, res) => {
       res.send('Todo service apis.');
     });
