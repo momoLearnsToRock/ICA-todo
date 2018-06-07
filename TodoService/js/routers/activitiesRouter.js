@@ -223,23 +223,6 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
                 }
             }.bind(this)());
         });
-        this.router.route("/:activityId/cards/getCardTypes")
-            .get((req, res) => {
-            try {
-                let rslt = this.table.activityCardsTable.getCardTypes();
-                res.send(rslt);
-            }
-            catch (err) {
-                console.log(err);
-                let code = 500;
-                switch (true) {
-                    case "error" == err.message:
-                        code = 400;
-                        break;
-                }
-                res.status(code).send(err.message);
-            }
-        });
         this.router.use("/:activityId/cards/:cardId", (req, res, next) => {
             (async function query() {
                 try {
