@@ -247,14 +247,15 @@ export class TodosRouter extends baseRouter.BaseRouter {
      this.router.route("/:todoId/cards/:cardId/attachment/")
      .post((req, resp) => {
        (async function query(this: any) {
-         if (true) {
+         if (req.files && req.files.attachment) {
+           // Get attachment from request
            let fileName = req.files.attachment.name;
            let fileContentType = req.files.attachment.mimetype;
            let fileData = req.files.attachment.data;
-
-           var hexStr = '0x';
-           for (var i = 0; i < fileData.length; i++) {
-             var hex = (fileData[i] & 0xff).toString(16);
+           // Convert file buffer to HEX
+           let hexStr = '0x';
+           for (let i = 0; i < fileData.length; i++) {
+             let hex = (fileData[i] & 0xff).toString(16);
              hex = (hex.length === 1) ? '0' + hex : hex;
              hexStr += hex;
            }
