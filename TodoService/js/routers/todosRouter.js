@@ -201,6 +201,59 @@ class TodosRouter extends baseRouter.BaseRouter {
                 }
             }.bind(this)());
         });
+        // Route for outputMedia
+        this.router.route("/:todoId/cards/:cardId/attachment/")
+            .post((req, resp) => {
+            (async function query() {
+                if (true) {
+                    let fileName = req.files.attachment.name;
+                    let fileContentType = req.files.attachment.mimetype;
+                    let fileData = req.files.attachment.data;
+                    var hexStr = '0x';
+                    for (var i = 0; i < fileData.length; i++) {
+                        var hex = (fileData[i] & 0xff).toString(16);
+                        hex = (hex.length === 1) ? '0' + hex : hex;
+                        hexStr += hex;
+                    }
+                    await this.table.todoCardsTable.setOutputMedia(req.params.cardId, fileName, fileContentType, hexStr.toUpperCase());
+                    resp.status(200).send(fileName + ' ' + fileContentType);
+                }
+                else {
+                    resp.status(500).send("Attachment is missing.");
+                }
+            }.bind(this)());
+        });
+        this.router.route("/:todoId/cards/:cardId/attachment/:fileName/")
+            .get((req, res) => {
+            (async function query() {
+                try {
+                    // Fetch file data and meta data
+                    let rslt = await this.table.todoCardsTable.getOutputMedia(req.params.cardId);
+                    // Check if file exists and that file name matches, else send 404
+                    if (rslt && rslt.outputFileName && rslt.outputFileName.localeCompare(req.params.fileName) === 0) {
+                        // Set headers with content-type
+                        res.setHeader('Content-Type', rslt.outputFileContentType);
+                        res.setHeader('Content-Disposition', 'filename=' + rslt.outputFileName);
+                        res.status(200).send(rslt.outputFileData);
+                    }
+                    else {
+                        // File not found or file name doesn't match
+                        res.status(404).send("File not found.");
+                    }
+                }
+                catch (err) {
+                    console.log(err);
+                    let code = 500;
+                    switch (true) {
+                        case "error" == err.message:
+                        case /^Parse error:/.test(err.message):
+                            code = 400;
+                            break;
+                    }
+                    res.status(code).send(err.message);
+                }
+            }.bind(this)());
+        });
         // #endregion TodoCards
     }
 }

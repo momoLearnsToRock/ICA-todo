@@ -7,6 +7,7 @@ const sql = require("mssql");
 const config = require("../config/sql.js");
 const bodyParser = require("body-parser");
 const baseRouter = require("./routers/baseRouter");
+const fileUpload = require("express-fileupload");
 const acsTable = require("./dal/activitiesTable");
 const acRouter = require("./routers/activitiesRouter");
 const tdRouter = require("./routers/todosRouter");
@@ -23,6 +24,7 @@ class main {
         const app = express();
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
+        app.use(fileUpload());
         app.get(['/get', '/'], (req, res) => {
             res.send('Todo service apis.');
         });
