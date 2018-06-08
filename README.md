@@ -28,9 +28,10 @@ The backend code can be found in /TodoService.
 
 ### TodoService
 
-There is a build server that Momo can describe in further detail when he's back from vacation. The build server builds to a dev instance with the address TBD.
+There is a build server that Momo can describe in further detail when he's back from vacation. The build server builds to a dev instance with the address https://ic-todo.azurewebsites.net/.
 
-Once stable, by doing <insert description  here>, you deploy to the integration server which is used by the frontend project. Its adress is TBD.
+Once stable, by doing <insert description  here>, you deploy to the integration server which is used by the frontend project. Its adress is https://ica-todo-backend-prod.azurewebsites.net/.
+So to test fetching all todos, you can try: https://ica-todo-backend-prod.azurewebsites.net/todos
 
 ### UserService
 
