@@ -14,7 +14,7 @@ connected to this repository, which means that most activity in this repo will b
 ## Output
 
 The swagger files are stored in both yaml and json format.
-Swaggerhub also creates html documentation. The Master branch of htat is published as Github Pages, that you can look at here:
+Swaggerhub also creates html documentation. The master branch is published as Github Pages, that you can look at here:
 
 https://itchdx.github.io/ica-dek-backend/
 
@@ -31,6 +31,7 @@ The backend code can be found in /TodoService.
 There is a build server that Momo can describe in further detail when he's back from vacation. The build server builds to a dev instance with the address https://ic-todo.azurewebsites.net/.
 
 Once stable, by doing <insert description  here>, you deploy to the integration server which is used by the frontend project. Its adress is https://ica-todo-backend-prod.azurewebsites.net/.
+  
 So to test fetching all todos, you can try: https://ica-todo-backend-prod.azurewebsites.net/todos
 
 ### UserService
