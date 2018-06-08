@@ -1,4 +1,4 @@
-# ica-dek-swagger
+# ica-dek-backend
 
 This is the repository of the backend for Ica Digital Egenkontroll, that is, the swagger definitions and the code for the TodoService.
 
