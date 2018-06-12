@@ -38,8 +38,8 @@ The build server builds to a dev instance with the address https://ic-todo.azure
 
 ##### HOWTO: Deploy to test
 1. Checkout origin/master
-2. Run tests: npm run test
-2. Connect to Azure: git remote add azure https://[your_deplyment_user]@ic-todo.scm.azurewebsites.net:443/ic-todo.git
+2. Run tests: `npm run test`
+2. Connect to Azure: git remote add azure `https://[your_deployment_user]@ic-todo.scm.azurewebsites.net:443/ic-todo.git`
 3. Push to build server: git push azure master
 4. Sip on a cup of coffee and for build server to compile code...
 
