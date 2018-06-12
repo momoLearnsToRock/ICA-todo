@@ -1,4 +1,4 @@
-import { CardTypesTable } from './cardTypesTable';
+import { CardTypesTable } from '../src/dal/cardTypesTable';
 import { expect } from 'chai';
 import 'mocha';
 

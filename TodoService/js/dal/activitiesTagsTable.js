@@ -17,8 +17,11 @@ class ActivitiesTagsTable extends sqlTableType_1.SqlTableType {
         debug.enabled = true;
     }
     async customUpdateChecks(jsonBody) {
-        if (!jsonBody.activityId || !jsonBody.tagId) { //all or none
-            throw new Error(`Body is missing the fields. all the fields 'activityId' and 'tagId' must be present.`);
+        if (!jsonBody.activityId) {
+            throw new Error(`Body is missing the field 'activityId'`);
+        }
+        if (!jsonBody.tagId) {
+            throw new Error(`Body is missing the field 'tagId'`);
         }
         return;
     }

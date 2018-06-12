@@ -79,17 +79,20 @@ export class ActivitiesTable extends SqlTableType {
     try {
       todo = await this.todosTable.insertTransPool(activity, false, transaction);
 
-      let activityTags = JSON.parse(activity.tags); //await this.getTags(activity.activityId);
-      // await activityTags.forEach(async function (at) {
-      for (let i: number = 0; i < activityTags.length; i++) {
-        let at: any = activityTags[i];
-        delete at.title;
-        at.tagId = at.id;
-        delete at.id;
-        at.todoId = todo.id;
-        const todostag = await this.todosTable.todosTagsTable.insertTransPool(at, false, transaction);
-        debug(todostag);
-      } // .bind(this));
+      if (activity.tags && activity.tags.length > 0) {
+        let activityTags = JSON.parse(activity.tags);
+        // await this.getTags(activity.activityId);
+        // await activityTags.forEach(async function (at) {
+        for (let i: number = 0; i < activityTags.length; i++) {
+          let at: any = activityTags[i];
+          delete at.title;
+          at.tagId = at.id;
+          delete at.id;
+          at.todoId = todo.id;
+          const todostag = await this.todosTable.todosTagsTable.insertTransPool(at, false, transaction);
+          debug(todostag);
+        } // .bind(this));
+      }
       let activityCardsFilter: string = `$filter=activityId eq ${activity.activityId}`;
       let activityCards = await this.activityCardsTable.getAll(activityCardsFilter);
       for (let i: number = 0; i < activityCards.length; i++) {

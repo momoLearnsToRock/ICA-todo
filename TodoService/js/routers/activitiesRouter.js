@@ -105,8 +105,8 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
                     if (!rslt || rslt.length == 0) {
                         throw new Error(`Could not find an entry with the given id.`);
                     }
-                    req.activityCardById = rslt[0];
-                    if (req.body.id && req.body.id !== req.activityCardById.id) {
+                    req.activityTagById = rslt[0];
+                    if (req.body.id && req.body.id !== req.activityTagById.id) {
                         res
                             .status(400)
                             .send("Wrong id was passed as part of the request body.");
@@ -133,7 +133,8 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
             // if (req.itemById == null) {
             //   res.status(204).send({});
             // } else {
-            res.send(req.activityTagById);
+            let tag = req.activityTagById;
+            res.send(tag);
             // }
         })
             .post((req, res) => {
@@ -337,7 +338,7 @@ class ActivitiesRouter extends baseRouter.BaseRouter {
                 }
             }.bind(this)());
         });
-        // #endregion ActiviyVards
+        // #endregion ActiviyCards
     }
 }
 exports.ActivitiesRouter = ActivitiesRouter;

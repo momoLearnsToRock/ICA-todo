@@ -142,7 +142,7 @@ class main {
         disablePost: true,
         disablePut: false,
         disablePatch: false,
-        disableDelete: true,
+        disableDelete: false,
       });
       app.use('/todos', todosRouter.router);
     });
