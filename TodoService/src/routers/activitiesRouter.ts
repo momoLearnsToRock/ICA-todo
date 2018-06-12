@@ -129,15 +129,13 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
     this.router.use("/:activityId/tags/:tagId", (req, res, next) => {
       (async function query(this: any) {
         try {
-          let reqUrl = `$filter=(activityId eq ${
-            req.params.activityId
-            } and tagId eq ${req.params.tagId})`;
+          let reqUrl = `$filter=(activityId eq ${req.params.activityId} and tagId eq ${req.params.tagId})`;
           let rslt = await this.table.activitiesTagsTable.getAll(reqUrl);
           if (!rslt || rslt.length == 0) {
             throw new Error(`Could not find an entry with the given id.`);
           }
-          (<any>req).activityCardById = rslt[0];
-          if (req.body.id && req.body.id !== (<any>req).activityCardById.id) {
+          (<any>req).activityTagById = rslt[0];
+          if (req.body.id && req.body.id !== (<any>req).activityTagById.id) {
             res
               .status(400)
               .send("Wrong id was passed as part of the request body.");
@@ -164,7 +162,8 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
         // if (req.itemById == null) {
         //   res.status(204).send({});
         // } else {
-        res.send((<any>req).activityTagById);
+        let tag = (<any>req).activityTagById;
+        res.send(tag);
         // }
       })
       .post((req, res) => {
@@ -400,6 +399,6 @@ export class ActivitiesRouter extends baseRouter.BaseRouter {
           }
         }.bind(this)());
       });
-    // #endregion ActiviyVards
+    // #endregion ActiviyCards
   }
 }

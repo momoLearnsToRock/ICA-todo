@@ -95,6 +95,9 @@ export class TodosRouter extends baseRouter.BaseRouter {
         }.bind(this)());
       });
 
+    // ROUTE: /todos/n/tags
+    
+
     // ROUTE: /todos/n/cards/n
     // Middle-ware
     this.router.use("/:todoId/cards/:cardId", (req, res, next) => {
@@ -261,7 +264,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
            }
 
            await this.table.todoCardsTable.setOutputMedia(req.params.cardId, fileName, fileContentType, hexStr.toUpperCase());
-           resp.status(200).send(fileName + ' ' + fileContentType);
+           resp.status(200).send({ fileName: fileName, contentType: fileContentType });
          } else {
            resp.status(500).send("Attachment is missing.");
          }
