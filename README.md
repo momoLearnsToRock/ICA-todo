@@ -8,7 +8,7 @@ The current team consists of:
 * Göran, [roseeng](https://github.com/roseeng)
 * Momo, [MomoLearnsToRock](https://github.com/momolearnstorock)
 * Daniel J, [skurtbert](https://github.com/skurtbert)
-* Abdallah, (mailto:abdallah.rifai@acando.com)
+* Abdallah, [AboAdam](https://github.com/AboAdam)
 
 ## Swagger definitions
 ### Input
