@@ -1,5 +1,6 @@
 import baseRouter = require("./baseRouter");
 import h = require("../helpers/misc");
+import fileUpload = require("express-fileupload")
 import dbg from "debug";
 import express = require("express");
 import http = require("http");
@@ -31,6 +32,12 @@ export class TodosRouter extends baseRouter.BaseRouter {
       disablePatch: disablePatch,
       disableDelete: disableDelete
     });
+
+    // Upload file type prevent compliation errors when working with todo card attachments
+    type UploadedFile = fileUpload.UploadedFile;
+    function isUploadedFile(file: UploadedFile | UploadedFile[]): file is UploadedFile {
+      return typeof file === 'object' && (<UploadedFile> file).name !== undefined;
+    }
 
     // #region TodoCards
 
@@ -250,7 +257,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
      this.router.route("/:todoId/cards/:cardId/attachment/")
      .post((req, resp) => {
        (async function query(this: any) {
-         if (req.files && req.files.attachment) {
+         if (req.files && req.files.attachment && isUploadedFile(req.files.attachment)) {
            // Get attachment from request
            let fileName = req.files.attachment.name;
            let fileContentType = req.files.attachment.mimetype;
