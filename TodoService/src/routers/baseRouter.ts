@@ -97,11 +97,7 @@ export class BaseRouter {
           this.methodNotAvailable(res, "Get", "");
           return;
         }
-        // if (req.itemById == null) {
-        //   res.status(204).send({});
-        // } else {
         res.send((<any>req).itemById);
-        // }
       })
       .post((req, res) => {
         this.methodNotAvailable(

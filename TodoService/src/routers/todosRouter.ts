@@ -17,13 +17,13 @@ export class TodosRouter extends baseRouter.BaseRouter {
     disablePatch,
     disableDelete
   }: {
-    table: TodosTable;
-    disableGetAll: boolean;
-    disablePost: boolean;
-    disablePut: boolean;
-    disablePatch: boolean;
-    disableDelete: boolean;
-  }) {
+      table: TodosTable;
+      disableGetAll: boolean;
+      disablePost: boolean;
+      disablePut: boolean;
+      disablePatch: boolean;
+      disableDelete: boolean;
+    }) {
     super({
       table: table,
       disableGetAll: disableGetAll,
@@ -36,14 +36,25 @@ export class TodosRouter extends baseRouter.BaseRouter {
     // Upload file type prevent compliation errors when working with todo card attachments
     type UploadedFile = fileUpload.UploadedFile;
     function isUploadedFile(file: UploadedFile | UploadedFile[]): file is UploadedFile {
-      return typeof file === 'object' && (<UploadedFile> file).name !== undefined;
+      return typeof file === 'object' && (<UploadedFile>file).name !== undefined;
+    }
+
+    // Convert attached file to HEX string to store in database
+    function convertAttachmentToHex(fileData: any) {
+      let hexStr = '0x';
+      for (let i = 0; i < fileData.length; i++) {
+        let hex = (fileData[i] & 0xff).toString(16);
+        hex = (hex.length === 1) ? '0' + hex : hex;
+        hexStr += hex;
+      }
+      return hexStr.toUpperCase();
     }
 
     // #region TodoCards
 
     // ROUTE: /todos/n/cards
     this.router.route("/:todoId/cards")
-    // GET
+      // GET
       .get((req, res) => {
         (async function query(this: any) {
           try {
@@ -103,7 +114,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
       });
 
     // ROUTE: /todos/n/tags
-    
+
 
     // ROUTE: /todos/n/cards/n
     // Middle-ware
@@ -138,176 +149,174 @@ export class TodosRouter extends baseRouter.BaseRouter {
     });
 
     this.router.route("/:todoId/cards/:cardId")
-    
-    // GET
-    .get((req, res) => {
-      (async function query(this: any) {
-        try {
-          let reqUrl = `$filter=todoId eq ${req.params.todoId} and id eq ${req.params.cardId}`;
-          let rslt = await this.table.todoCardsTable.getAll(reqUrl);
-          res.send(rslt);
-        } catch (err) {
-          console.log(err);
-          let code: number = 500;
-          switch (true) {
-            case "error" == err.message:
-            case /^Parse error:/.test(err.message):
-              code = 400;
-              break;
-          }
-          res.status(code).send(err.message);
-        }
-      }.bind(this)());
-    })
-    
-    // POST (not allowed)
-    .post((req, res) => {
-      this.methodNotAvailable(
-        res,
-        `"post"`,
-        `try using "post" on the address "todos/${req.params.todoId}/cards" instead of "todos/${req.params.todoId}/cards/${req.params.cardId}"`
-      );
-    })
-    
-    // PUT
-    .put((req, res) => {
-      (async function query(this: any) {
-        let result = null;
-        try {
-          if ((<any>req).todoCardById == null) {
-            throw new Error("Could not find an entry with the given id.");
-          }
-          result = await this.table.todoCardsTable.update(
-            req.body,
-            req.params.cardId,
-            true
-          ); // the last argument makes sure to throw an error if there is a field missing (otherwise it should be patch)
-          res.send(result);
-        } catch (err) {
-          let code: number = 500;
-          switch (true) {
-            case "Could not find an entry with the given id." == err.message:
-            case "error" == err.message:
-            case /^Body is missing the field/.test(err.message):
-            case /^No fields could be parsed from body./.test(err.message):
-            case /^The field '.*' entity.$/.test(err.message):
-              code = 400;
-              break;
-          }
-          res.status(code).send(err.message);
-        }
-      }.bind(this)());
-    })
-    
-    // PATCH
-    .patch((req, res) => {
-      (async function query(this: any) {
-        let result = null;
-        try {
-          if ((<any>req).todoCardById == null) {
-            throw new Error("Could not find an entry with the given id.");
-          }
-          result = await this.table.todoCardsTable.update(
-            req.body,
-            req.params.cardId,
-            false
-          );
-          res.send(result);
-        } catch (err) {
-          let code: number = 500;
-          switch (true) {
-            case "Could not find an entry with the given id." == err.message:
-            case "error" == err.message:
-            case /^Body is missing the field/.test(err.message):
-            case /^No fields could be parsed from body./.test(err.message):
-            case /^The field '.*' entity.$/.test(err.message):
-              code = 400;
-              break;
-          }
-          res.status(code).send(err.message);
-        }
-      }.bind(this)());
-    })
 
-    // DELETE
-    .delete((req, res) => {
-      (async function query(this: any) {
-        try {
-          if ((req as any).todoCardById == null) {
-            throw new Error("Could not find an entry with the given id.");
+      // GET
+      .get((req, res) => {
+        (async function query(this: any) {
+          try {
+            let reqUrl = `$filter=todoId eq ${req.params.todoId} and id eq ${req.params.cardId}`;
+            let rslt = await this.table.todoCardsTable.getAll(reqUrl);
+            res.send(rslt);
+          } catch (err) {
+            console.log(err);
+            let code: number = 500;
+            switch (true) {
+              case "error" == err.message:
+              case /^Parse error:/.test(err.message):
+                code = 400;
+                break;
+            }
+            res.status(code).send(err.message);
           }
-          await this.table.todoCardsTable.delete(
-            (req as any).todoCardById.id
-          );
-          res.status(204).send();
-        } catch (err) {
-          let code: number = 500;
-          switch (err.message) {
-            case "Could not find an entry with the given id.":
-            case "error":
-              code = 400;
-              break;
+        }.bind(this)());
+      })
+
+      // POST (not allowed)
+      .post((req, res) => {
+        this.methodNotAvailable(
+          res,
+          `"post"`,
+          `try using "post" on the address "todos/${req.params.todoId}/cards" instead of "todos/${req.params.todoId}/cards/${req.params.cardId}"`
+        );
+      })
+
+      // PUT
+      .put((req, res) => {
+        (async function query(this: any) {
+          let result = null;
+          try {
+            if ((<any>req).todoCardById == null) {
+              throw new Error("Could not find an entry with the given id.");
+            }
+            result = await this.table.todoCardsTable.update(
+              req.body,
+              req.params.cardId,
+              true
+            ); // the last argument makes sure to throw an error if there is a field missing (otherwise it should be patch)
+            res.send(result);
+          } catch (err) {
+            let code: number = 500;
+            switch (true) {
+              case "Could not find an entry with the given id." == err.message:
+              case "error" == err.message:
+              case /^Body is missing the field/.test(err.message):
+              case /^No fields could be parsed from body./.test(err.message):
+              case /^The field '.*' entity.$/.test(err.message):
+                code = 400;
+                break;
+            }
+            res.status(code).send(err.message);
           }
-          res.status(code).send(err.message);
-        }
-      }.bind(this)());
-    });
+        }.bind(this)());
+      })
 
-     // Route for outputMedia
-     this.router.route("/:todoId/cards/:cardId/attachment/")
-     .post((req, resp) => {
-       (async function query(this: any) {
-         if (req.files && req.files.attachment && isUploadedFile(req.files.attachment)) {
-           // Get attachment from request
-           let fileName = req.files.attachment.name;
-           let fileContentType = req.files.attachment.mimetype;
-           let fileData = req.files.attachment.data;
-           // Convert file buffer to HEX
-           let hexStr = '0x';
-           for (let i = 0; i < fileData.length; i++) {
-             let hex = (fileData[i] & 0xff).toString(16);
-             hex = (hex.length === 1) ? '0' + hex : hex;
-             hexStr += hex;
-           }
+      // PATCH
+      .patch((req, res) => {
+        (async function query(this: any) {
+          let result = null;
+          try {
+            if ((<any>req).todoCardById == null) {
+              throw new Error("Could not find an entry with the given id.");
+            }
+            result = await this.table.todoCardsTable.update(
+              req.body,
+              req.params.cardId,
+              false
+            );
+            res.send(result);
+          } catch (err) {
+            let code: number = 500;
+            switch (true) {
+              case "Could not find an entry with the given id." == err.message:
+              case "error" == err.message:
+              case /^Body is missing the field/.test(err.message):
+              case /^No fields could be parsed from body./.test(err.message):
+              case /^The field '.*' entity.$/.test(err.message):
+                code = 400;
+                break;
+            }
+            res.status(code).send(err.message);
+          }
+        }.bind(this)());
+      })
 
-           await this.table.todoCardsTable.setOutputMedia(req.params.cardId, fileName, fileContentType, hexStr.toUpperCase());
-           resp.status(200).send({ fileName: fileName, contentType: fileContentType });
-         } else {
-           resp.status(500).send("Attachment is missing.");
-         }
-       }.bind(this)());
-     });
+      // DELETE
+      .delete((req, res) => {
+        (async function query(this: any) {
+          try {
+            if ((req as any).todoCardById == null) {
+              throw new Error("Could not find an entry with the given id.");
+            }
+            await this.table.todoCardsTable.delete(
+              (req as any).todoCardById.id
+            );
+            res.status(204).send();
+          } catch (err) {
+            let code: number = 500;
+            switch (err.message) {
+              case "Could not find an entry with the given id.":
+              case "error":
+                code = 400;
+                break;
+            }
+            res.status(code).send(err.message);
+          }
+        }.bind(this)());
+      });
 
-   this.router.route("/:todoId/cards/:cardId/attachment/:fileName/")
-     .get((req, res) => {
-       (async function query(this: any) {
-         try {
-           // Fetch file data and meta data
-           let rslt = await this.table.todoCardsTable.getOutputMedia(req.params.cardId);
-           // Check if file exists and that file name matches, else send 404
-           if (rslt && rslt.outputFileName && rslt.outputFileName.localeCompare(req.params.fileName) === 0) {
-             // Set headers with content-type
-             res.setHeader('Content-Type', rslt.outputFileContentType);
-             res.setHeader('Content-Disposition', 'filename=' + rslt.outputFileName);
-             res.status(200).send(rslt.outputFileData);
-           } else {
-             // File not found or file name doesn't match
-             res.status(404).send("File not found.");
-           }
-         } catch (err) {
-           console.log(err);
-           let code: number = 500;
-           switch (true) {
-             case "error" == err.message:
-             case /^Parse error:/.test(err.message):
-               code = 400;
-               break;
-           }
-           res.status(code).send(err.message);
-         }
-       }.bind(this)());
-     });
-     
+    // Route for outputMedia
+    this.router.route("/:todoId/cards/:cardId/attachment/")
+      .post((req, resp) => {
+        (async function query(this: any) {
+          try {
+            if (req.files && req.files.attachment && isUploadedFile(req.files.attachment)) {
+              // Get attachment from request
+              let fileName = req.files.attachment.name;
+              let fileContentType = req.files.attachment.mimetype;
+              let fileData = convertAttachmentToHex(req.files.attachment.data);
+
+              await this.table.todoCardsTable.setOutputMedia(req.params.cardId, fileName, fileContentType, fileData);
+              resp.status(200).send({ fileName: fileName, contentType: fileContentType });
+            }
+            else {
+              resp.status(422).send("Attachment is missing.");
+            }
+          } catch (ex) {
+            resp.status(500).send("An error occured while processing attachment.");
+          }
+        }.bind(this)());
+      });
+
+    this.router.route("/:todoId/cards/:cardId/attachment/:fileName/")
+      .get((req, res) => {
+        (async function query(this: any) {
+          try {
+            // Fetch file data and meta data
+            let rslt = await this.table.todoCardsTable.getOutputMedia(req.params.cardId);
+            // Check if file exists and that file name matches, else send 404
+            if (rslt && rslt.outputFileName && rslt.outputFileName.localeCompare(req.params.fileName) === 0) {
+              // Set headers with content-type
+              res.setHeader('Content-Type', rslt.outputFileContentType);
+              res.setHeader('Content-Disposition', 'filename=' + rslt.outputFileName);
+              res.status(200).send(rslt.outputFileData);
+            } else {
+              // File not found or file name doesn't match
+              res.status(404).send("File not found.");
+            }
+          } catch (err) {
+            console.log(err);
+            let code: number = 500;
+            switch (true) {
+              case "error" == err.message:
+              case /^Parse error:/.test(err.message):
+                code = 400;
+                break;
+            }
+            res.status(code).send(err.message);
+          }
+        }.bind(this)());
+      });
+
     // #endregion TodoCards
   }
 }
