@@ -126,67 +126,6 @@
         }
       }
     },
-    "/todos/{id}/assign" : {
-      "post" : {
-        "tags" : [ "clients" ],
-        "summary" : "assigns the todo",
-        "description" : "Assigns a user or department to the todo",
-        "operationId" : "todoAssign",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "ID of the todo to change the assignee for",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "assignee",
-          "description" : "User or Department to assign to",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/Assignee"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Item Updated",
-            "schema" : {
-              "$ref" : "#/definitions/TodoItem"
-            }
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          }
-        }
-      }
-    },
-    "/todos/{id}/close" : {
-      "post" : {
-        "tags" : [ "clients" ],
-        "summary" : "close the todo",
-        "description" : "close the todo",
-        "operationId" : "todoClose",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "ID of the todo to change the assignee for",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "item updated"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          }
-        }
-      }
-    },
     "/todos/{id}/cards" : {
       "get" : {
         "tags" : [ "clients" ],
@@ -1412,7 +1351,7 @@
   },
   "definitions" : {
     "TodoItem" : {
-      "required" : [ "title", "todoType" ],
+      "required" : [ "categoryId", "contentUrl", "note", "priority", "title", "todoType" ],
       "properties" : {
         "id" : {
           "type" : "string",
@@ -1633,7 +1572,7 @@
     },
     "Activity" : {
       "type" : "object",
-      "required" : [ "activityType", "categoryId", "title" ],
+      "required" : [ "activityType", "categoryId", "contentUrl", "note", "priority", "title" ],
       "properties" : {
         "id" : {
           "type" : "string",
@@ -1709,17 +1648,6 @@
           "id" : "123456",
           "title" : "Rengöring"
         } ]
-      }
-    },
-    "BaseTable" : {
-      "type" : "object",
-      "required" : [ "modifiedOn" ],
-      "properties" : {
-        "modifiedOn" : {
-          "type" : "string",
-          "format" : "date-time",
-          "example" : "2018-04-24 14:41"
-        }
       }
     },
     "TodoInstantiate" : {
