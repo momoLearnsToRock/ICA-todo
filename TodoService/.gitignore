@@ -2,9 +2,6 @@
 # config
 /config/*
 
-# compiled js files
-/js/*
-
 # dependencies
 /node_modules
 
