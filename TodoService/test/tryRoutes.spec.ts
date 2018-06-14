@@ -287,7 +287,7 @@ describe('Test routes', () => {
         res.body.should.have.property('id');
         // assign todo ids to objects
         todoId = res.body.id;
-        todoCardId1 = JSON.parse(res.body.cards)[0].cardId; // should only have one card
+        todoCardId1 = JSON.parse(res.body.cards)[0].id; // should only have one card
         done();
       });
   })
@@ -336,7 +336,7 @@ describe('Test routes', () => {
 
   it('GET /todos/:id/cards/:id => Get todo card for a todo by id', (done) => {
     chai.request(server)
-      .get('/todos/' + todoId + '/cards/' + todoCardId1)
+      .get('/todos/' + todoId + '/cards/' + todoCardId2)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('array'); // a single card is returned as an object in an array (?)
@@ -346,7 +346,7 @@ describe('Test routes', () => {
 
   it('POST /todos/:id/cards/:id/attachment => Add attachment to a todo card', (done) => {
     chai.request(server)
-      .post('/todos/' + todoId + '/cards/' + todoCardId1 + '/attachment/')
+      .post('/todos/' + todoId + '/cards/' + todoCardId2 + '/attachment/')
       .attach('attachment', fs.readFileSync('./test/testfile.txt'), 'testFile.txt')
       .end((err, res) => {
         res.should.have.status(200);
@@ -358,7 +358,7 @@ describe('Test routes', () => {
 
   it('GET /todos/:id/cards/:id/attachment/:filename => Get attachment for a todo card by filename', (done) => {
     chai.request(server)
-      .get('/todos/' + todoId + '/cards/' + todoCardId1 + '/attachment/' + attachment)
+      .get('/todos/' + todoId + '/cards/' + todoCardId2 + '/attachment/' + attachment)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
