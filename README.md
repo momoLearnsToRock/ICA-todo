@@ -67,4 +67,8 @@ step 1 :
 
 step 2 : 
 
-- 
+- click on clone or download here on github and copy the url of the project 
+- go to any command prompt and do the following : 
+              - create a folder for you project e.g. mkdir ICA
+              - use git commands to download the project start with git init 
+              - git clone https://github.com/ 
