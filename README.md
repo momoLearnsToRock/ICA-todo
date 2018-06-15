@@ -55,5 +55,16 @@ The code is in our repo in Ica's Gitlab and it is deployed to http://dek-ica-use
 
 You can try it out by e.g. fetching http://dek-ica-userservice.azurewebsites.net/users in the browser.
 
+### SetUp For New Developers 
 
+As a new developer you will need first to install some programs .
 
+step 1 :
+
+1- Start with node.js ,  https://nodejs.org/en/download/
+2- install Git , https://git-scm.com/downloads 
+3- VS Code , https://code.visualstudio.com/download 
+
+step 2 : 
+
+- 
