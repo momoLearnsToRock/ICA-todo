@@ -61,14 +61,24 @@ As a new developer you will need first to install some programs .
 
 step 1 :
 
-1- Start with node.js ,  https://nodejs.org/en/download/
-2- install Git , https://git-scm.com/downloads 
-3- VS Code , https://code.visualstudio.com/download 
+- Start with node.js ,  https://nodejs.org/en/download/
+- install Git , https://git-scm.com/downloads 
+- VS Code , https://code.visualstudio.com/download 
 
 step 2 : 
 
 - click on clone or download here on github and copy the url of the project 
-- go to any command prompt and do the following : 
-              - create a folder for you project e.g. mkdir ICA
-              - use git commands to download the project start with git init 
-              - git clone https://github.com/ 
+- go to any command prompt and create a folder for you project e.g. mkdir ICA
+- use git commands to download the project start with git init 
+- git clone https://github.com/itchDX/ica-dek-backend.git to download 
+- code . => that will open it in vs code . 
+
+step 3 : 
+
+- run npm install in the command prompt (you can use vs code built in cmd )
+- ctrl+shift+B  to build the project . 
+- Run tests: `npm run test`
+
+finally : 
+ 
+ if you get any errors so get a coffe and check with the guys who's names listed above to help you solve them  :) 
