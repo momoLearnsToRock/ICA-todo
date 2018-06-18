@@ -1,5 +1,5 @@
 /***
- * Manually clean up database: 
+ * Manually clean up database (in case somethings goes wrong): 
 delete from TodoCardsBase where cardType = 'TEST';
 delete from TodosBase where assignedToId = 'testid'
 delete from ActivityCardsBase where cardType = 'TEST'
