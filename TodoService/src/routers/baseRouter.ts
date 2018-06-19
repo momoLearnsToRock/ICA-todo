@@ -20,13 +20,13 @@ export class BaseRouter {
     disablePatch,
     disableDelete
   }: {
-    table: SqlTableType;
-    disableGetAll: boolean;
-    disablePost: boolean;
-    disablePut: boolean;
-    disablePatch: boolean;
-    disableDelete: boolean;
-  }) {
+      table: SqlTableType;
+      disableGetAll: boolean;
+      disablePost: boolean;
+      disablePut: boolean;
+      disablePatch: boolean;
+      disableDelete: boolean;
+    }) {
     const debug = dbg("todo:baseRouter");
     debug.enabled = true;
     this.table = table;
@@ -73,6 +73,13 @@ export class BaseRouter {
             if (!rslt) {
               throw new Error(`Could not find an entry with the given id.`);
             }
+            // Parse known json arrays for the result
+            if (rslt.tags) {
+              rslt.tags = JSON.parse(rslt.tags)
+            }
+            if (rslt.cards) {
+              rslt.cards = JSON.parse(rslt.cards);
+            }
             (<any>req).itemById = rslt;
             next();
           } catch (err) {
@@ -104,7 +111,7 @@ export class BaseRouter {
           res,
           `"post"`,
           `try using "post" on the address "${
-            this.table.tableName
+          this.table.tableName
           }" instead of "${this.table.tableName}/${req.params.id}"`
         );
       })
@@ -131,6 +138,17 @@ export class BaseRouter {
         reqUrl = decodeURI(reqUrl);
 
         let rslt = await this.table.getAll(reqUrl);
+        // Parse known json arrays for each item in the result
+        if (rslt && rslt.length > 0) {
+          for (let item of rslt) {
+            if (item.tags) {
+              item.tags = JSON.parse(item.tags)
+            }
+            if (item.cards) {
+              item.cards = JSON.parse(item.cards);
+            }
+          };
+        }
         res.send(rslt);
       } catch (err) {
         console.log(err);

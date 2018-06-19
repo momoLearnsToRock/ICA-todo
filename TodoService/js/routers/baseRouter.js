@@ -41,6 +41,13 @@ class BaseRouter {
                         if (!rslt) {
                             throw new Error(`Could not find an entry with the given id.`);
                         }
+                        // Parse known json arrays for the result
+                        if (rslt.tags) {
+                            rslt.tags = JSON.parse(rslt.tags);
+                        }
+                        if (rslt.cards) {
+                            rslt.cards = JSON.parse(rslt.cards);
+                        }
                         req.itemById = rslt;
                         next();
                     }
@@ -91,6 +98,18 @@ class BaseRouter {
                 reqUrl = reqUrl.substring(reqUrl.indexOf("$"), reqUrl.length);
                 reqUrl = decodeURI(reqUrl);
                 let rslt = await this.table.getAll(reqUrl);
+                // Parse known json arrays for each item in the result
+                if (rslt && rslt.length > 0) {
+                    for (let item of rslt) {
+                        if (item.tags) {
+                            item.tags = JSON.parse(item.tags);
+                        }
+                        if (item.cards) {
+                            item.cards = JSON.parse(item.cards);
+                        }
+                    }
+                    ;
+                }
                 res.send(rslt);
             }
             catch (err) {
