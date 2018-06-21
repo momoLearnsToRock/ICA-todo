@@ -33,7 +33,7 @@ let activityCardObj = { activityId: 0, notes: "Test card", cardType: 'TEST', inp
 let todoCardObj = { notes: "Test card", cardType: 'TEST', input: 'Test input', outputText: 'Test output text', outputMedia: null };
 
 // Additional parameters to instantiate todo
-let instantiateTodoParams = { dueAt: now, assignedToId: 'testid', assignedToName: 'Test Group', assignedToObjectType: 'Group' };
+let instantiateTodoParams = { dueAt: now, assignedToId: 'testid', assignedToName: 'Test Group', assignedToObjectType: 'Group', createdById: 'test.user', createdByName: 'Test User' };
 let assignee = { assignedToId: 'testid', assignedToName: 'Test Group', assignedToObjectType: 'Group' };
 
 // Parameters

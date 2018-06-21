@@ -86,7 +86,7 @@ export class ActivitiesTable extends SqlTableType {
       todo = await this.todosTable.insertTransPool(activity, false, transaction);
 
       if (activity.tags && activity.tags.length > 0) {
-        let activityTags = JSON.parse(activity.tags);
+        let activityTags = activity.tags;
         // await this.getTags(activity.activityId);
         // await activityTags.forEach(async function (at) {
         for (let i: number = 0; i < activityTags.length; i++) {
