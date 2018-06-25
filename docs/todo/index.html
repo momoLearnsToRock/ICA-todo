@@ -439,7 +439,7 @@
                                             <div class="col-md-6 sw-request-model">
                             <div  class="panel panel-definition">
                                 <div class="panel-body">
-                                            <a class="json-schema-ref" href="#/definitions/Activity">Activity</a>
+                                            <a class="json-schema-ref" href="#/definitions/ActivityBase">ActivityBase</a>
                                 </div>
                             </div></div>
                                         </div>
@@ -749,7 +749,7 @@
                                             <div class="col-md-6 sw-request-model">
                             <div  class="panel panel-definition">
                                 <div class="panel-body">
-                                            <a class="json-schema-ref" href="#/definitions/Activity">Activity</a>
+                                            <a class="json-schema-ref" href="#/definitions/ActivityBase">ActivityBase</a>
                                 </div>
                             </div></div>
                                         </div>
@@ -4098,7 +4098,7 @@
                                             <div class="col-md-6 sw-request-model">
                             <div  class="panel panel-definition">
                                 <div class="panel-body">
-                                            <a class="json-schema-ref" href="#/definitions/TodoItem">TodoItem</a>
+                                            <a class="json-schema-ref" href="#/definitions/TodoItemUpdateModel">TodoItemUpdateModel</a>
                                 </div>
                             </div></div>
                                         </div>
@@ -5132,6 +5132,101 @@
                         <div class="panel-heading">
                                 <h3 class="panel-title"><a name="/definitions/Activity"></a>Activity:
                                     <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                <section class="json-schema-allOf">
+                                    <section class="json-schema-allOf-inherited">
+                                        <ul>
+                                                    <a class="json-schema-ref" href="#/definitions/ActivityBase">ActivityBase</a>
+                                        </ul>
+                                    </section>
+                                    <section class="json-schema-allOf-additional">
+                                                    <section class="json-schema-example">
+                                                        <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">activityType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;basic&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">cards</span>&quot;: <span class="hljs-value">[<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span><br>        </span>},<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123457&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you perform task 2&quot;</span><br>        </span>}<br>    ]</span>,<br>    &quot;<span class="hljs-attribute">categoryId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">categoryTitle</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;HACCP&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">contentUrl</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;https://episerver.ica.se/getContent?id=4711&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">note</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;r s&#xE5; h&#xE4;r&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">priority</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>    &quot;<span class="hljs-attribute">tags</span>&quot;: <span class="hljs-value">[<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">sortId</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>            &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Reng&#xF6;ring&quot;</span><br>        </span>},<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123457&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">sortId</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>            &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;M&#xE4;tning&quot;</span><br>        </span>}<br>    ]</span>,<br>    &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;St&#xE4;da charken&quot;</span><br></span>}
+                                                </code></pre>
+                                                
+                                                    </section>
+                                                
+                                                        <section class="json-schema-properties">
+                                                            <dl>
+                                                                    <dt data-property-name="categoryTitle">
+                                                                        <span class="json-property-name">categoryTitle:</span>
+                                                                        
+                                                                        <span class="json-property-type">string</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                    </dt>
+                                                                    <dd>
+                                                                        
+                                                                        <div class="json-inner-schema">
+                                                                                <section class="json-schema-example">
+                                                                                    <pre><code class="lang-json"><span class="hljs-string">&quot;HACCP&quot;</span>
+                                                                            </code></pre>
+                                                                            
+                                                                                </section>
+                                                                            
+                                                                        </div>
+                                                                    </dd>
+                                                                    <dt data-property-name="tags">
+                                                                        <span class="json-property-name">tags:</span>
+                                                                        
+                                                                        <span class="json-property-type">object[]</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                    </dt>
+                                                                    <dd>
+                                                                        
+                                                                        <div class="json-inner-schema">
+                                                                            
+                                                                                            <section class="json-schema-array-items">
+                                                                                                
+                                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/Tag">Tag</a>
+                                                                                                </span>
+                                                                                                <span class="json-property-range" title="Value limits"></span>
+                                                                                                
+                                                                                                <div class="json-inner-schema">
+                                                                                                    
+                                                                                                </div>
+                                                                                            </section>                </div>
+                                                                    </dd>
+                                                                    <dt data-property-name="cards">
+                                                                        <span class="json-property-name">cards:</span>
+                                                                        
+                                                                        <span class="json-property-type">object[]</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                    </dt>
+                                                                    <dd>
+                                                                        
+                                                                        <div class="json-inner-schema">
+                                                                            
+                                                                                            <section class="json-schema-array-items">
+                                                                                                
+                                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/CardBase">CardBase</a>
+                                                                                                </span>
+                                                                                                <span class="json-property-range" title="Value limits"></span>
+                                                                                                
+                                                                                                <div class="json-inner-schema">
+                                                                                                    
+                                                                                                </div>
+                                                                                            </section>                </div>
+                                                                    </dd>
+                                                            </dl>
+                                                        </section>
+                                    </section>
+                                </section>
+                    </div>
+                </div>        
+                <div id="definition-ActivityBase" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/ActivityBase"></a>ActivityBase:
+                                    <span class="json-property-type">
                 <span class="json-property-type">object</span>
                 <span class="json-property-range" title="Value limits"></span>
                 
@@ -5140,7 +5235,7 @@
                         </div>
                     <div class="panel-body">
                                 <section class="json-schema-example">
-                                    <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">activityType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;basic&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">categoryId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">categoryTitle</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;HACCP&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">contentUrl</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;https://episerver.ica.se/getContent?id=4711&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">note</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;r s&#xE5; h&#xE4;r&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">priority</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>    &quot;<span class="hljs-attribute">tags</span>&quot;: <span class="hljs-value">[<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">sortId</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>            &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Reng&#xF6;ring&quot;</span><br>        </span>},<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">sortId</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>            &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Reng&#xF6;ring&quot;</span><br>        </span>}<br>    ]</span>,<br>    &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;St&#xE4;da charken&quot;</span><br></span>}
+                                    <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">activityType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;basic&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">categoryId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">contentUrl</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;https://episerver.ica.se/getContent?id=4711&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">note</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;r s&#xE5; h&#xE4;r&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">priority</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>    &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;St&#xE4;da charken&quot;</span><br></span>}
                             </code></pre>
                             
                                 </section>
@@ -5298,68 +5393,6 @@
                                                         
                                                     </div>
                                                 </dd>
-                                                <dt data-property-name="categoryTitle">
-                                                    <span class="json-property-name">categoryTitle:</span>
-                                                    
-                                                    <span class="json-property-type">string</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                            <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;HACCP&quot;</span>
-                                                        </code></pre>
-                                                        
-                                                            </section>
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <dt data-property-name="tags">
-                                                    <span class="json-property-name">tags:</span>
-                                                    
-                                                    <span class="json-property-type">object[]</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                        
-                                                                        <section class="json-schema-array-items">
-                                                                            
-                                                                            <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/Tag">Tag</a>
-                                                                            </span>
-                                                                            <span class="json-property-range" title="Value limits"></span>
-                                                                            
-                                                                            <div class="json-inner-schema">
-                                                                                
-                                                                            </div>
-                                                                        </section>                </div>
-                                                </dd>
-                                                <dt data-property-name="cards">
-                                                    <span class="json-property-name">cards:</span>
-                                                    
-                                                    <span class="json-property-type">object[]</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                        
-                                                                        <section class="json-schema-array-items">
-                                                                            
-                                                                            <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/ActivityCard">ActivityCard</a>
-                                                                            </span>
-                                                                            <span class="json-property-range" title="Value limits"></span>
-                                                                            
-                                                                            <div class="json-inner-schema">
-                                                                                
-                                                                            </div>
-                                                                        </section>                </div>
-                                                </dd>
                                                 <dt data-property-name="modifiedOn">
                                                     <span class="json-property-name">modifiedOn:</span>
                                                     
@@ -5386,6 +5419,132 @@
                         <div class="panel-heading">
                                 <h3 class="panel-title"><a name="/definitions/ActivityCard"></a>ActivityCard:
                                     <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                <section class="json-schema-allOf">
+                                    <section class="json-schema-allOf-inherited">
+                                        <ul>
+                                                    <a class="json-schema-ref" href="#/definitions/CardBase">CardBase</a>
+                                        </ul>
+                                    </section>
+                                    <section class="json-schema-allOf-additional">
+                                                    <section class="json-schema-example">
+                                                        <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">activityId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">cardType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;TEMP&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">input</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;tempreture must be between -5 and 8&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">outputText</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;8&quot;</span><br></span>}
+                                                </code></pre>
+                                                
+                                                    </section>
+                                                
+                                                        <section class="json-schema-properties">
+                                                            <dl>
+                                                                    <dt data-property-name="activityId">
+                                                                        <span class="json-property-name">activityId:</span>
+                                                                        
+                                                                        <span class="json-property-type">string</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                            <span class="json-property-required"></span>
+                                                                    </dt>
+                                                                    <dd>
+                                                                        
+                                                                        <div class="json-inner-schema">
+                                                                                <section class="json-schema-example">
+                                                                                    <pre><code class="lang-json"><span class="hljs-string">&quot;123456&quot;</span>
+                                                                            </code></pre>
+                                                                            
+                                                                                </section>
+                                                                            
+                                                                        </div>
+                                                                    </dd>
+                                                                    <dt data-property-name="cardType">
+                                                                        <span class="json-property-name">cardType:</span>
+                                                                        
+                                                                        <span class="json-property-type">string</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                            <span class="json-property-required"></span>
+                                                                    </dt>
+                                                                    <dd>
+                                                                        <p>the value is a key from the CardTypes entity. note that the key is string.</p>
+                                                        
+                                                                        <div class="json-inner-schema">
+                                                                                <section class="json-schema-example">
+                                                                                    <pre><code class="lang-json"><span class="hljs-string">&quot;TEMP&quot;</span>
+                                                                            </code></pre>
+                                                                            
+                                                                                </section>
+                                                                            
+                                                                        </div>
+                                                                    </dd>
+                                                                    <dt data-property-name="input">
+                                                                        <span class="json-property-name">input:</span>
+                                                                        
+                                                                        <span class="json-property-type">string</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                    </dt>
+                                                                    <dd>
+                                                                        
+                                                                        <div class="json-inner-schema">
+                                                                                <section class="json-schema-example">
+                                                                                    <pre><code class="lang-json"><span class="hljs-string">&quot;tempreture must be between -5 and 8&quot;</span>
+                                                                            </code></pre>
+                                                                            
+                                                                                </section>
+                                                                            
+                                                                        </div>
+                                                                    </dd>
+                                                                    <dt data-property-name="outputText">
+                                                                        <span class="json-property-name">outputText:</span>
+                                                                        
+                                                                        <span class="json-property-type">string</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                    </dt>
+                                                                    <dd>
+                                                                        
+                                                                        <div class="json-inner-schema">
+                                                                                <section class="json-schema-example">
+                                                                                    <pre><code class="lang-json"><span class="hljs-string">&quot;8&quot;</span>
+                                                                            </code></pre>
+                                                                            
+                                                                                </section>
+                                                                            
+                                                                        </div>
+                                                                    </dd>
+                                                                    <dt data-property-name="modifiedOn">
+                                                                        <span class="json-property-name">modifiedOn:</span>
+                                                                        
+                                                                        <span class="json-property-type">string</span>    <span class="json-property-format">(date-time)</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                    </dt>
+                                                                    <dd>
+                                                                        
+                                                                        <div class="json-inner-schema">
+                                                                                <section class="json-schema-example">
+                                                                                    <pre><code class="lang-json"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span>
+                                                                            </code></pre>
+                                                                            
+                                                                                </section>
+                                                                            
+                                                                        </div>
+                                                                    </dd>
+                                                            </dl>
+                                                        </section>
+                                    </section>
+                                </section>
+                    </div>
+                </div>        
+                <div id="definition-CardBase" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/CardBase"></a>CardBase:
+                                    <span class="json-property-type">
                 <span class="json-property-type">object</span>
                 <span class="json-property-range" title="Value limits"></span>
                 
@@ -5394,7 +5553,7 @@
                         </div>
                     <div class="panel-body">
                                 <section class="json-schema-example">
-                                    <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">activityId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">cardType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;TEMP&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">input</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;tempreture must be between -5 and 8&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">outputText</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;8&quot;</span><br></span>}
+                                    <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span><br></span>}
                             </code></pre>
                             
                                 </section>
@@ -5419,44 +5578,8 @@
                                                         
                                                     </div>
                                                 </dd>
-                                                <dt data-property-name="activityId">
-                                                    <span class="json-property-name">activityId:</span>
-                                                    
-                                                    <span class="json-property-type">string</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                            <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;123456&quot;</span>
-                                                        </code></pre>
-                                                        
-                                                            </section>
-                                                        
-                                                    </div>
-                                                </dd>
                                                 <dt data-property-name="notes">
                                                     <span class="json-property-name">notes:</span>
-                                                    
-                                                    <span class="json-property-type">string</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                            <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;this is how you measure things&quot;</span>
-                                                        </code></pre>
-                                                        
-                                                            </section>
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <dt data-property-name="cardType">
-                                                    <span class="json-property-name">cardType:</span>
                                                     
                                                     <span class="json-property-type">string</span>
                                                     <span class="json-property-range" title="Value limits"></span>
@@ -5464,65 +5587,10 @@
                                                         <span class="json-property-required"></span>
                                                 </dt>
                                                 <dd>
-                                                    <p>the value is a key from the CardTypes entity. note that the key is string.</p>
-                                    
-                                                    <div class="json-inner-schema">
-                                                            <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;TEMP&quot;</span>
-                                                        </code></pre>
-                                                        
-                                                            </section>
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <dt data-property-name="input">
-                                                    <span class="json-property-name">input:</span>
-                                                    
-                                                    <span class="json-property-type">string</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
                                                     
                                                     <div class="json-inner-schema">
                                                             <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;tempreture must be between -5 and 8&quot;</span>
-                                                        </code></pre>
-                                                        
-                                                            </section>
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <dt data-property-name="outputText">
-                                                    <span class="json-property-name">outputText:</span>
-                                                    
-                                                    <span class="json-property-type">string</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                            <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;8&quot;</span>
-                                                        </code></pre>
-                                                        
-                                                            </section>
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <dt data-property-name="modifiedOn">
-                                                    <span class="json-property-name">modifiedOn:</span>
-                                                    
-                                                    <span class="json-property-type">string</span>    <span class="json-property-format">(date-time)</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                            <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span>
+                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;this is how you measure things&quot;</span>
                                                         </code></pre>
                                                         
                                                             </section>
@@ -5819,12 +5887,12 @@
                                 <section class="json-schema-allOf">
                                     <section class="json-schema-allOf-inherited">
                                         <ul>
-                                                    <a class="json-schema-ref" href="#/definitions/TodoCardBase">TodoCardBase</a>
+                                                    <a class="json-schema-ref" href="#/definitions/CardBase">CardBase</a>
                                         </ul>
                                     </section>
                                     <section class="json-schema-allOf-additional">
                                                     <section class="json-schema-example">
-                                                        <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">activityCardId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">cardType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;TEMP&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">input</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;tempreture must be between -5 and 8&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">outputMedia</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">outputText</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;8&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">todoId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span><br></span>}
+                                                        <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">activityCardId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">cardType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;TEMP&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">input</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;tempreture must be between -5 and 8&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">outputMedia</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;/todos/3/cards/225/attachment/ica.jpg&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">outputText</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;8&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">todoId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span><br></span>}
                                                 </code></pre>
                                                 
                                                     </section>
@@ -5936,7 +6004,7 @@
                                                                         
                                                                         <div class="json-inner-schema">
                                                                                 <section class="json-schema-example">
-                                                                                    <pre><code class="lang-json"><span class="hljs-string">&quot;{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }&quot;</span>
+                                                                                    <pre><code class="lang-json"><span class="hljs-string">&quot;/todos/3/cards/225/attachment/ica.jpg&quot;</span>
                                                                             </code></pre>
                                                                             
                                                                                 </section>
@@ -5965,66 +6033,6 @@
                                                         </section>
                                     </section>
                                 </section>
-                    </div>
-                </div>        
-                <div id="definition-TodoCardBase" class="panel panel-definition">
-                        <div class="panel-heading">
-                                <h3 class="panel-title"><a name="/definitions/TodoCardBase"></a>TodoCardBase:
-                                    <span class="json-property-type">
-                <span class="json-property-type">object</span>
-                <span class="json-property-range" title="Value limits"></span>
-                
-                </span>
-                                </h3>
-                        </div>
-                    <div class="panel-body">
-                                <section class="json-schema-example">
-                                    <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span><br></span>}
-                            </code></pre>
-                            
-                                </section>
-                            
-                                    <section class="json-schema-properties">
-                                        <dl>
-                                                <dt data-property-name="id">
-                                                    <span class="json-property-name">id:</span>
-                                                    
-                                                    <span class="json-property-type">string</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                            <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;123456&quot;</span>
-                                                        </code></pre>
-                                                        
-                                                            </section>
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <dt data-property-name="notes">
-                                                    <span class="json-property-name">notes:</span>
-                                                    
-                                                    <span class="json-property-type">string</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                        <span class="json-property-required"></span>
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                            <section class="json-schema-example">
-                                                                <pre><code class="lang-json"><span class="hljs-string">&quot;this is how you measure things&quot;</span>
-                                                        </code></pre>
-                                                        
-                                                            </section>
-                                                        
-                                                    </div>
-                                                </dd>
-                                        </dl>
-                                    </section>
                     </div>
                 </div>        
                 <div id="definition-TodoInstantiate" class="panel panel-definition">
@@ -6183,7 +6191,7 @@
                                     </section>
                                     <section class="json-schema-allOf-additional">
                                                     <section class="json-schema-example">
-                                                        <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">assignedToId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0851&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">assignedToName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Frukt &amp; Gr&#xF6;nt&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">assignedToObjectType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Group&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">categoryId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">categoryTitle</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;HACCP&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-04-12 12:00&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedById</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0851&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedByName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;ran Roseen&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">contentUrl</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;https://episerver.ica.se/getContent?id=4711&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdById</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0853&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdByName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Abdallah Rifai&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">dueAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-04-12 12:00&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">isCompleted</span>&quot;: <span class="hljs-value"><span class="hljs-literal">true</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">note</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;r s&#xE5; h&#xE4;r&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">priority</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>    &quot;<span class="hljs-attribute">tags</span>&quot;: <span class="hljs-value">[<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">sortId</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>            &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Reng&#xF6;ring&quot;</span><br>        </span>},<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">sortId</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>            &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Reng&#xF6;ring&quot;</span><br>        </span>}<br>    ]</span>,<br>    &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;St&#xE4;da charken&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">todoType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;basic&quot;</span><br></span>}
+                                                        <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">assignedToId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0851&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">assignedToName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Frukt &amp; Gr&#xF6;nt&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">assignedToObjectType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Group&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">cards</span>&quot;: <span class="hljs-value">[<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span><br>        </span>},<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123457&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you perform task 2&quot;</span><br>        </span>}<br>    ]</span>,<br>    &quot;<span class="hljs-attribute">categoryId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">categoryTitle</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;HACCP&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-04-12 12:00&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedById</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0851&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedByName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;ran Roseen&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">contentUrl</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;https://episerver.ica.se/getContent?id=4711&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdById</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0853&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdByName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Abdallah Rifai&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">dueAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-04-12 12:00&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">isCompleted</span>&quot;: <span class="hljs-value"><span class="hljs-literal">true</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">note</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;r s&#xE5; h&#xE4;r&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">priority</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>    &quot;<span class="hljs-attribute">tags</span>&quot;: <span class="hljs-value">[<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">sortId</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>            &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Reng&#xF6;ring&quot;</span><br>        </span>},<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123457&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">sortId</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>            &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;M&#xE4;tning&quot;</span><br>        </span>}<br>    ]</span>,<br>    &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;St&#xE4;da charken&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">todoType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;basic&quot;</span><br></span>}
                                                 </code></pre>
                                                 
                                                     </section>
@@ -6243,7 +6251,7 @@
                                                                             
                                                                                             <section class="json-schema-array-items">
                                                                                                 
-                                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/TodoCard">TodoCard</a>
+                                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/CardBase">CardBase</a>
                                                                                                 </span>
                                                                                                 <span class="json-property-range" title="Value limits"></span>
                                                                                                 
@@ -6630,6 +6638,61 @@
                                                 </dd>
                                         </dl>
                                     </section>
+                    </div>
+                </div>        
+                <div id="definition-TodoItemUpdateModel" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/TodoItemUpdateModel"></a>TodoItemUpdateModel:
+                                    <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                <section class="json-schema-allOf">
+                                    <section class="json-schema-allOf-inherited">
+                                        <ul>
+                                                    <a class="json-schema-ref" href="#/definitions/TodoItemBase">TodoItemBase</a>
+                                        </ul>
+                                    </section>
+                                    <section class="json-schema-allOf-additional">
+                                                    <section class="json-schema-example">
+                                                        <pre><code class="lang-json">{<br>    &quot;<span class="hljs-attribute">assignedToId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0851&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">assignedToName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Frukt &amp; Gr&#xF6;nt&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">assignedToObjectType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Group&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">cards</span>&quot;: <span class="hljs-value">[<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you measure things&quot;</span><br>        </span>},<br>        {<br>            &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123457&quot;</span></span>,<br>            &quot;<span class="hljs-attribute">notes</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;this is how you perform task 2&quot;</span><br>        </span>}<br>    ]</span>,<br>    &quot;<span class="hljs-attribute">categoryId</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-04-12 12:00&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedById</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0851&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">completedByName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;ran Roseen&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">contentUrl</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;https://episerver.ica.se/getContent?id=4711&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdById</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;d290f1ee-6c54-4b01-90e6-d701748f0853&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">createdByName</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;Abdallah Rifai&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">dueAt</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-04-12 12:00&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">id</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;123456&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">isCompleted</span>&quot;: <span class="hljs-value"><span class="hljs-literal">true</span></span>,<br>    &quot;<span class="hljs-attribute">modifiedOn</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;2018-03-14 15:22&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">note</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;G&#xF6;r s&#xE5; h&#xE4;r&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">priority</span>&quot;: <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>    &quot;<span class="hljs-attribute">title</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;St&#xE4;da charken&quot;</span></span>,<br>    &quot;<span class="hljs-attribute">todoType</span>&quot;: <span class="hljs-value"><span class="hljs-string">&quot;basic&quot;</span><br></span>}
+                                                </code></pre>
+                                                
+                                                    </section>
+                                                
+                                                        <section class="json-schema-properties">
+                                                            <dl>
+                                                                    <dt data-property-name="cards">
+                                                                        <span class="json-property-name">cards:</span>
+                                                                        
+                                                                        <span class="json-property-type">object[]</span>
+                                                                        <span class="json-property-range" title="Value limits"></span>
+                                                                        
+                                                                    </dt>
+                                                                    <dd>
+                                                                        
+                                                                        <div class="json-inner-schema">
+                                                                            
+                                                                                            <section class="json-schema-array-items">
+                                                                                                
+                                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/CardBase">CardBase</a>
+                                                                                                </span>
+                                                                                                <span class="json-property-range" title="Value limits"></span>
+                                                                                                
+                                                                                                <div class="json-inner-schema">
+                                                                                                    
+                                                                                                </div>
+                                                                                            </section>                </div>
+                                                                    </dd>
+                                                            </dl>
+                                                        </section>
+                                    </section>
+                                </section>
                     </div>
                 </div>
 </div>
