@@ -1195,6 +1195,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Tag'
+      cards:
+        type: array
+        items:
+          $ref: '#/definitions/TodoCard'
       modifiedOn:
         type: string
         format: date-time
@@ -1358,6 +1362,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Tag'
+      cards:
+        type: array
+        items:
+          $ref: '#/definitions/ActivityCard'          
       modifiedOn:
         type: string
         format: date-time
