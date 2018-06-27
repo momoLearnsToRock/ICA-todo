@@ -62,7 +62,9 @@ export class ActivitiesTable extends SqlTableType {
     if (!jsonBody.assignedToId) throw new Error(`Body is missing the field 'assignedToId'`);
     if (!jsonBody.assignedToName) throw new Error(`Body is missing the field 'assignedToName'`);
     if (!jsonBody.assignedToObjectType) throw new Error(`Body is missing the field 'assignedToObjectType'`);
-
+    if (!jsonBody.createdById) throw new Error(`Body is missing the field 'createdById'`);
+    if (!jsonBody.createdByName) throw new Error(`Body is missing the field 'createdByName'`);
+    
     activity.activityId = activity.id;
     delete activity.id;
     activity.todoType = activity.activityType;
@@ -71,6 +73,10 @@ export class ActivitiesTable extends SqlTableType {
     activity.assignedToName = jsonBody.assignedToName;
     activity.assignedToObjectType = jsonBody.assignedToObjectType;
     activity.dueAt = !jsonBody.dueAt ? null : jsonBody.dueAt;
+    activity.createdById = jsonBody.createdById;
+    activity.createdByName = jsonBody.createdByName;
+    
+
     // activity.startsAt = !jsonBody.startsAt?null:jsonBody.startsAt;
 
     let todo = null;
@@ -80,7 +86,7 @@ export class ActivitiesTable extends SqlTableType {
       todo = await this.todosTable.insertTransPool(activity, false, transaction);
 
       if (activity.tags && activity.tags.length > 0) {
-        let activityTags = activity.tags //JSON.parse(activity.tags); // We cans parse already parsed tags (in base router)
+        let activityTags = activity.tags;
         // await this.getTags(activity.activityId);
         // await activityTags.forEach(async function (at) {
         for (let i: number = 0; i < activityTags.length; i++) {
