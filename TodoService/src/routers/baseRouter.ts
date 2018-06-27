@@ -126,7 +126,7 @@ export class BaseRouter {
       });
   }
 
-  private get(req: any, res: any): void {
+  get(req: any, res: any): void {
     (async function query(this: any) {
       try {
         if (!!this.disableGetAll) {
@@ -164,7 +164,7 @@ export class BaseRouter {
     }.bind(this)());
   }
 
-  private post(req: any, res: any): void {
+  post(req: any, res: any): void {
     (async function query(this: any) {
       try {
         if (!!this.disablePost) {
@@ -205,7 +205,7 @@ export class BaseRouter {
     }.bind(this)());
   }
 
-  private put(req: any, res: any): void {
+  put(req: any, res: any): void {
     (async function query(this: any) {
       let result = null;
       try {
@@ -235,7 +235,7 @@ export class BaseRouter {
     }.bind(this)());
   }
 
-  private patch(req: any, res: any): void {
+  patch(req: any, res: any): void {
     if (!!this.disablePatch) {
       this.methodNotAvailable(res, "Patch", "");
       return;
@@ -269,7 +269,7 @@ export class BaseRouter {
     }.bind(this)());
   }
 
-  private delete(req: any, res: any): void {
+  delete(req: any, res: any): void {
     (async function query(this: any) {
       try {
         if (!!this.disableDelete) {

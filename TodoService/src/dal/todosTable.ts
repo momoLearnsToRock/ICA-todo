@@ -48,71 +48,6 @@ export class TodosTable extends SqlTableType {
     this.todoCardsTable = new TodoCardsTable(connectionPool);
   }
 
-  //   async getAll(q: string) {
-  //     if(!q || q == '/' || q =='/?'){
-  //       q='$top=100'
-  //     }
-  //     const query = odataV4Sql.createQuery(q);
-  //     if(!query.limit){
-  //       query.limit=1000;
-  //     }
-  //     if(query.limit>1000){
-  //       throw new Error(`Parse error: max number of rows returned can be 1000. please adjust query to 'top=1000'`);
-  //     }
-  //     let result = null;
-  //     try {
-  //       const requ = new sql.Request(this.connectionPool);
-  //       let sqlQuery = //`select ${query.select} from ${this.viewName}`;
-  // `
-  // SELECT  baseTable.id, baseTable.note, baseTable.createdAt, baseTable.contentUrl, baseTable.modifiedOn, baseTable.title, baseTable.todoType, baseTable.[priority], 
-  //         baseTable.completedAt, baseTable.completedById as [completedBy.id], baseTable.completedByName as [completedBy.name], 
-  // --        CASE WHEN baseTable.completedAt IS NULL THEN 'false' ELSE 'true' END as isCompleted, 				   
-  //         baseTable.assignedToId as [assignedTo.id], baseTable.assignedToName as [assignedTo.name], baseTable.assignedToObjectType as [assignedTo.objectType],  
-  //         baseTable.dueAt, baseTable.activityId, baseTable.categoryId as [category.id], c.title as [category.title],
-  //         ISNULL((SELECT tt.tagid AS [id], tt.tagtitle AS [title]
-  //                                 from TodosTags as tt
-  //                                 where baseTable.id = tt.todoId
-  //                                 FOR JSON PATH), '[]') as tags
-  // FROM     dbo.Categories c INNER JOIN
-  //                   dbo.TodosBase baseTable ON c.id = baseTable.categoryId
-  // `
-  //       let where = query.where;
-  //       if (where) {
-  //         for (let p of query.parameters) {
-  //           if (where.indexOf('?') < 0) {
-  //             throw new Error(`Parse error: could not parse near '${p[1]}'`);
-  //           }
-  //           requ.input(`${p[0]}`, `${p[1]}`);
-  //           where = where.replace('?', `@${p[0]}`);
-  //           where = where.replace('[', 'baseTable.[');
-  //         }
-
-  //         sqlQuery += `
-  // WHERE ${where}`;
-  //       }
-  //       //TODO: Proper order by here
-  //       sqlQuery += ` 
-  // ORDER BY CURRENT_TIMESTAMP
-  // OFFSET ${query.skip || 0} ROWS
-  // FETCH NEXT ${query.limit} ROWS ONLY
-  // FOR JSON PATH`;
-  //       result = await requ.query(sqlQuery);
-  //       result = result.recordset[0]["JSON_F52E2B61-18A1-11d1-B105-00805F49916B"];// the special name of the json column
-  //       debug(result);
-  //       return result;
-  //     } catch (er) {
-  //       debug(er);
-  //       throw er;
-  //     }
-  //   }
-
-  // async getById(id: any) {
-  //   let result = await this.getAll(`$filter=id eq ${id}`);
-  //   debug('return of check for the same id', result);
-  //   result = result != "" ? JSON.parse(result)[0] : null;
-  //   return result;
-  // }
-
   async customUpdateChecks(jsonBody: any) {
     jsonBody = TodosTable.preParseJson(jsonBody);
     if ((jsonBody.completedAt || jsonBody.completedById || jsonBody.completedByName) && (!jsonBody.completedAt || !jsonBody.completedById || !jsonBody.completedByName)) { //all or none
@@ -144,5 +79,28 @@ export class TodosTable extends SqlTableType {
       delete jsonBody.category;
     }
     return jsonBody;
+  }
+
+  async updateTodoAndCards(jsonBody: JSON, id: any, throwOnMissingFields: boolean, previousTodoState: any){
+    const transaction = new sql.Transaction(this.connectionPool);
+    try {
+      await transaction.begin();
+
+      if ((<any>jsonBody).cards && (<any>jsonBody).cards.length > 0) {
+        let todoCards = (<any>jsonBody).cards; 
+        for (let i: number = 0; i < todoCards.length; i++) {
+          let tc: any = todoCards[i];
+          const tcUpdateResult = await this.todoCardsTable.updateTransPool(tc, tc.id, false, transaction);
+          debug(tcUpdateResult);
+        } // .bind(this));
+      }
+      const result = await this.update(jsonBody, id, throwOnMissingFields);
+      await transaction.commit();
+      return result;
+    }
+    catch (ex) {
+      await transaction.rollback();
+      throw ex;
+    }
   }
 }

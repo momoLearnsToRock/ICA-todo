@@ -270,6 +270,70 @@ class TodosRouter extends baseRouter.BaseRouter {
         });
         // #endregion TodoCards
     }
+    put(req, res) {
+        (async function query() {
+            let result = null;
+            try {
+                if (!!this.disablePut) {
+                    this.methodNotAvailable(res, "Put", "");
+                    return;
+                }
+                if (req.itemById == null) {
+                    throw new Error("Could not find an entry with the given id.");
+                }
+                result = await this.table.updateTodoAndCards(req.body, req.params.id, true, req.itemById); // the second to last argument makes sure to throw an error if there is a field missing (otherwise it should be patch)
+                res.send(result);
+            }
+            catch (err) {
+                let code = 500;
+                switch (true) {
+                    case "Could not find an entry with the given id." == err.message:
+                    case "error" == err.message:
+                    case /^Body is missing the field/.test(err.message):
+                    case /^No fields could be parsed from body./.test(err.message):
+                    case /^The field '.*' entity.$/.test(err.message):
+                    case /^the field '.*' has an invalid value.$/.test(err.message):
+                        code = 400;
+                        break;
+                }
+                res.status(code).send(err.message);
+            }
+        }.bind(this)());
+    }
+    patch(req, res) {
+        if (!!this.disablePatch) {
+            this.methodNotAvailable(res, "Patch", "");
+            return;
+        }
+        (async function query() {
+            let result = null;
+            try {
+                if (!!this.disablePut) {
+                    this.methodNotAvailable(res, "Put", "");
+                    return;
+                }
+                if (req.itemById == null) {
+                    throw new Error("Could not find an entry with the given id.");
+                }
+                result = await this.table.updateTodoAndCards(req.body, req.params.id, false, req.itemById); // the second to last argument makes sure to throw an error if there is a field missing (otherwise it should be patch)
+                res.send(result);
+            }
+            catch (err) {
+                let code = 500;
+                switch (true) {
+                    case "Could not find an entry with the given id." == err.message:
+                    case "error" == err.message:
+                    case /^Body is missing the field/.test(err.message):
+                    case /^No fields could be parsed from body./.test(err.message):
+                    case /^The field '.*' entity.$/.test(err.message):
+                    case /^the field '.*' has an invalid value.$/.test(err.message):
+                        code = 400;
+                        break;
+                }
+                res.status(code).send(err.message);
+            }
+        }.bind(this)());
+    }
 }
 exports.TodosRouter = TodosRouter;
 //# sourceMappingURL=todosRouter.js.map
