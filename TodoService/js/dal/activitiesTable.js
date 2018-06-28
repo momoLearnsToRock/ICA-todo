@@ -10,32 +10,54 @@ const activityCardsTable_1 = require("./activityCardsTable");
 const debug = dbg('todo:activitiesTable');
 class ActivitiesTable extends sqlTableType_1.SqlTableType {
     constructor(connectionPool) {
-        const activityFields = [new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }), new h.Helpers.SqlField({
+        const activityFields = [
+            new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),
+            new h.Helpers.SqlField({
                 name: 'note',
                 type: sql.NVarChar(sql.MAX),
-            }), new h.Helpers.SqlField({
+            }),
+            new h.Helpers.SqlField({
                 name: 'createdAt',
                 type: sql.DateTime,
-            }), new h.Helpers.SqlField({
+            }),
+            new h.Helpers.SqlField({
                 name: 'contentUrl',
                 type: sql.NVarChar(512),
-            }), new h.Helpers.SqlField({
+            }),
+            new h.Helpers.SqlField({
                 name: 'title',
                 type: sql.NVarChar(255),
-            }), new h.Helpers.SqlField({
+            }),
+            new h.Helpers.SqlField({
                 name: 'activityType',
                 type: sql.NVarChar(50),
-            }), new h.Helpers.SqlField({
+            }),
+            new h.Helpers.SqlField({
                 name: 'priority',
                 type: sql.Int,
-            }), new h.Helpers.SqlField({
+            }),
+            new h.Helpers.SqlField({
                 name: 'categoryId',
                 type: sql.BigInt,
-            }), new h.Helpers.SqlField({
+            }),
+            new h.Helpers.SqlField({
+                // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
                 name: 'modifiedOn',
                 type: sql.DateTime,
-            })];
+            }),
+            new h.Helpers.SqlField({
+                // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
+                name: 'createdById',
+                type: sql.NVarChar(255),
+            }),
+            new h.Helpers.SqlField({
+                // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
+                name: 'createdByName',
+                type: sql.NVarChar(255),
+            }),
+        ];
         super({
+            // tslint:disable-next-line:object-literal-shorthand
             connectionPool: connectionPool,
             tableName: 'ActivitiesBase',
             viewName: 'Activities',
@@ -50,16 +72,15 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
     }
     async instantiateTodo(jsonBody, activity) {
         jsonBody = ActivitiesTable.preParseJson(jsonBody);
-        if (!jsonBody.assignedToId)
+        if (!jsonBody.assignedToId) {
             throw new Error(`Body is missing the field 'assignedToId'`);
-        if (!jsonBody.assignedToName)
+        }
+        if (!jsonBody.assignedToName) {
             throw new Error(`Body is missing the field 'assignedToName'`);
-        if (!jsonBody.assignedToObjectType)
+        }
+        if (!jsonBody.assignedToObjectType) {
             throw new Error(`Body is missing the field 'assignedToObjectType'`);
-        if (!jsonBody.createdById)
-            throw new Error(`Body is missing the field 'createdById'`);
-        if (!jsonBody.createdByName)
-            throw new Error(`Body is missing the field 'createdByName'`);
+        }
         activity.activityId = activity.id;
         delete activity.id;
         activity.todoType = activity.activityType;
@@ -68,8 +89,6 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
         activity.assignedToName = jsonBody.assignedToName;
         activity.assignedToObjectType = jsonBody.assignedToObjectType;
         activity.dueAt = !jsonBody.dueAt ? null : jsonBody.dueAt;
-        activity.createdById = jsonBody.createdById;
-        activity.createdByName = jsonBody.createdByName;
         // activity.startsAt = !jsonBody.startsAt?null:jsonBody.startsAt;
         let todo = null;
         const transaction = new sql.Transaction(this.connectionPool);
@@ -77,9 +96,7 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
         try {
             todo = await this.todosTable.insertTransPool(activity, false, transaction);
             if (activity.tags && activity.tags.length > 0) {
-                let activityTags = activity.tags;
-                // await this.getTags(activity.activityId);
-                // await activityTags.forEach(async function (at) {
+                let activityTags = activity.tags; // JSON.parse(activity.tags); // We cans parse already parsed tags (in base router)
                 for (let i = 0; i < activityTags.length; i++) {
                     let at = activityTags[i];
                     delete at.title;
@@ -117,6 +134,7 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
         jsonBody = ActivitiesTable.preParseJson(jsonBody);
         jsonBody.createdAt = new Date();
     }
+    // tslint:disable-next-line:member-ordering
     static preParseJson(jsonBody) {
         if (jsonBody.completedBy) {
             jsonBody.completedById = jsonBody.completedBy.id;

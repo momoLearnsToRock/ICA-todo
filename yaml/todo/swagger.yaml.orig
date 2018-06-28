@@ -1443,9 +1443,7 @@ definitions:
       activityType: basic
       priority: 1
       categoryId: "123"
-      categoryTitle: HACCP
-      createdById: "122"
-      createdByName: "arifai"
+<<<<<<< refs/remotes/origin/develop
   Activity:
     allOf:
       - $ref: "#/definitions/ActivityBase"
@@ -1487,9 +1485,20 @@ definitions:
             notes: "this is how you measure things"
           - id: "123457"
             notes:  "this is how you perform task 2"
-          categoryTitle: HACCP
-          createdById: "122"
-          createdByName: "arifai"
+=======
+      categoryTitle: HACCP
+      createdById: "122"
+      createdByName: "arifai"
+      tags:
+      - modifiedOn: 2018-03-14 15:22
+        sortId: 1
+        id: "123456"
+        title: Rengöring
+      - modifiedOn: 2018-03-14 15:22
+        sortId: 1
+        id: "123456"
+        title: Rengöring
+>>>>>>> added createdbyid , createdByName for Activities
   TodoInstantiate:
     type: object
     required:

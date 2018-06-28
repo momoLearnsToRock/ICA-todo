@@ -14,35 +14,55 @@ export class ActivitiesTable extends SqlTableType {
   public todosTable: TodosTable;
   public activityCardsTable: ActivityCardsTable;
   constructor(connectionPool: sql.ConnectionPool) {
-    const activityFields: h.Helpers.SqlField[] = [new h.Helpers.SqlField(
-      { name: 'id', type: sql.BigInt },
-    ), new h.Helpers.SqlField({
-      name: 'note',
-      type: sql.NVarChar(sql.MAX),
-    }), new h.Helpers.SqlField({
-      name: 'createdAt',
-      type: sql.DateTime,
-    }), new h.Helpers.SqlField({
-      name: 'contentUrl',
-      type: sql.NVarChar(512),
-    }), new h.Helpers.SqlField({
-      name: 'title',
-      type: sql.NVarChar(255),
-    }), new h.Helpers.SqlField({
-      name: 'activityType',
-      type: sql.NVarChar(50),
-    }), new h.Helpers.SqlField({
-      name: 'priority',
-      type: sql.Int,
-    }), new h.Helpers.SqlField({
-      name: 'categoryId',
-      type: sql.BigInt,
-    }), new h.Helpers.SqlField({ // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
-      name: 'modifiedOn',
-      type: sql.DateTime,
-    })];
+    const activityFields: h.Helpers.SqlField[] = [
+      new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),
+      new h.Helpers.SqlField({
+        name: 'note',
+        type: sql.NVarChar(sql.MAX),
+      }),
+      new h.Helpers.SqlField({
+        name: 'createdAt',
+        type: sql.DateTime,
+      }),
+      new h.Helpers.SqlField({
+        name: 'contentUrl',
+        type: sql.NVarChar(512),
+      }),
+      new h.Helpers.SqlField({
+        name: 'title',
+        type: sql.NVarChar(255),
+      }),
+      new h.Helpers.SqlField({
+        name: 'activityType',
+        type: sql.NVarChar(50),
+      }),
+      new h.Helpers.SqlField({
+        name: 'priority',
+        type: sql.Int,
+      }),
+      new h.Helpers.SqlField({
+        name: 'categoryId',
+        type: sql.BigInt,
+      }),
+      new h.Helpers.SqlField({
+        // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
+        name: 'modifiedOn',
+        type: sql.DateTime,
+      }),
+      new h.Helpers.SqlField({
+        // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
+        name: 'createdById',
+        type: sql.NVarChar(255),
+      }),
+      new h.Helpers.SqlField({
+        // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
+        name: 'createdByName',
+        type: sql.NVarChar(255),
+      }),
+    ];
 
     super({
+      // tslint:disable-next-line:object-literal-shorthand
       connectionPool: connectionPool,
       tableName: 'ActivitiesBase',
       viewName: 'Activities',
@@ -52,19 +72,25 @@ export class ActivitiesTable extends SqlTableType {
     });
     debug.enabled = true;
 
-    this.activitiesTagsTable = new activtiesTagsT.ActivitiesTagsTable(connectionPool);
+    this.activitiesTagsTable = new activtiesTagsT.ActivitiesTagsTable(
+      connectionPool,
+    );
     this.todosTable = new TodosTable(connectionPool);
     this.activityCardsTable = new ActivityCardsTable(connectionPool);
   }
 
   async instantiateTodo(jsonBody: any, activity: any) {
     jsonBody = ActivitiesTable.preParseJson(jsonBody);
-    if (!jsonBody.assignedToId) throw new Error(`Body is missing the field 'assignedToId'`);
-    if (!jsonBody.assignedToName) throw new Error(`Body is missing the field 'assignedToName'`);
-    if (!jsonBody.assignedToObjectType) throw new Error(`Body is missing the field 'assignedToObjectType'`);
-    if (!jsonBody.createdById) throw new Error(`Body is missing the field 'createdById'`);
-    if (!jsonBody.createdByName) throw new Error(`Body is missing the field 'createdByName'`);
-    
+    if (!jsonBody.assignedToId) {
+      throw new Error(`Body is missing the field 'assignedToId'`);
+    }
+    if (!jsonBody.assignedToName) {
+      throw new Error(`Body is missing the field 'assignedToName'`);
+    }
+    if (!jsonBody.assignedToObjectType) {
+      throw new Error(`Body is missing the field 'assignedToObjectType'`);
+    }
+
     activity.activityId = activity.id;
     delete activity.id;
     activity.todoType = activity.activityType;
@@ -73,20 +99,24 @@ export class ActivitiesTable extends SqlTableType {
     activity.assignedToName = jsonBody.assignedToName;
     activity.assignedToObjectType = jsonBody.assignedToObjectType;
     activity.dueAt = !jsonBody.dueAt ? null : jsonBody.dueAt;
-    activity.createdById = jsonBody.createdById;
-    activity.createdByName = jsonBody.createdByName;
-    
-
     // activity.startsAt = !jsonBody.startsAt?null:jsonBody.startsAt;
 
     let todo = null;
     const transaction = new sql.Transaction(this.connectionPool);
     await transaction.begin();
     try {
-      todo = await this.todosTable.insertTransPool(activity, false, transaction);
+      todo = await this.todosTable.insertTransPool(
+        activity,
+        false,
+        transaction,
+      );
 
       if (activity.tags && activity.tags.length > 0) {
+<<<<<<< HEAD
+        let activityTags = activity.tags; // JSON.parse(activity.tags); // We cans parse already parsed tags (in base router)
+=======
         let activityTags = activity.tags;
+>>>>>>> f7bb8441ddc04ec7ffbccaf06bad236bfbd2a5bf
         // await this.getTags(activity.activityId);
         // await activityTags.forEach(async function (at) {
         for (let i: number = 0; i < activityTags.length; i++) {
@@ -95,24 +125,35 @@ export class ActivitiesTable extends SqlTableType {
           at.tagId = at.id;
           delete at.id;
           at.todoId = todo.id;
-          const todostag = await this.todosTable.todosTagsTable.insertTransPool(at, false, transaction);
+          const todostag = await this.todosTable.todosTagsTable.insertTransPool(
+            at,
+            false,
+            transaction,
+          );
           debug(todostag);
         } // .bind(this));
       }
-      let activityCardsFilter: string = `$filter=activityId eq ${activity.activityId}`;
-      let activityCards = await this.activityCardsTable.getAll(activityCardsFilter);
+      let activityCardsFilter: string = `$filter=activityId eq ${
+        activity.activityId
+      }`;
+      let activityCards = await this.activityCardsTable.getAll(
+        activityCardsFilter,
+      );
       for (let i: number = 0; i < activityCards.length; i++) {
         //throw new Error('momo tests deleting the extra todo');
         let tc: any = activityCards[i];
         delete tc.id;
         delete tc.activityId;
         tc.todoId = todo.id;
-        const todostag = await this.todosTable.todoCardsTable.insertTransPool(tc, false, transaction);
+        const todostag = await this.todosTable.todoCardsTable.insertTransPool(
+          tc,
+          false,
+          transaction,
+        );
         debug(todostag);
       }
       await transaction.commit();
-    }
-    catch (ex) {
+    } catch (ex) {
       await transaction.rollback();
       throw ex;
     }
@@ -127,6 +168,7 @@ export class ActivitiesTable extends SqlTableType {
     jsonBody = ActivitiesTable.preParseJson(jsonBody);
     jsonBody.createdAt = new Date();
   }
+  // tslint:disable-next-line:member-ordering
   static preParseJson(jsonBody: any): any {
     if (jsonBody.completedBy) {
       jsonBody.completedById = jsonBody.completedBy.id;
