@@ -16,12 +16,26 @@ The current team consists of:
 The files are maintained on Swaggerhub (https://app.swaggerhub.com/apis/ica-egenkontroll/) and there is a github integration
 connected to this repository, which means that most activity in this repo will be automatic. Swaggerhub pushes to the SWAGGERHUB branch. From there we manually create a merge request with a nice description, which we then accept.
 
+In order to make changes to the swagger definitions, one can make changes to the yaml files under 
+https://github.com/itchDX/ica-dek-backend-node/tree/master/yaml/todo/swagger.yaml
+and after changes html files can be built in
+https://github.com/itchDX/ica-dek-backend-node/tree/master/docs/todo
+in order to do this you need to install two npm packages, so run the following commands:
+npm install -g bootprint
+npm install -g bootprint-openapi
+and then assuming that you are in the ica-dek-backend-node folder you can run the following command to generate html from the swagger specification
+bootprint openapi .//yaml//todo//swagger.yaml .//docs//todo
+note: for different services you can change "todo" to the desired service.
+
 ### Output
 
 The swagger files are stored in both yaml and json format.
 Swaggerhub also creates html documentation. The master branch is published as Github Pages, that you can look at here:
+for  swagger definitions, TodoService and other node services:
+https://itchdx.github.io/ica-dek-backend-node/
 
-https://itchdx.github.io/ica-dek-backend/
+please note that for services done in .netCore the repository is as follows:
+https://itchdx.github.io/ica-dek-backend-net/
 
 The pages there are the recommended contract between frontend and backend.
 
@@ -39,7 +53,7 @@ The build server builds to a dev instance with the address https://ic-todo.azure
 ##### HOWTO: Deploy to test
 1. Checkout origin/master
 2. Run tests: `npm run test`
-2. Connect to Azure: git remote add azure `https://[your_deployment_user]@ic-todo.scm.azurewebsites.net:443/ic-todo.git`
+2. Connect to Azure: git remote add azure `https://icaLogin@ic-todo.scm.azurewebsites.net:443/ic-todo.git`
 3. Push to build server: git push azure master
 4. Sip on a cup of coffee and for build server to compile code...
 

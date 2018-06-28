@@ -84,6 +84,33 @@ paths:
           description: error
         404:
           description: Could not find an entry with the given id.
+    put:
+      tags:
+      - clients
+      summary: updates a todo
+      description: Updates a todo in the system
+      operationId: updateTodo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the Todo
+        required: true
+        type: string
+      - in: body
+        name: Todo
+        description: Todo to update
+        required: true
+        schema:
+          $ref: '#/definitions/TodoItemUpdateModel'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
     delete:
       tags:
       - admins
@@ -190,7 +217,7 @@ paths:
           description: Could not find an entry with the given id.
     put:
       tags:
-      - admins
+      - clients
       summary: updates a todoCard
       description: Updates a todoCard in the system
       operationId: updateTodoCard
@@ -635,7 +662,7 @@ paths:
         description: Activity to add
         required: false
         schema:
-          $ref: '#/definitions/Activity'
+          $ref: '#/definitions/ActivityBase'
       responses:
         201:
           description: item created
@@ -688,7 +715,7 @@ paths:
         description: Activity item to update
         required: false
         schema:
-          $ref: '#/definitions/Activity'
+          $ref: '#/definitions/ActivityBase'
       responses:
         200:
           description: item updated
@@ -937,7 +964,7 @@ paths:
           description: Could not find an entry with the given id.
     put:
       tags:
-      - admins
+      - clients
       summary: updates an activityCard
       description: Updates an activityCard in the system
       operationId: updateActivityCard
@@ -1129,7 +1156,8 @@ paths:
         404:
           description: Could not find an entry with the given id.
 definitions:
-  TodoItem:
+  TodoItemBase:
+    type: object
     required:
     - categoryId
     - contentUrl
@@ -1137,6 +1165,8 @@ definitions:
     - priority
     - title
     - todoType
+    - createdById
+    - createdByName
     properties:
       id:
         type: string
@@ -1175,8 +1205,12 @@ definitions:
       isCompleted:
         type: boolean
         example: true
-      completedBy:
-        $ref: '#/definitions/User'
+      completedById:
+        type: string
+        example: d290f1ee-6c54-4b01-90e6-d701748f0852
+      completedByName:
+        type: string
+        example: "Momo Harati"
       completedAt:
         type: string
         format: date-time
@@ -1188,13 +1222,12 @@ definitions:
       categoryId:
         type: string
         example: "123"
-      categoryTitle:
+      createdById:
         type: string
-        example: HACCP
-      tags:
-        type: array
-        items:
-          $ref: '#/definitions/Tag'
+        example: d290f1ee-6c54-4b01-90e6-d701748f0852
+      createdByName:
+        type: string
+        example: "Abdallah Rifai"
       modifiedOn:
         type: string
         format: date-time
@@ -1208,26 +1241,102 @@ definitions:
       assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
       assignedToName: Frukt & Grönt
       assignedToObjectType: Group
-      tags:
-      - modifiedOn: 2018-03-14 15:22
-        sortId: 1
-        id: "123456"
-        title: Rengöring
-      - modifiedOn: 2018-03-14 15:22
-        sortId: 1
-        id: "123456"
-        title: Rengöring
       dueAt: 2018-04-12 12:00
       createdAt: 2018-03-14 15:22
       contentUrl: https://episerver.ica.se/getContent?id=4711
       modifiedOn: 2018-03-14 15:22
       id: "123456"
       categoryId: "123"
-      categoryTitle: HACCP
-      completedBy:
-        id: d290f1ee-6c54-4b01-90e6-d701748f0851
-        fullname: Göran Roseen
+      completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
+      completedByName: Göran Roseen
       isCompleted: true
+      createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
+      createdByName: Abdallah Rifai
+  TodoItemUpdateModel:
+    allOf:
+      - $ref: "#/definitions/TodoItemBase"
+      - type: object
+        properties:
+          cards:
+            type: array
+            items:
+              $ref: '#/definitions/CardBase'
+        example:
+          note: Gör så här
+          completedAt: 2018-04-12 12:00
+          todoType: basic
+          title: Städa charken
+          priority: 1
+          assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
+          assignedToName: Frukt & Grönt
+          assignedToObjectType: Group
+          dueAt: 2018-04-12 12:00
+          createdAt: 2018-03-14 15:22
+          contentUrl: https://episerver.ica.se/getContent?id=4711
+          modifiedOn: 2018-03-14 15:22
+          id: "123456"
+          categoryId: "123"
+          completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
+          completedByName: Göran Roseen
+          isCompleted: true
+          createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
+          createdByName: Abdallah Rifai
+          cards:
+          - id: "123456"
+            notes: "this is how you measure things"
+          - id: "123457"
+            notes:  "this is how you perform task 2"
+  TodoItem:
+    allOf:
+      - $ref: "#/definitions/TodoItemBase"
+      - type: object
+        properties:
+          categoryTitle:
+            type: string
+            example: HACCP
+          tags:
+            type: array
+            items:
+              $ref: '#/definitions/Tag'
+          cards:
+            type: array
+            items:
+              $ref: '#/definitions/CardBase'
+        example:
+          note: Gör så här
+          completedAt: 2018-04-12 12:00
+          todoType: basic
+          title: Städa charken
+          priority: 1
+          assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
+          assignedToName: Frukt & Grönt
+          assignedToObjectType: Group
+          tags:
+          - modifiedOn: 2018-03-14 15:22
+            sortId: 1
+            id: "123456"
+            title: Rengöring
+          - modifiedOn: 2018-03-14 15:22
+            sortId: 1
+            id: "123457"
+            title: Mätning
+          dueAt: 2018-04-12 12:00
+          createdAt: 2018-03-14 15:22
+          contentUrl: https://episerver.ica.se/getContent?id=4711
+          modifiedOn: 2018-03-14 15:22
+          id: "123456"
+          categoryId: "123"
+          categoryTitle: HACCP
+          completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
+          completedByName: Göran Roseen
+          isCompleted: true
+          createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
+          createdByName: Abdallah Rifai
+          cards:
+          - id: "123456"
+            notes: "this is how you measure things"
+          - id: "123457"
+            notes:  "this is how you perform task 2"
   Tag:
     type: object
     required:
@@ -1276,44 +1385,7 @@ definitions:
       sortId: 1
       id: "123456"
       title: HACCP
-  User:
-    required:
-    - fullname
-    - id
-    properties:
-      id:
-        type: string
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        description: id is the user identity from SIA
-      fullname:
-        type: string
-        example: Göran Roseen
-    example:
-      id: d290f1ee-6c54-4b01-90e6-d701748f0851
-      fullname: Göran Roseen
-  Assignee:
-    required:
-    - id
-    - objectType
-    properties:
-      objectType:
-        type: string
-        example: Group
-        description: Must be one of User or Group
-        enum:
-        - User
-        - Group
-      id:
-        type: string
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      name:
-        type: string
-        example: Frukt & Grönt
-    example:
-      name: Frukt & Grönt
-      id: d290f1ee-6c54-4b01-90e6-d701748f0851
-      objectType: Group
-  Activity:
+  ActivityBase:
     type: object
     required:
     - activityType
@@ -1351,13 +1423,6 @@ definitions:
       categoryId:
         type: string
         example: "123"
-      categoryTitle:
-        type: string
-        example: HACCP
-      tags:
-        type: array
-        items:
-          $ref: '#/definitions/Tag'
       modifiedOn:
         type: string
         format: date-time
@@ -1372,16 +1437,47 @@ definitions:
       activityType: basic
       priority: 1
       categoryId: "123"
-      categoryTitle: HACCP
-      tags:
-      - modifiedOn: 2018-03-14 15:22
-        sortId: 1
-        id: "123456"
-        title: Rengöring
-      - modifiedOn: 2018-03-14 15:22
-        sortId: 1
-        id: "123456"
-        title: Rengöring
+  Activity:
+    allOf:
+      - $ref: "#/definitions/ActivityBase"
+      - type: object
+        properties:
+          categoryTitle:
+            type: string
+            example: HACCP
+          tags:
+            type: array
+            items:
+              $ref: '#/definitions/Tag'
+          cards:
+            type: array
+            items:
+              $ref: '#/definitions/CardBase'       
+        example:
+          note: Gör så här
+          createdAt: 2018-03-14 15:22
+          contentUrl: https://episerver.ica.se/getContent?id=4711
+          modifiedOn: 2018-03-14 15:22
+          id: "123456"
+          title: Städa charken
+          activityType: basic
+          priority: 1
+          categoryId: "123"
+          categoryTitle: HACCP
+          tags:
+          - modifiedOn: 2018-03-14 15:22
+            sortId: 1
+            id: "123456"
+            title: Rengöring
+          - modifiedOn: 2018-03-14 15:22
+            sortId: 1
+            id: "123457"
+            title: Mätning
+          cards:
+          - id: "123456"
+            notes: "this is how you measure things"
+          - id: "123457"
+            notes:  "this is how you perform task 2"
   TodoInstantiate:
     type: object
     required:
@@ -1389,6 +1485,8 @@ definitions:
     - assignedToName
     - assignedToObjectType
     - dueAt
+    - craetedById
+    - createdByName
     properties:
       assignedToId:
         type: string
@@ -1403,93 +1501,106 @@ definitions:
         type: string
         format: date-time
         example: 2018-04-24 14:41
+      createdById:
+        type: string
+        example: d290f1ee-6c54-4b01-90e6-d701748f0853
+      createdByName:
+        type: string
+        example: "Abdallah Rifai"
     example:
       dueAt: 2018-04-24 14:41
       assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
       assignedToName: Frukt & Grönt
       assignedToObjectType: Group
+  CardBase:
+    type: object
+    required:
+    - notes
+    properties:
+      id:
+        type: string
+        example: "123456"
+      notes:
+        type: string
+        example: this is how you measure things
+    example:
+      notes: this is how you measure things
+      id: "123456"
   TodoCard:
-    type: object
-    required:
-    - activityCardId
-    - cardType
-    - todoId
-    properties:
-      id:
-        type: string
-        example: "123456"
-      todoId:
-        type: string
-        example: "123456"
-      activityCardId:
-        type: string
-        example: "123456"
-      notes:
-        type: string
-        example: this is how you measure things
-      cardType:
-        type: string
-        example: TEMP
-        description: the value is a key from the CardTypes entity. note that the key is string.
-      input:
-        type: string
-        example: tempreture must be between -5 and 8
-      outputText:
-        type: string
-        example: "8"
-      outputMedia:
-        type: string
-        example: '{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }'
-      modifiedOn:
-        type: string
-        format: date-time
-        example: 2018-03-14 15:22
-    example:
-      input: tempreture must be between -5 and 8
-      activityCardId: "123456"
-      modifiedOn: 2018-03-14 15:22
-      notes: this is how you measure things
-      outputMedia: '{ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 }'
-      cardType: TEMP
-      id: "123456"
-      todoId: "123456"
-      outputText: "8"
+    allOf:
+      - $ref: "#/definitions/CardBase"
+      - type: object
+        required:
+        - activityCardId
+        - cardType
+        - todoId
+        properties:
+          todoId:
+            type: string
+            example: "123456"
+          activityCardId:
+            type: string
+            example: "123456"
+          cardType:
+            type: string
+            example: TEMP
+            description: the value is a key from the CardTypes entity. note that the key is string.
+          input:
+            type: string
+            example: tempreture must be between -5 and 8
+          outputText:
+            type: string
+            example: "8"
+          outputMedia:
+            type: string
+            example: '/todos/3/cards/225/attachment/ica.jpg'
+          modifiedOn:
+            type: string
+            format: date-time
+            example: 2018-03-14 15:22
+        example:
+          input: tempreture must be between -5 and 8
+          activityCardId: "123456"
+          modifiedOn: 2018-03-14 15:22
+          notes: this is how you measure things
+          outputMedia: '/todos/3/cards/225/attachment/ica.jpg'
+          cardType: TEMP
+          id: "123456"
+          todoId: "123456"
+          outputText: "8"
   ActivityCard:
-    type: object
-    required:
-    - cardType
-    properties:
-      id:
-        type: string
-        example: "123456"
-      activityId:
-        type: string
-        example: "123456"
-      notes:
-        type: string
-        example: this is how you measure things
-      cardType:
-        type: string
-        example: TEMP
-        description: the value is a key from the CardTypes entity. note that the key is string.
-      input:
-        type: string
-        example: tempreture must be between -5 and 8
-      outputText:
-        type: string
-        example: "8"
-      modifiedOn:
-        type: string
-        format: date-time
-        example: 2018-03-14 15:22
-    example:
-      activityId: "123456"
-      input: tempreture must be between -5 and 8
-      modifiedOn: 2018-03-14 15:22
-      notes: this is how you measure things
-      cardType: TEMP
-      id: "123456"
-      outputText: "8"
+    allOf:
+      - $ref: "#/definitions/CardBase"
+      - type: object
+        required:
+        - cardType
+        - activityId
+        properties:
+          activityId:
+            type: string
+            example: "123456"
+          cardType:
+            type: string
+            example: TEMP
+            description: the value is a key from the CardTypes entity. note that the key is string.
+          input:
+            type: string
+            example: tempreture must be between -5 and 8
+          outputText:
+            type: string
+            example: "8"
+          modifiedOn:
+            type: string
+            format: date-time
+            example: 2018-03-14 15:22
+        example:
+          input: tempreture must be between -5 and 8
+          activityId: "123456"
+          modifiedOn: 2018-03-14 15:22
+          notes: this is how you measure things
+          cardType: TEMP
+          id: "123456"
+          outputText: "8"
   CardType:
     type: object
     required:

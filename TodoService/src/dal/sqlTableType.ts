@@ -304,7 +304,7 @@ export class SqlTableType extends h.Helpers.TableType {
   async updateTransPool(jsonBody: JSON, id: any, throwOnMissingFields: boolean, transPool: any) {
     await this.customUpdateChecks(jsonBody);
     let result = null;
-    let requ = new sql.Request(this.connectionPool);
+    let requ = new sql.Request(transPool);
     debug("update query");
     result = await requ.query(
       this.createUpdateStatement(
