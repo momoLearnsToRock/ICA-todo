@@ -1,8 +1,8 @@
 import sql = require('mssql');
 import dbg = require('debug');
 import h = require('../helpers/misc');
-import odataV4Sql= require('odata-v4-sql');
-import {SqlTableType} from './sqlTableType';
+import odataV4Sql = require('odata-v4-sql');
+import { SqlTableType } from './sqlTableType';
 import { TodoCardsTable } from './todoCardsTable';
 
 const debug = dbg('todo:todosTable');
@@ -81,20 +81,31 @@ export class TodosTable extends SqlTableType {
     return jsonBody;
   }
 
-  async updateTodoAndCards(jsonBody: JSON, id: any, throwOnMissingFields: boolean, previousTodoState: any){
+  async updateTodoAndCards(jsonBody: JSON, id: any, throwOnMissingFields: boolean, previousTodoState: any) {
     const transaction = new sql.Transaction(this.connectionPool);
+    if((<any>jsonBody).tags){
+      delete (<any>jsonBody).tags;
+    }
+    await transaction.begin();
     try {
-      await transaction.begin();
 
       if ((<any>jsonBody).cards && (<any>jsonBody).cards.length > 0) {
-        let todoCards = (<any>jsonBody).cards; 
+        let todoCards = (<any>jsonBody).cards;
         for (let i: number = 0; i < todoCards.length; i++) {
           let tc: any = todoCards[i];
+          const previousTodoCardState=previousTodoState.cards.find((card: any)=> {return card.id==tc.id})
+          if(!previousTodoCardState){
+            throw new Error(`Could not find an entry with the given id. Card with id ${tc.id} does not belong to this todo.`);
+          }
+          if(tc.todoId && tc.todoId!=id){
+            throw new Error(`Could not find an entry with the given id. Card with id ${tc.id} does not belong to this todo.`);
+          }
           const tcUpdateResult = await this.todoCardsTable.updateTransPool(tc, tc.id, false, transaction);
           debug(tcUpdateResult);
         } // .bind(this));
+        delete (<any>jsonBody).cards;
       }
-      const result = await this.update(jsonBody, id, throwOnMissingFields);
+      const result = await this.updateTransPool(jsonBody, id, throwOnMissingFields, transaction);
       await transaction.commit();
       return result;
     }

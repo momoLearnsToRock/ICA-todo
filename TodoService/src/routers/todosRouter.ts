@@ -197,7 +197,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
           } catch (err) {
             let code: number = 500;
             switch (true) {
-              case "Could not find an entry with the given id." == err.message:
+              case /^Could not find an entry with the given id./.test(err.message):
               case "error" == err.message:
               case /^Body is missing the field/.test(err.message):
               case /^No fields could be parsed from body./.test(err.message):
@@ -227,7 +227,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
           } catch (err) {
             let code: number = 500;
             switch (true) {
-              case "Could not find an entry with the given id." == err.message:
+              case /^Could not find an entry with the given id./.test(err.message):
               case "error" == err.message:
               case /^Body is missing the field/.test(err.message):
               case /^No fields could be parsed from body./.test(err.message):
@@ -336,7 +336,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
       } catch (err) {
         let code: number = 500;
         switch (true) {
-          case "Could not find an entry with the given id." == err.message:
+          case /^Could not find an entry with the given id./.test(err.message):
           case "error" == err.message:
           case /^Body is missing the field/.test(err.message):
           case /^No fields could be parsed from body./.test(err.message):
@@ -370,7 +370,7 @@ export class TodosRouter extends baseRouter.BaseRouter {
       } catch (err) {
         let code: number = 500;
         switch (true) {
-          case "Could not find an entry with the given id." == err.message:
+          case /^Could not find an entry with the given id./.test(err.message):
           case "error" == err.message:
           case /^Body is missing the field/.test(err.message):
           case /^No fields could be parsed from body./.test(err.message):

@@ -75,17 +75,28 @@ class TodosTable extends sqlTableType_1.SqlTableType {
     }
     async updateTodoAndCards(jsonBody, id, throwOnMissingFields, previousTodoState) {
         const transaction = new sql.Transaction(this.connectionPool);
+        if (jsonBody.tags) {
+            delete jsonBody.tags;
+        }
+        await transaction.begin();
         try {
-            await transaction.begin();
             if (jsonBody.cards && jsonBody.cards.length > 0) {
                 let todoCards = jsonBody.cards;
                 for (let i = 0; i < todoCards.length; i++) {
                     let tc = todoCards[i];
+                    const previousTodoCardState = previousTodoState.cards.find((card) => { return card.id == tc.id; });
+                    if (!previousTodoCardState) {
+                        throw new Error(`Could not find an entry with the given id. Card with id ${tc.id} does not belong to this todo.`);
+                    }
+                    if (tc.todoId && tc.todoId != id) {
+                        throw new Error(`Could not find an entry with the given id. Card with id ${tc.id} does not belong to this todo.`);
+                    }
                     const tcUpdateResult = await this.todoCardsTable.updateTransPool(tc, tc.id, false, transaction);
                     debug(tcUpdateResult);
                 } // .bind(this));
+                delete jsonBody.cards;
             }
-            const result = await this.update(jsonBody, id, throwOnMissingFields);
+            const result = await this.updateTransPool(jsonBody, id, throwOnMissingFields, transaction);
             await transaction.commit();
             return result;
         }
