@@ -81,24 +81,37 @@ export class TodosTable extends SqlTableType {
     return jsonBody;
   }
 
-  async updateTodoAndCards(jsonBody: JSON, id: any, throwOnMissingFields: boolean, previousTodoState: any) {
+  async updateTodoAndCards(jsonBody: JSON, id: any, throwOnMissingFields: boolean, previousStateTodo: any) {
     const transaction = new sql.Transaction(this.connectionPool);
-    if((<any>jsonBody).tags){
+    if ((<any>jsonBody).tags) {
       delete (<any>jsonBody).tags;
+    }
+    const todoCards = (<any>jsonBody).cards;
+    const previousStateTodoCards = await this.todoCardsTable.getAll(`$filter=todoId eq ${id}`);
+    if ((<any>jsonBody).completedAt) { // ska stängas
+      for (let i: number=0;i<previousStateTodoCards.length;i++) { // är ala kort stängd?
+        const pstc: any = previousStateTodoCards[i];
+        const jsonBodytc=todoCards.find((jbtc: any)=>{return jbtc.id==pstc.id})
+        let isCardClosed: boolean = false;
+        isCardClosed = (jsonBodytc && jsonBodytc.hasOwnProperty('outputText')) ? !!jsonBodytc.outputText : !!pstc.outputText;
+        isCardClosed = (isCardClosed || !!pstc.outputFileData);
+        if(!isCardClosed){
+          throw new Error(`TodoService error. A todo can not be closed before all cards are closed. card with id ${pstc.id} needs to be clsoed.`);
+        }
+      }
     }
     await transaction.begin();
     try {
 
       if ((<any>jsonBody).cards && (<any>jsonBody).cards.length > 0) {
-        let todoCards = (<any>jsonBody).cards;
         for (let i: number = 0; i < todoCards.length; i++) {
           let tc: any = todoCards[i];
-          const previousTodoCardState=previousTodoState.cards.find((card: any)=> {return card.id==tc.id})
-          if(!previousTodoCardState){
-            throw new Error(`Could not find an entry with the given id. Card with id ${tc.id} does not belong to this todo.`);
+          const previousTodoCardState=previousStateTodo.cards.find((card: any)=> {return card.id==tc.id})
+          if(!previousTodoCardState){ // är id på todokort gilltig?
+            throw new Error(`TodoService error. Card with id ${tc.id} does not belong to todo ${id}.`);
           }
-          if(tc.todoId && tc.todoId!=id){
-            throw new Error(`Could not find an entry with the given id. Card with id ${tc.id} does not belong to this todo.`);
+          if(tc.todoId && tc.todoId!=id){ // är todoId på todokort gilltig?
+            throw new Error(`TodoService error. Card with id ${tc.id} does not belong to todo ${id}.`);
           }
           const tcUpdateResult = await this.todoCardsTable.updateTransPool(tc, tc.id, false, transaction);
           debug(tcUpdateResult);

@@ -40,11 +40,11 @@ class SqlTableType extends h.Helpers.TableType {
                         typeof jsonBody[item.name] == "undefined") {
                         throw new Error(`Body is missing the field '${item.name}'.`);
                     }
-                    if (!jsonBody[item.name]) {
+                    if (typeof jsonBody[item.name] == "undefined") {
                         return;
                     }
                     sqlReq.input(item.name, item.type, item.type == sql.DateTime
-                        ? new Date(jsonBody[item.name])
+                        ? !jsonBody[item.name] ? null : new Date(jsonBody[item.name])
                         : jsonBody[item.name]);
                 }
                 parsedFieldsList.push(item.name);
