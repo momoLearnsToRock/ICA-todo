@@ -17,7 +17,7 @@ export class ActivitiesTable extends SqlTableType {
     const activityFields: h.Helpers.SqlField[] = [
       new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),
       new h.Helpers.SqlField({
-        name: 'note',
+        name: 'description',
         type: sql.NVarChar(sql.MAX),
       }),
       new h.Helpers.SqlField({
@@ -25,7 +25,7 @@ export class ActivitiesTable extends SqlTableType {
         type: sql.DateTime,
       }),
       new h.Helpers.SqlField({
-        name: 'contentUrl',
+        name: 'context',
         type: sql.NVarChar(512),
       }),
       new h.Helpers.SqlField({
@@ -41,24 +41,37 @@ export class ActivitiesTable extends SqlTableType {
         type: sql.Int,
       }),
       new h.Helpers.SqlField({
-        name: 'categoryId',
+        name: 'categoryOneId',
         type: sql.BigInt,
       }),
       new h.Helpers.SqlField({
-        // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
+        name: 'categoryTwoId',
+        type: sql.BigInt,
+      }),
+      new h.Helpers.SqlField({
+        name: 'system',
+        type: sql.BigInt,
+      }),
+      new h.Helpers.SqlField({
+        name: 'descriptionimage',
+        type: sql.VarBinary(sql.MAX),
+      }),
+      new h.Helpers.SqlField({
         name: 'modifiedOn',
         type: sql.DateTime,
       }),
       new h.Helpers.SqlField({
-        // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
         name: 'createdById',
         type: sql.NVarChar(255),
       }),
       new h.Helpers.SqlField({
-        // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
         name: 'createdByName',
         type: sql.NVarChar(255),
       }),
+      new h.Helpers.SqlField({
+        name: 'context',
+        type: sql.NVarChar(255),
+      })
     ];
 
     super({
@@ -112,11 +125,7 @@ export class ActivitiesTable extends SqlTableType {
       );
 
       if (activity.tags && activity.tags.length > 0) {
-<<<<<<< HEAD
-        let activityTags = activity.tags; // JSON.parse(activity.tags); // We cans parse already parsed tags (in base router)
-=======
         let activityTags = activity.tags;
->>>>>>> f7bb8441ddc04ec7ffbccaf06bad236bfbd2a5bf
         // await this.getTags(activity.activityId);
         // await activityTags.forEach(async function (at) {
         for (let i: number = 0; i < activityTags.length; i++) {

@@ -11,7 +11,7 @@ export class ActivityCardsTable extends SqlTableType {
     const activityCardsFields: Helpers.SqlField[] = [
       new Helpers.SqlField({ name: 'id', type: sql.BigInt }),
       new Helpers.SqlField({ name: 'activityId', type: sql.BigInt }),
-      new Helpers.SqlField({ name: 'notes', type: sql.NVarChar(sql.MAX) }),
+      new Helpers.SqlField({ name: 'title', type: sql.NVarChar(sql.MAX) }),
       new Helpers.SqlField({ name: 'cardType', type: sql.NVarChar(50) }),
       new Helpers.SqlField({ name: 'input', type: sql.NVarChar(sql.MAX) }),
       new Helpers.SqlField({ name: 'outputText', type: sql.NVarChar(sql.MAX) }),

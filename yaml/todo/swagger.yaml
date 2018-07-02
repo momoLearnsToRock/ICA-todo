@@ -1160,8 +1160,8 @@ definitions:
     type: object
     required:
     - categoryId
-    - contentUrl
-    - note
+    - context
+    - description
     - priority
     - title
     - todoType
@@ -1178,10 +1178,10 @@ definitions:
         type: string
         example: basic
         description: Must be one of "basic", "measure", "yesno"
-      note:
+      description:
         type: string
         example: Gör så här
-      contentUrl:
+      context:
         type: string
         format: url
         example: https://episerver.ica.se/getContent?id=4711
@@ -1189,7 +1189,7 @@ definitions:
         type: string
         format: date-time
         example: 2018-03-14 15:22
-      dueAt:
+      dueDate:
         type: string
         format: date-time
         example: 2018-04-12 12:00
@@ -1215,11 +1215,26 @@ definitions:
         type: string
         format: date-time
         example: 2018-04-12 12:00
+      startDate:
+        type: string
+        format: date-time
+        example: 2018-04-12 12:00
       priority:
         type: integer
         format: int32
         example: 1
-      categoryId:
+      system:
+        type: integer
+        format: int32
+        example: 1
+      descriptionImage:
+       type: image
+       format: varbinary
+       example: 0x4858
+      categoryOneId:
+        type: string
+        example: "123"
+      categoryTwoId:
         type: string
         example: "123"
       createdById:
@@ -1233,7 +1248,7 @@ definitions:
         format: date-time
         example: 2018-03-14 15:22
     example:
-      note: Gör så här
+      description: Gör så här
       completedAt: 2018-04-12 12:00
       todoType: basic
       title: Städa charken
@@ -1241,17 +1256,21 @@ definitions:
       assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
       assignedToName: Frukt & Grönt
       assignedToObjectType: Group
-      dueAt: 2018-04-12 12:00
+      dueDate: 2018-04-12 12:00
       createdAt: 2018-03-14 15:22
-      contentUrl: https://episerver.ica.se/getContent?id=4711
+      context: https://episerver.ica.se/getContent?id=4711
       modifiedOn: 2018-03-14 15:22
       id: "123456"
-      categoryId: "123"
+      categoryOneId: "123"
+      categoryTwoId: "123"
       completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
       completedByName: Göran Roseen
       isCompleted: true
       createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
       createdByName: Abdallah Rifai
+      startDate: 2018-03-14 15:22
+      descriptionImage: 0x4858
+      system : 1
   TodoItemUpdateModel:
     allOf:
       - $ref: "#/definitions/TodoItemBase"
@@ -1262,7 +1281,7 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'
         example:
-          note: Gör så här
+          description: Gör så här
           completedAt: 2018-04-12 12:00
           todoType: basic
           title: Städa charken
@@ -1270,12 +1289,16 @@ definitions:
           assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
           assignedToName: Frukt & Grönt
           assignedToObjectType: Group
-          dueAt: 2018-04-12 12:00
+          dueDate: 2018-04-12 12:00
+          startDate: 2018-04-12 12:00
           createdAt: 2018-03-14 15:22
-          contentUrl: https://episerver.ica.se/getContent?id=4711
+          context: https://episerver.ica.se/getContent?id=4711
           modifiedOn: 2018-03-14 15:22
           id: "123456"
-          categoryId: "123"
+          categoryoneId: "123"
+          categoryoneId: "123"
+          system: "1"
+          descriptionImage: 0x4858FE25053CA4D236F3D61AE29668BA
           completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
           completedByName: Göran Roseen
           isCompleted: true
@@ -1283,9 +1306,9 @@ definitions:
           createdByName: Abdallah Rifai
           cards:
           - id: "123456"
-            notes: "this is how you measure things"
+            title: "this is how you measure things"
           - id: "123457"
-            notes:  "this is how you perform task 2"
+            title:  "this is how you perform task 2"
   TodoItem:
     allOf:
       - $ref: "#/definitions/TodoItemBase"
@@ -1303,7 +1326,7 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'
         example:
-          note: Gör så här
+          description: Gör så här
           completedAt: 2018-04-12 12:00
           todoType: basic
           title: Städa charken
@@ -1320,13 +1343,18 @@ definitions:
             sortId: 1
             id: "123457"
             title: Mätning
-          dueAt: 2018-04-12 12:00
+          dueDate: 2018-04-12 12:00
           createdAt: 2018-03-14 15:22
-          contentUrl: https://episerver.ica.se/getContent?id=4711
+          context: https://episerver.ica.se/getContent?id=4711
           modifiedOn: 2018-03-14 15:22
+          startDate: 2018-04-12 12:00
           id: "123456"
-          categoryId: "123"
-          categoryTitle: HACCP
+          categoryOneId: "123"
+          categoryOneTitle: HACCP
+          categoryTwoId: "123"
+          categoryTwoTitle: HACCP
+          system: "1"
+          descriptionImage: 0x4858FE25053CA4D236F3D61AE29668BA
           completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
           completedByName: Göran Roseen
           isCompleted: true
@@ -1334,9 +1362,9 @@ definitions:
           createdByName: Abdallah Rifai
           cards:
           - id: "123456"
-            notes: "this is how you measure things"
+            title: "this is how you measure things"
           - id: "123457"
-            notes:  "this is how you perform task 2"
+            title:  "this is how you perform task 2"
   Tag:
     type: object
     required:
@@ -1361,7 +1389,31 @@ definitions:
       sortId: 1
       id: "123456"
       title: Rengöring
-  Category:
+  CategoryOne:
+    type: object
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        example: "123456"
+      title:
+        type: string
+        example: HACCP
+      sortId:
+        type: integer
+        format: int32
+        example: 1
+      modifiedOn:
+        type: string
+        format: date-time
+        example: 2018-03-14 15:22
+    example:
+      modifiedOn: 2018-03-14 15:22
+      sortId: 1
+      id: "123456"
+      title: HACCP
+  CategoryTwo:
     type: object
     required:
     - title
@@ -1389,9 +1441,8 @@ definitions:
     type: object
     required:
     - activityType
-    - categoryId
-    - contentUrl
-    - note
+    - context
+    - description
     - priority
     - title
     properties:
@@ -1405,10 +1456,10 @@ definitions:
         type: string
         example: basic
         description: Must be one of "basic", "measure", "yesno"
-      note:
+      description:
         type: string
         example: Gör så här
-      contentUrl:
+      context:
         type: string
         format: url
         example: https://episerver.ica.se/getContent?id=4711
@@ -1416,11 +1467,22 @@ definitions:
         type: string
         format: date-time
         example: 2018-03-14 15:22
+      system:
+        type: integer
+        format: int
+        example: 1
+      descriptionImage:
+        type: image
+        format: varbinary
+        example: 0x4858FE25053CA4D236F3D61AE29668BA
       priority:
         type: integer
         format: int32
         example: 1
-      categoryId:
+      categoryOneId:
+        type: string
+        example: "123"
+      categoryTwoId:
         type: string
         example: "123"
       modifiedOn:
@@ -1451,7 +1513,10 @@ definitions:
       - $ref: "#/definitions/ActivityBase"
       - type: object
         properties:
-          categoryTitle:
+          categoryOneTitle:
+            type: string
+            example: HACCP
+          categoryTwoTitle:
             type: string
             example: HACCP
           tags:
@@ -1463,16 +1528,20 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'       
         example:
-          note: Gör så här
+          description: Gör så här
           createdAt: 2018-03-14 15:22
-          contentUrl: https://episerver.ica.se/getContent?id=4711
+          context: https://episerver.ica.se/getContent?id=4711
           modifiedOn: 2018-03-14 15:22
           id: "123456"
           title: Städa charken
           activityType: basic
           priority: 1
-          categoryId: "123"
-          categoryTitle: HACCP
+          system: 1
+          descriptionImage : 0x4858FE25053CA4D236F3D61AE29668BA
+          categoryOneId: "123"
+          categoryOneTitle: HACCP
+          categoryTwoId: "123"
+          categoryTwoTitle: HACCP
           tags:
           - modifiedOn: 2018-03-14 15:22
             sortId: 1
@@ -1484,10 +1553,9 @@ definitions:
             title: Mätning
           cards:
           - id: "123456"
-            notes: "this is how you measure things"
+            title: "this is how you measure things"
           - id: "123457"
-            notes:  "this is how you perform task 2"
-          categoryTitle: HACCP
+            title:  "this is how you perform task 2"
           createdById: "122"
           createdByName: "arifai"
   TodoInstantiate:
@@ -1496,7 +1564,7 @@ definitions:
     - assignedToId
     - assignedToName
     - assignedToObjectType
-    - dueAt
+    - dueDate
     - craetedById
     - createdByName
     properties:
@@ -1509,7 +1577,7 @@ definitions:
       assignedToObjectType:
         type: string
         example: Group
-      dueAt:
+      dueDate:
         type: string
         format: date-time
         example: 2018-04-24 14:41
@@ -1520,7 +1588,7 @@ definitions:
         type: string
         example: "Abdallah Rifai"
     example:
-      dueAt: 2018-04-24 14:41
+      dueDate: 2018-04-24 14:41
       assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
       assignedToName: Frukt & Grönt
       assignedToObjectType: Group
@@ -1532,11 +1600,11 @@ definitions:
       id:
         type: string
         example: "123456"
-      notes:
+      title:
         type: string
         example: this is how you measure things
     example:
-      notes: this is how you measure things
+      title: this is how you measure things
       id: "123456"
   TodoCard:
     allOf:
@@ -1574,7 +1642,7 @@ definitions:
           input: tempreture must be between -5 and 8
           activityCardId: "123456"
           modifiedOn: 2018-03-14 15:22
-          notes: this is how you measure things
+          title: this is how you measure things
           outputMedia: '/todos/3/cards/225/attachment/ica.jpg'
           cardType: TEMP
           id: "123456"
@@ -1609,7 +1677,7 @@ definitions:
           input: tempreture must be between -5 and 8
           activityId: "123456"
           modifiedOn: 2018-03-14 15:22
-          notes: this is how you measure things
+          title: this is how you measure things
           cardType: TEMP
           id: "123456"
           outputText: "8"
