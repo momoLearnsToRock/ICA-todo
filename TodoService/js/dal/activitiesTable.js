@@ -13,7 +13,7 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
         const activityFields = [
             new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),
             new h.Helpers.SqlField({
-                name: 'note',
+                name: 'description',
                 type: sql.NVarChar(sql.MAX),
             }),
             new h.Helpers.SqlField({
@@ -21,7 +21,7 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
                 type: sql.DateTime,
             }),
             new h.Helpers.SqlField({
-                name: 'contentUrl',
+                name: 'context',
                 type: sql.NVarChar(512),
             }),
             new h.Helpers.SqlField({
@@ -37,24 +37,37 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
                 type: sql.Int,
             }),
             new h.Helpers.SqlField({
-                name: 'categoryId',
+                name: 'categoryOneId',
                 type: sql.BigInt,
             }),
             new h.Helpers.SqlField({
-                // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
+                name: 'categoryTwoId',
+                type: sql.BigInt,
+            }),
+            new h.Helpers.SqlField({
+                name: 'system',
+                type: sql.BigInt,
+            }),
+            new h.Helpers.SqlField({
+                name: 'descriptionimage',
+                type: sql.VarBinary(sql.MAX),
+            }),
+            new h.Helpers.SqlField({
                 name: 'modifiedOn',
                 type: sql.DateTime,
             }),
             new h.Helpers.SqlField({
-                // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
                 name: 'createdById',
                 type: sql.NVarChar(255),
             }),
             new h.Helpers.SqlField({
-                // new h.Helpers.SqlField({name: 'categoryTitle', type: sql.NVarChar(100)}),
                 name: 'createdByName',
                 type: sql.NVarChar(255),
             }),
+            new h.Helpers.SqlField({
+                name: 'context',
+                type: sql.NVarChar(255),
+            })
         ];
         super({
             // tslint:disable-next-line:object-literal-shorthand
@@ -96,7 +109,9 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
         try {
             todo = await this.todosTable.insertTransPool(activity, false, transaction);
             if (activity.tags && activity.tags.length > 0) {
-                let activityTags = activity.tags; // JSON.parse(activity.tags); // We cans parse already parsed tags (in base router)
+                let activityTags = activity.tags;
+                // await this.getTags(activity.activityId);
+                // await activityTags.forEach(async function (at) {
                 for (let i = 0; i < activityTags.length; i++) {
                     let at = activityTags[i];
                     delete at.title;

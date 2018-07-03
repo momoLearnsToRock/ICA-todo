@@ -10,7 +10,7 @@ class ActivityCardsTable extends sqlTableType_1.SqlTableType {
         const activityCardsFields = [
             new misc_1.Helpers.SqlField({ name: 'id', type: sql.BigInt }),
             new misc_1.Helpers.SqlField({ name: 'activityId', type: sql.BigInt }),
-            new misc_1.Helpers.SqlField({ name: 'notes', type: sql.NVarChar(sql.MAX) }),
+            new misc_1.Helpers.SqlField({ name: 'title', type: sql.NVarChar(sql.MAX) }),
             new misc_1.Helpers.SqlField({ name: 'cardType', type: sql.NVarChar(50) }),
             new misc_1.Helpers.SqlField({ name: 'input', type: sql.NVarChar(sql.MAX) }),
             new misc_1.Helpers.SqlField({ name: 'outputText', type: sql.NVarChar(sql.MAX) }),

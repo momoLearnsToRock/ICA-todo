@@ -335,7 +335,7 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
-  /categories:
+  /categoryOne:
     get:
       tags:
       - clients
@@ -386,11 +386,11 @@ paths:
       - application/json
       parameters:
       - in: body
-        name: Category
+        name: categoryOne
         description: Category to add
         required: false
         schema:
-          $ref: '#/definitions/Category'
+          $ref: '#/definitions/categoryOne'
       responses:
         201:
           description: item created
@@ -398,26 +398,26 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
-  /categories/{id}:
+  /categoryOne/{id}:
     get:
       tags:
       - clients
       summary: Find Category by Id
-      description: Find a Category by Id
-      operationId: getCategoryById
+      description: Find a CategoryOne by Id
+      operationId: getCategoryOneById
       produces:
       - application/json
       parameters:
       - name: id
         in: path
-        description: Id of the Category that needs to be fetched
+        description: Id of the CategoryOne that needs to be fetched
         required: true
         type: string
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Category'
+            $ref: '#/definitions/categoryOne'
         400:
           description: error
         404:
@@ -425,9 +425,9 @@ paths:
     put:
       tags:
       - admins
-      summary: updates a Category
-      description: Updates a Category in the system
-      operationId: updateCategory
+      summary: updates a categoryOne
+      description: Updates a categoryOne in the system
+      operationId: updatecategoryOne
       consumes:
       - application/json
       produces:
@@ -435,15 +435,15 @@ paths:
       parameters:
       - name: id
         in: path
-        description: id of the Category to be updated
+        description: id of the categoryOne to be updated
         required: true
         type: string
       - in: body
-        name: Category
-        description: Category to update
+        name: categoryOne
+        description: categoryOne to update
         required: false
         schema:
-          $ref: '#/definitions/Category'
+          $ref: '#/definitions/categoryOne'
       responses:
         200:
           description: item updated
@@ -452,15 +452,15 @@ paths:
     delete:
       tags:
       - admins
-      summary: Delete Category by Id
-      description: Deletes a Category in the system
-      operationId: deleteCategory
+      summary: Delete categoryOne by Id
+      description: Deletes a categoryOne in the system
+      operationId: deletecategoryOne
       produces:
       - application/json
       parameters:
       - name: id
         in: path
-        description: ID of the Category that needs to be deleted
+        description: ID of the categoryOne that needs to be deleted
         required: true
         type: string
       responses:
@@ -470,6 +470,277 @@ paths:
           description: error
         404:
           description: Could not find an entry with the given id.
+  /categoryTwo:
+    get:
+      tags:
+      - clients
+      summary: Fetch all categoryTwo
+      description: Fetch all categoryTwo
+      operationId: getcategoryTwo
+      produces:
+      - application/json
+      parameters:
+      - name: $top
+        in: query
+        description: Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)
+        required: false
+        type: integer
+      - name: $filter
+        in: query
+        description: Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported
+        required: false
+        type: string
+      responses:
+        200:
+          description: all categoryTwo
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/categoryTwo'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a categoryTwo
+      description: Adds a categoryTwo to the system
+      operationId: addcategoryTwo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: categoryTwo
+        description: categoryTwo to add
+        required: false
+        schema:
+          $ref: '#/definitions/categoryTwo'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /categoryTwo/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find categoryTwo by Id
+      description: Find a categoryTwo by Id
+      operationId: getcategoryTwoById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the categoryTwo that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/categoryTwo'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a categoryTwo
+      description: Updates a categoryTwo in the system
+      operationId: updatecategoryTwo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the categoryTwo to be updated
+        required: true
+        type: string
+      - in: body
+        name: categoryTwo
+        description: categoryTwo to update
+        required: false
+        schema:
+          $ref: '#/definitions/categoryTwo'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete categoryTwo by Id
+      description: Deletes a categoryTwo in the system
+      operationId: deletecategoryTwo
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the CategoryTwo that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+
+  /System:
+    get:
+      tags:
+      - clients
+      summary: Fetch all Systems
+      description: Fetch all Systems
+      operationId: getSystems
+      produces:
+      - application/json
+      parameters:
+      - name: $top
+        in: query
+        description: Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)
+        required: false
+        type: integer
+      - name: $filter
+        in: query
+        description: Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported
+        required: false
+        type: string
+      responses:
+        200:
+          description: all Systems
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/System'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a System
+      description: Adds a System to the system
+      operationId: addSystem
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: System
+        description: System to add
+        required: false
+        schema:
+          $ref: '#/definitions/System'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exist
+  /System/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find Systems by Id
+      description: Find a System by Id
+      operationId: getSystemById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the System that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/System'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a System
+      description: Updates a System in the system
+      operationId: updateSystem
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the System to be updated
+        required: true
+        type: string
+      - in: body
+        name: System
+        description: System to update
+        required: false
+        schema:
+          $ref: '#/definitions/System'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete System by Id
+      description: Deletes a System in the system
+      operationId: deleteSystem
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the System that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.       
   /tags:
     get:
       tags:
@@ -1437,6 +1708,22 @@ definitions:
       sortId: 1
       id: "123456"
       title: HACCP
+  System:
+    type: object
+    required:
+    - title
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 1
+      title:
+        type: string
+        example: HACCP
+    example:
+      modifiedOn: 2018-03-14 15:22
+      id: 1
+      title: SystemOne    
   ActivityBase:
     type: object
     required:
