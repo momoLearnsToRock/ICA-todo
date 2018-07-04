@@ -335,7 +335,7 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
-  /categoryOne:
+  /categoryOnes:
     get:
       tags:
       - clients
@@ -377,9 +377,9 @@ paths:
     post:
       tags:
       - admins
-      summary: adds a Category
-      description: Adds a Category to the system
-      operationId: addCategory
+      summary: adds a categoryOne
+      description: Adds a categoryOne to the system
+      operationId: addcategoryOne
       consumes:
       - application/json
       produces:
@@ -387,7 +387,7 @@ paths:
       parameters:
       - in: body
         name: categoryOne
-        description: Category to add
+        description: categoryOne to add
         required: false
         schema:
           $ref: '#/definitions/categoryOne'
@@ -398,7 +398,7 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
-  /categoryOne/{id}:
+  /categoryOnes/{id}:
     get:
       tags:
       - clients
@@ -470,7 +470,7 @@ paths:
           description: error
         404:
           description: Could not find an entry with the given id.
-  /categoryTwo:
+  /categoryTwos:
     get:
       tags:
       - clients
@@ -533,7 +533,7 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
-  /categoryTwo/{id}:
+  /categoryTwos/{id}:
     get:
       tags:
       - clients
@@ -606,7 +606,7 @@ paths:
         404:
           description: Could not find an entry with the given id.
 
-  /System:
+  /Systems:
     get:
       tags:
       - clients
@@ -669,7 +669,7 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exist
-  /System/{id}:
+  /Systems/{id}:
     get:
       tags:
       - clients
