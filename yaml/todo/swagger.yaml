@@ -1534,6 +1534,8 @@ definitions:
       id: "123456"
       categoryOneId: "123"
       categoryTwoId: "123"
+      categoryOneTitle: "Haccp"
+      categoryTwoTitle: "title"
       completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
       completedByName: Göran Roseen
       isCompleted: true
@@ -1567,7 +1569,9 @@ definitions:
           modifiedOn: 2018-03-14 15:22
           id: "123456"
           categoryoneId: "123"
-          categoryoneId: "123"
+          categoryTwoId: "123"
+          categoryOneTitle: "Haccp"
+          categoryTwoTitle: "title"
           system: "1"
           descriptionImage: 0x4858FE25053CA4D236F3D61AE29668BA
           completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
@@ -1791,8 +1795,8 @@ definitions:
       title: Städa charken
       activityType: basic
       priority: 1
-      categoryId: "123"
-      categoryTitle: HACCP
+      categoryOneId: "123"
+      categoryOneTitle: HACCP
       createdById: "122"
       createdByName: "arifai"
   Activity:
