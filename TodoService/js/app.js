@@ -59,7 +59,7 @@ class main {
                 disablePatch: true,
                 disableDelete: false,
             });
-            app.use('/System', sy.router);
+            app.use('/Systems', sy.router);
             const categoryFields = [
                 new h.Helpers.SqlField({
                     name: 'id',
@@ -94,7 +94,7 @@ class main {
                 disablePatch: true,
                 disableDelete: false,
             });
-            app.use('/categoryOne', crOne.router);
+            app.use('/categoryOnes', crOne.router);
             const categoryTwoTable = new sqlTableType_1.SqlTableType({
                 connectionPool: pool,
                 tableName: 'categoryTwo',
@@ -111,7 +111,7 @@ class main {
                 disablePatch: true,
                 disableDelete: false,
             });
-            app.use('/categoryTwo', crTwo.router);
+            app.use('/categoryTwos', crTwo.router);
             const tagFields = [
                 new h.Helpers.SqlField({
                     name: 'id',
