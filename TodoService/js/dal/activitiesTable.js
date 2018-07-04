@@ -45,14 +45,6 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
                 type: sql.BigInt,
             }),
             new h.Helpers.SqlField({
-                name: 'system',
-                type: sql.BigInt,
-            }),
-            new h.Helpers.SqlField({
-                name: 'descriptionimage',
-                type: sql.VarBinary(sql.MAX),
-            }),
-            new h.Helpers.SqlField({
                 name: 'modifiedOn',
                 type: sql.DateTime,
             }),
@@ -65,9 +57,13 @@ class ActivitiesTable extends sqlTableType_1.SqlTableType {
                 type: sql.NVarChar(255),
             }),
             new h.Helpers.SqlField({
-                name: 'context',
-                type: sql.NVarChar(255),
-            })
+                name: 'sourceSystemId',
+                type: sql.Int,
+            }),
+            new h.Helpers.SqlField({
+                name: 'descriptionimage',
+                type: sql.NVarChar(512),
+            }),
         ];
         super({
             // tslint:disable-next-line:object-literal-shorthand

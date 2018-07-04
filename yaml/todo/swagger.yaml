@@ -390,7 +390,7 @@ paths:
         description: categoryOne to add
         required: false
         schema:
-          $ref: '#/definitions/categoryOne'
+          $ref: '#/definitions/Category'
       responses:
         201:
           description: item created
@@ -417,7 +417,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/categoryOne'
+            $ref: '#/definitions/Category'
         400:
           description: error
         404:
@@ -443,7 +443,7 @@ paths:
         description: categoryOne to update
         required: false
         schema:
-          $ref: '#/definitions/categoryOne'
+          $ref: '#/definitions/Category'
       responses:
         200:
           description: item updated
@@ -506,7 +506,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/categoryTwo'
+              $ref: '#/definitions/Category'
         400:
           description: bad input parameter
     post:
@@ -525,7 +525,7 @@ paths:
         description: categoryTwo to add
         required: false
         schema:
-          $ref: '#/definitions/categoryTwo'
+          $ref: '#/definitions/Category'
       responses:
         201:
           description: item created
@@ -552,7 +552,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/categoryTwo'
+            $ref: '#/definitions/Category'
         400:
           description: error
         404:
@@ -578,7 +578,7 @@ paths:
         description: categoryTwo to update
         required: false
         schema:
-          $ref: '#/definitions/categoryTwo'
+          $ref: '#/definitions/Category'
       responses:
         200:
           description: item updated
@@ -605,7 +605,6 @@ paths:
           description: error
         404:
           description: Could not find an entry with the given id.
-
   /Systems:
     get:
       tags:
@@ -1494,14 +1493,6 @@ definitions:
         type: integer
         format: int32
         example: 1
-      system:
-        type: integer
-        format: int32
-        example: 1
-      descriptionImage:
-       type: image
-       format: varbinary
-       example: 0x4858
       categoryOneId:
         type: string
         example: "123"
@@ -1518,32 +1509,37 @@ definitions:
         type: string
         format: date-time
         example: 2018-03-14 15:22
+      sourceSystemId:
+        type: string
+        example: 1
+      descriptionImage:
+       type: string
+       example: '/todos/attachement/myTodo1.jpg'
+        
     example:
-      description: Gör så här
-      completedAt: 2018-04-12 12:00
-      todoType: basic
+      id: "123456"
       title: Städa charken
-      priority: 1
+      todoType: basic
+      description: Gör så här
+      context: https://episerver.ica.se/getContent?id=4711
+      createdAt: 2018-03-14 15:22
+      dueDate: 2018-04-12 12:00
       assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
       assignedToName: Frukt & Grönt
       assignedToObjectType: Group
-      dueDate: 2018-04-12 12:00
-      createdAt: 2018-03-14 15:22
-      context: https://episerver.ica.se/getContent?id=4711
-      modifiedOn: 2018-03-14 15:22
-      id: "123456"
-      categoryOneId: "123"
-      categoryTwoId: "123"
-      categoryOneTitle: "Haccp"
-      categoryTwoTitle: "title"
+      isCompleted: true
       completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
       completedByName: Göran Roseen
-      isCompleted: true
+      completedAt: 2018-04-12 12:00
+      startDate: 2018-03-14 15:22
+      priority: 1
+      categoryOneId: "123"
+      categoryTwoId: "123"
       createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
       createdByName: Abdallah Rifai
-      startDate: 2018-03-14 15:22
-      descriptionImage: 0x4858
-      system : 1
+      modifiedOn: 2018-03-14 15:22
+      sourceSystemId : 1
+      descriptionImage: '/todos/attachement/myTodo1.jpg'
   TodoItemUpdateModel:
     allOf:
       - $ref: "#/definitions/TodoItemBase"
@@ -1554,31 +1550,29 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'
         example:
-          description: Gör så här
-          completedAt: 2018-04-12 12:00
-          todoType: basic
+          id: "123456"
           title: Städa charken
-          priority: 1
+          todoType: basic
+          description: Gör så här
+          context: https://episerver.ica.se/getContent?id=4711
+          createdAt: 2018-03-14 15:22
+          dueDate: 2018-04-12 12:00
           assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
           assignedToName: Frukt & Grönt
           assignedToObjectType: Group
-          dueDate: 2018-04-12 12:00
-          startDate: 2018-04-12 12:00
-          createdAt: 2018-03-14 15:22
-          context: https://episerver.ica.se/getContent?id=4711
-          modifiedOn: 2018-03-14 15:22
-          id: "123456"
-          categoryoneId: "123"
-          categoryTwoId: "123"
-          categoryOneTitle: "Haccp"
-          categoryTwoTitle: "title"
-          system: "1"
-          descriptionImage: 0x4858FE25053CA4D236F3D61AE29668BA
+          isCompleted: true
           completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
           completedByName: Göran Roseen
-          isCompleted: true
+          completedAt: 2018-04-12 12:00
+          startDate: 2018-03-14 15:22
+          priority: 1
+          categoryOneId: "123"
+          categoryTwoId: "123"
           createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
           createdByName: Abdallah Rifai
+          modifiedOn: 2018-03-14 15:22
+          sourceSystemId : 1
+          descriptionImage: '/todos/attachement/myTodo1.jpg'
           cards:
           - id: "123456"
             title: "this is how you measure things"
@@ -1589,9 +1583,12 @@ definitions:
       - $ref: "#/definitions/TodoItemBase"
       - type: object
         properties:
-          categoryTitle:
+          categoryOneTitle:
             type: string
-            example: HACCP
+            example: "Bageri"
+          categoryTwoTitle:
+            type: string
+            example: "Underhåll"
           tags:
             type: array
             items:
@@ -1601,14 +1598,31 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'
         example:
-          description: Gör så här
-          completedAt: 2018-04-12 12:00
-          todoType: basic
+          id: "123456"
           title: Städa charken
-          priority: 1
+          todoType: basic
+          description: Gör så här
+          context: https://episerver.ica.se/getContent?id=4711
+          createdAt: 2018-03-14 15:22
+          dueDate: 2018-04-12 12:00
           assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
           assignedToName: Frukt & Grönt
           assignedToObjectType: Group
+          isCompleted: true
+          completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
+          completedByName: Göran Roseen
+          completedAt: 2018-04-12 12:00
+          startDate: 2018-03-14 15:22
+          priority: 1
+          categoryOneId: "123"
+          categoryTwoId: "123"
+          createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
+          createdByName: Abdallah Rifai
+          modifiedOn: 2018-03-14 15:22
+          sourceSystemId : 1
+          descriptionImage: '/todos/attachement/myTodo1.jpg'
+          categoryOneTitle: "Bageri"
+          categoryTwoTitle: "Underhåll"
           tags:
           - modifiedOn: 2018-03-14 15:22
             sortId: 1
@@ -1618,23 +1632,6 @@ definitions:
             sortId: 1
             id: "123457"
             title: Mätning
-          dueDate: 2018-04-12 12:00
-          createdAt: 2018-03-14 15:22
-          context: https://episerver.ica.se/getContent?id=4711
-          modifiedOn: 2018-03-14 15:22
-          startDate: 2018-04-12 12:00
-          id: "123456"
-          categoryOneId: "123"
-          categoryOneTitle: HACCP
-          categoryTwoId: "123"
-          categoryTwoTitle: HACCP
-          system: "1"
-          descriptionImage: 0x4858FE25053CA4D236F3D61AE29668BA
-          completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
-          completedByName: Göran Roseen
-          isCompleted: true
-          createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
-          createdByName: Abdallah Rifai
           cards:
           - id: "123456"
             title: "this is how you measure things"
@@ -1664,7 +1661,7 @@ definitions:
       sortId: 1
       id: "123456"
       title: Rengöring
-  CategoryOne:
+  Category:
     type: object
     required:
     - title
@@ -1688,46 +1685,6 @@ definitions:
       sortId: 1
       id: "123456"
       title: HACCP
-  CategoryTwo:
-    type: object
-    required:
-    - title
-    properties:
-      id:
-        type: string
-        example: "123456"
-      title:
-        type: string
-        example: HACCP
-      sortId:
-        type: integer
-        format: int32
-        example: 1
-      modifiedOn:
-        type: string
-        format: date-time
-        example: 2018-03-14 15:22
-    example:
-      modifiedOn: 2018-03-14 15:22
-      sortId: 1
-      id: "123456"
-      title: HACCP
-  System:
-    type: object
-    required:
-    - title
-    properties:
-      id:
-        type: integer
-        format: int32
-        example: 1
-      title:
-        type: string
-        example: HACCP
-    example:
-      modifiedOn: 2018-03-14 15:22
-      id: 1
-      title: SystemOne    
   ActivityBase:
     type: object
     required:
@@ -1758,14 +1715,6 @@ definitions:
         type: string
         format: date-time
         example: 2018-03-14 15:22
-      system:
-        type: integer
-        format: int
-        example: 1
-      descriptionImage:
-        type: image
-        format: varbinary
-        example: 0x4858FE25053CA4D236F3D61AE29668BA
       priority:
         type: integer
         format: int32
@@ -1786,19 +1735,27 @@ definitions:
       createdByName:
         type: string
         example: arifai
+      sourceSystemId:
+        type: string
+        example: 1
+      descriptionImage:
+        type: string
+        example: "activities/attachement/myDesc.jpg"
     example:
-      note: Gör så här
-      createdAt: 2018-03-14 15:22
-      contentUrl: https://episerver.ica.se/getContent?id=4711
-      modifiedOn: 2018-03-14 15:22
       id: "123456"
       title: Städa charken
       activityType: basic
+      description: Gör så här
+      context: https://episerver.ica.se/getContent?id=4711
+      createdAt: 2018-03-14 15:22
       priority: 1
       categoryOneId: "123"
-      categoryOneTitle: HACCP
+      categoryTwoId: "123"
+      modifiedOn: 2018-03-14 15:22
       createdById: "122"
       createdByName: "arifai"
+      sourceSystemId: "1"
+      descriptionImage: "activities/attachement/myDesc.jpg"
   Activity:
     allOf:
       - $ref: "#/definitions/ActivityBase"
@@ -1806,10 +1763,10 @@ definitions:
         properties:
           categoryOneTitle:
             type: string
-            example: HACCP
+            example: "Bageri"
           categoryTwoTitle:
             type: string
-            example: HACCP
+            example: "Underhåll"
           tags:
             type: array
             items:
@@ -1819,20 +1776,22 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'       
         example:
-          description: Gör så här
-          createdAt: 2018-03-14 15:22
-          context: https://episerver.ica.se/getContent?id=4711
-          modifiedOn: 2018-03-14 15:22
           id: "123456"
           title: Städa charken
           activityType: basic
+          description: Gör så här
+          context: https://episerver.ica.se/getContent?id=4711
+          createdAt: 2018-03-14 15:22
           priority: 1
-          system: 1
-          descriptionImage : 0x4858FE25053CA4D236F3D61AE29668BA
           categoryOneId: "123"
-          categoryOneTitle: HACCP
           categoryTwoId: "123"
-          categoryTwoTitle: HACCP
+          modifiedOn: 2018-03-14 15:22
+          createdById: "122"
+          createdByName: "arifai"
+          sourceSystemId: "1"
+          descriptionImage: "activities/attachement/myDesc.jpg"
+          categoryOneTitle: "Bageri"
+          categoryTwoTitle: "Underhål"
           tags:
           - modifiedOn: 2018-03-14 15:22
             sortId: 1
@@ -1847,8 +1806,6 @@ definitions:
             title: "this is how you measure things"
           - id: "123457"
             title:  "this is how you perform task 2"
-          createdById: "122"
-          createdByName: "arifai"
   TodoInstantiate:
     type: object
     required:
@@ -1886,7 +1843,7 @@ definitions:
   CardBase:
     type: object
     required:
-    - notes
+    - title
     properties:
       id:
         type: string
@@ -1992,6 +1949,22 @@ definitions:
       id: TEMP
       title: Tempratur
       modifiedOn: 2018-03-14 15:22
+  System:
+    type: object
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        example: "123"
+      title:
+        type: string
+        example: "HACCP"
+    example:
+      id: 1
+      title: "HACCP"    
+      modifiedOn: 2018-03-14 15:22
+      
 parameters:
   top:
     name: $top
