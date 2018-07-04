@@ -11,7 +11,7 @@ export class TodoCardsTable extends SqlTableType {
     const todoCardsFields: h.Helpers.SqlField[] = [
       new h.Helpers.SqlField({ name: 'id', type: sql.BigInt }),
       new h.Helpers.SqlField({ name: 'todoId', type: sql.BigInt }),
-      new h.Helpers.SqlField({ name: 'notes', type: sql.NVarChar(sql.MAX) }),
+      new h.Helpers.SqlField({ name: 'title', type: sql.NVarChar(sql.MAX) }),
       new h.Helpers.SqlField({ name: 'cardType', type: sql.NVarChar(50) }),
       new h.Helpers.SqlField({ name: 'input', type: sql.NVarChar(sql.MAX) }),
       new h.Helpers.SqlField({ name: 'outputText', type: sql.NVarChar(sql.MAX) }),

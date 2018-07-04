@@ -335,7 +335,7 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
-  /categories:
+  /categoryOnes:
     get:
       tags:
       - clients
@@ -377,17 +377,17 @@ paths:
     post:
       tags:
       - admins
-      summary: adds a Category
-      description: Adds a Category to the system
-      operationId: addCategory
+      summary: adds a categoryOne
+      description: Adds a categoryOne to the system
+      operationId: addcategoryOne
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
       - in: body
-        name: Category
-        description: Category to add
+        name: categoryOne
+        description: categoryOne to add
         required: false
         schema:
           $ref: '#/definitions/Category'
@@ -398,19 +398,19 @@ paths:
           description: invalid input, object invalid
         409:
           description: an existing item already exists
-  /categories/{id}:
+  /categoryOnes/{id}:
     get:
       tags:
       - clients
       summary: Find Category by Id
-      description: Find a Category by Id
-      operationId: getCategoryById
+      description: Find a CategoryOne by Id
+      operationId: getCategoryOneById
       produces:
       - application/json
       parameters:
       - name: id
         in: path
-        description: Id of the Category that needs to be fetched
+        description: Id of the CategoryOne that needs to be fetched
         required: true
         type: string
       responses:
@@ -425,9 +425,9 @@ paths:
     put:
       tags:
       - admins
-      summary: updates a Category
-      description: Updates a Category in the system
-      operationId: updateCategory
+      summary: updates a categoryOne
+      description: Updates a categoryOne in the system
+      operationId: updatecategoryOne
       consumes:
       - application/json
       produces:
@@ -435,12 +435,12 @@ paths:
       parameters:
       - name: id
         in: path
-        description: id of the Category to be updated
+        description: id of the categoryOne to be updated
         required: true
         type: string
       - in: body
-        name: Category
-        description: Category to update
+        name: categoryOne
+        description: categoryOne to update
         required: false
         schema:
           $ref: '#/definitions/Category'
@@ -452,15 +452,15 @@ paths:
     delete:
       tags:
       - admins
-      summary: Delete Category by Id
-      description: Deletes a Category in the system
-      operationId: deleteCategory
+      summary: Delete categoryOne by Id
+      description: Deletes a categoryOne in the system
+      operationId: deletecategoryOne
       produces:
       - application/json
       parameters:
       - name: id
         in: path
-        description: ID of the Category that needs to be deleted
+        description: ID of the categoryOne that needs to be deleted
         required: true
         type: string
       responses:
@@ -470,6 +470,276 @@ paths:
           description: error
         404:
           description: Could not find an entry with the given id.
+  /categoryTwos:
+    get:
+      tags:
+      - clients
+      summary: Fetch all categoryTwo
+      description: Fetch all categoryTwo
+      operationId: getcategoryTwo
+      produces:
+      - application/json
+      parameters:
+      - name: $top
+        in: query
+        description: Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)
+        required: false
+        type: integer
+      - name: $filter
+        in: query
+        description: Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported
+        required: false
+        type: string
+      responses:
+        200:
+          description: all categoryTwo
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Category'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a categoryTwo
+      description: Adds a categoryTwo to the system
+      operationId: addcategoryTwo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: categoryTwo
+        description: categoryTwo to add
+        required: false
+        schema:
+          $ref: '#/definitions/Category'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /categoryTwos/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find categoryTwo by Id
+      description: Find a categoryTwo by Id
+      operationId: getcategoryTwoById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the categoryTwo that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Category'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a categoryTwo
+      description: Updates a categoryTwo in the system
+      operationId: updatecategoryTwo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the categoryTwo to be updated
+        required: true
+        type: string
+      - in: body
+        name: categoryTwo
+        description: categoryTwo to update
+        required: false
+        schema:
+          $ref: '#/definitions/Category'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete categoryTwo by Id
+      description: Deletes a categoryTwo in the system
+      operationId: deletecategoryTwo
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the CategoryTwo that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+  /Systems:
+    get:
+      tags:
+      - clients
+      summary: Fetch all Systems
+      description: Fetch all Systems
+      operationId: getSystems
+      produces:
+      - application/json
+      parameters:
+      - name: $top
+        in: query
+        description: Show only the first n items, see [OData Paging - Top](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374630)
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the first n items, see [OData Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374631)
+        required: false
+        type: integer
+      - name: $filter
+        in: query
+        description: Filter items by property values, see [OData Filtering](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374625), note that expand is not supported
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select properties to be returned, see [OData Select](http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html#_Toc445374620), note that expand is not supported
+        required: false
+        type: string
+      responses:
+        200:
+          description: all Systems
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/System'
+        400:
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: adds a System
+      description: Adds a System to the system
+      operationId: addSystem
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: System
+        description: System to add
+        required: false
+        schema:
+          $ref: '#/definitions/System'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exist
+  /Systems/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find Systems by Id
+      description: Find a System by Id
+      operationId: getSystemById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Id of the System that needs to be fetched
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/System'
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.
+    put:
+      tags:
+      - admins
+      summary: updates a System
+      description: Updates a System in the system
+      operationId: updateSystem
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of the System to be updated
+        required: true
+        type: string
+      - in: body
+        name: System
+        description: System to update
+        required: false
+        schema:
+          $ref: '#/definitions/System'
+      responses:
+        200:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+      - admins
+      summary: Delete System by Id
+      description: Deletes a System in the system
+      operationId: deleteSystem
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID of the System that needs to be deleted
+        required: true
+        type: string
+      responses:
+        204:
+          description: Delete successful
+        400:
+          description: error
+        404:
+          description: Could not find an entry with the given id.       
   /tags:
     get:
       tags:
@@ -1160,8 +1430,8 @@ definitions:
     type: object
     required:
     - categoryId
-    - contentUrl
-    - note
+    - context
+    - description
     - priority
     - title
     - todoType
@@ -1178,10 +1448,10 @@ definitions:
         type: string
         example: basic
         description: Must be one of "basic", "measure", "yesno"
-      note:
+      description:
         type: string
         example: Gör så här
-      contentUrl:
+      context:
         type: string
         format: url
         example: https://episerver.ica.se/getContent?id=4711
@@ -1189,7 +1459,7 @@ definitions:
         type: string
         format: date-time
         example: 2018-03-14 15:22
-      dueAt:
+      dueDate:
         type: string
         format: date-time
         example: 2018-04-12 12:00
@@ -1215,11 +1485,18 @@ definitions:
         type: string
         format: date-time
         example: 2018-04-12 12:00
+      startDate:
+        type: string
+        format: date-time
+        example: 2018-04-12 12:00
       priority:
         type: integer
         format: int32
         example: 1
-      categoryId:
+      categoryOneId:
+        type: string
+        example: "123"
+      categoryTwoId:
         type: string
         example: "123"
       createdById:
@@ -1232,26 +1509,37 @@ definitions:
         type: string
         format: date-time
         example: 2018-03-14 15:22
+      sourceSystemId:
+        type: string
+        example: 1
+      descriptionImage:
+       type: string
+       example: '/todos/attachement/myTodo1.jpg'
+        
     example:
-      note: Gör så här
-      completedAt: 2018-04-12 12:00
-      todoType: basic
+      id: "123456"
       title: Städa charken
-      priority: 1
+      todoType: basic
+      description: Gör så här
+      context: https://episerver.ica.se/getContent?id=4711
+      createdAt: 2018-03-14 15:22
+      dueDate: 2018-04-12 12:00
       assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
       assignedToName: Frukt & Grönt
       assignedToObjectType: Group
-      dueAt: 2018-04-12 12:00
-      createdAt: 2018-03-14 15:22
-      contentUrl: https://episerver.ica.se/getContent?id=4711
-      modifiedOn: 2018-03-14 15:22
-      id: "123456"
-      categoryId: "123"
+      isCompleted: true
       completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
       completedByName: Göran Roseen
-      isCompleted: true
+      completedAt: 2018-04-12 12:00
+      startDate: 2018-03-14 15:22
+      priority: 1
+      categoryOneId: "123"
+      categoryTwoId: "123"
       createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
       createdByName: Abdallah Rifai
+      modifiedOn: 2018-03-14 15:22
+      sourceSystemId : 1
+      descriptionImage: '/todos/attachement/myTodo1.jpg'
   TodoItemUpdateModel:
     allOf:
       - $ref: "#/definitions/TodoItemBase"
@@ -1262,38 +1550,45 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'
         example:
-          note: Gör så här
-          completedAt: 2018-04-12 12:00
-          todoType: basic
+          id: "123456"
           title: Städa charken
-          priority: 1
+          todoType: basic
+          description: Gör så här
+          context: https://episerver.ica.se/getContent?id=4711
+          createdAt: 2018-03-14 15:22
+          dueDate: 2018-04-12 12:00
           assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
           assignedToName: Frukt & Grönt
           assignedToObjectType: Group
-          dueAt: 2018-04-12 12:00
-          createdAt: 2018-03-14 15:22
-          contentUrl: https://episerver.ica.se/getContent?id=4711
-          modifiedOn: 2018-03-14 15:22
-          id: "123456"
-          categoryId: "123"
+          isCompleted: true
           completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
           completedByName: Göran Roseen
-          isCompleted: true
+          completedAt: 2018-04-12 12:00
+          startDate: 2018-03-14 15:22
+          priority: 1
+          categoryOneId: "123"
+          categoryTwoId: "123"
           createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
           createdByName: Abdallah Rifai
+          modifiedOn: 2018-03-14 15:22
+          sourceSystemId : 1
+          descriptionImage: '/todos/attachement/myTodo1.jpg'
           cards:
           - id: "123456"
-            notes: "this is how you measure things"
+            title: "this is how you measure things"
           - id: "123457"
-            notes:  "this is how you perform task 2"
+            title:  "this is how you perform task 2"
   TodoItem:
     allOf:
       - $ref: "#/definitions/TodoItemBase"
       - type: object
         properties:
-          categoryTitle:
+          categoryOneTitle:
             type: string
-            example: HACCP
+            example: "Bageri"
+          categoryTwoTitle:
+            type: string
+            example: "Underhåll"
           tags:
             type: array
             items:
@@ -1303,14 +1598,31 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'
         example:
-          note: Gör så här
-          completedAt: 2018-04-12 12:00
-          todoType: basic
+          id: "123456"
           title: Städa charken
-          priority: 1
+          todoType: basic
+          description: Gör så här
+          context: https://episerver.ica.se/getContent?id=4711
+          createdAt: 2018-03-14 15:22
+          dueDate: 2018-04-12 12:00
           assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
           assignedToName: Frukt & Grönt
           assignedToObjectType: Group
+          isCompleted: true
+          completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
+          completedByName: Göran Roseen
+          completedAt: 2018-04-12 12:00
+          startDate: 2018-03-14 15:22
+          priority: 1
+          categoryOneId: "123"
+          categoryTwoId: "123"
+          createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
+          createdByName: Abdallah Rifai
+          modifiedOn: 2018-03-14 15:22
+          sourceSystemId : 1
+          descriptionImage: '/todos/attachement/myTodo1.jpg'
+          categoryOneTitle: "Bageri"
+          categoryTwoTitle: "Underhåll"
           tags:
           - modifiedOn: 2018-03-14 15:22
             sortId: 1
@@ -1320,23 +1632,11 @@ definitions:
             sortId: 1
             id: "123457"
             title: Mätning
-          dueAt: 2018-04-12 12:00
-          createdAt: 2018-03-14 15:22
-          contentUrl: https://episerver.ica.se/getContent?id=4711
-          modifiedOn: 2018-03-14 15:22
-          id: "123456"
-          categoryId: "123"
-          categoryTitle: HACCP
-          completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
-          completedByName: Göran Roseen
-          isCompleted: true
-          createdById: d290f1ee-6c54-4b01-90e6-d701748f0853
-          createdByName: Abdallah Rifai
           cards:
           - id: "123456"
-            notes: "this is how you measure things"
+            title: "this is how you measure things"
           - id: "123457"
-            notes:  "this is how you perform task 2"
+            title:  "this is how you perform task 2"
   Tag:
     type: object
     required:
@@ -1389,9 +1689,8 @@ definitions:
     type: object
     required:
     - activityType
-    - categoryId
-    - contentUrl
-    - note
+    - context
+    - description
     - priority
     - title
     properties:
@@ -1405,10 +1704,10 @@ definitions:
         type: string
         example: basic
         description: Must be one of "basic", "measure", "yesno"
-      note:
+      description:
         type: string
         example: Gör så här
-      contentUrl:
+      context:
         type: string
         format: url
         example: https://episerver.ica.se/getContent?id=4711
@@ -1420,7 +1719,10 @@ definitions:
         type: integer
         format: int32
         example: 1
-      categoryId:
+      categoryOneId:
+        type: string
+        example: "123"
+      categoryTwoId:
         type: string
         example: "123"
       modifiedOn:
@@ -1433,27 +1735,38 @@ definitions:
       createdByName:
         type: string
         example: arifai
+      sourceSystemId:
+        type: string
+        example: 1
+      descriptionImage:
+        type: string
+        example: "activities/attachement/myDesc.jpg"
     example:
-      note: Gör så här
-      createdAt: 2018-03-14 15:22
-      contentUrl: https://episerver.ica.se/getContent?id=4711
-      modifiedOn: 2018-03-14 15:22
       id: "123456"
       title: Städa charken
       activityType: basic
+      description: Gör så här
+      context: https://episerver.ica.se/getContent?id=4711
+      createdAt: 2018-03-14 15:22
       priority: 1
-      categoryId: "123"
-      categoryTitle: HACCP
+      categoryOneId: "123"
+      categoryTwoId: "123"
+      modifiedOn: 2018-03-14 15:22
       createdById: "122"
       createdByName: "arifai"
+      sourceSystemId: "1"
+      descriptionImage: "activities/attachement/myDesc.jpg"
   Activity:
     allOf:
       - $ref: "#/definitions/ActivityBase"
       - type: object
         properties:
-          categoryTitle:
+          categoryOneTitle:
             type: string
-            example: HACCP
+            example: "Bageri"
+          categoryTwoTitle:
+            type: string
+            example: "Underhåll"
           tags:
             type: array
             items:
@@ -1463,16 +1776,22 @@ definitions:
             items:
               $ref: '#/definitions/CardBase'       
         example:
-          note: Gör så här
-          createdAt: 2018-03-14 15:22
-          contentUrl: https://episerver.ica.se/getContent?id=4711
-          modifiedOn: 2018-03-14 15:22
           id: "123456"
           title: Städa charken
           activityType: basic
+          description: Gör så här
+          context: https://episerver.ica.se/getContent?id=4711
+          createdAt: 2018-03-14 15:22
           priority: 1
-          categoryId: "123"
-          categoryTitle: HACCP
+          categoryOneId: "123"
+          categoryTwoId: "123"
+          modifiedOn: 2018-03-14 15:22
+          createdById: "122"
+          createdByName: "arifai"
+          sourceSystemId: "1"
+          descriptionImage: "activities/attachement/myDesc.jpg"
+          categoryOneTitle: "Bageri"
+          categoryTwoTitle: "Underhål"
           tags:
           - modifiedOn: 2018-03-14 15:22
             sortId: 1
@@ -1484,19 +1803,16 @@ definitions:
             title: Mätning
           cards:
           - id: "123456"
-            notes: "this is how you measure things"
+            title: "this is how you measure things"
           - id: "123457"
-            notes:  "this is how you perform task 2"
-          categoryTitle: HACCP
-          createdById: "122"
-          createdByName: "arifai"
+            title:  "this is how you perform task 2"
   TodoInstantiate:
     type: object
     required:
     - assignedToId
     - assignedToName
     - assignedToObjectType
-    - dueAt
+    - dueDate
     - craetedById
     - createdByName
     properties:
@@ -1509,7 +1825,7 @@ definitions:
       assignedToObjectType:
         type: string
         example: Group
-      dueAt:
+      dueDate:
         type: string
         format: date-time
         example: 2018-04-24 14:41
@@ -1520,23 +1836,23 @@ definitions:
         type: string
         example: "Abdallah Rifai"
     example:
-      dueAt: 2018-04-24 14:41
+      dueDate: 2018-04-24 14:41
       assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
       assignedToName: Frukt & Grönt
       assignedToObjectType: Group
   CardBase:
     type: object
     required:
-    - notes
+    - title
     properties:
       id:
         type: string
         example: "123456"
-      notes:
+      title:
         type: string
         example: this is how you measure things
     example:
-      notes: this is how you measure things
+      title: this is how you measure things
       id: "123456"
   TodoCard:
     allOf:
@@ -1574,7 +1890,7 @@ definitions:
           input: tempreture must be between -5 and 8
           activityCardId: "123456"
           modifiedOn: 2018-03-14 15:22
-          notes: this is how you measure things
+          title: this is how you measure things
           outputMedia: '/todos/3/cards/225/attachment/ica.jpg'
           cardType: TEMP
           id: "123456"
@@ -1609,7 +1925,7 @@ definitions:
           input: tempreture must be between -5 and 8
           activityId: "123456"
           modifiedOn: 2018-03-14 15:22
-          notes: this is how you measure things
+          title: this is how you measure things
           cardType: TEMP
           id: "123456"
           outputText: "8"
@@ -1633,6 +1949,22 @@ definitions:
       id: TEMP
       title: Tempratur
       modifiedOn: 2018-03-14 15:22
+  System:
+    type: object
+    required:
+    - title
+    properties:
+      id:
+        type: string
+        example: "123"
+      title:
+        type: string
+        example: "HACCP"
+    example:
+      id: 1
+      title: "HACCP"    
+      modifiedOn: 2018-03-14 15:22
+      
 parameters:
   top:
     name: $top
