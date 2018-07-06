@@ -1557,9 +1557,10 @@ definitions:
           context: https://episerver.ica.se/getContent?id=4711
           createdAt: 2018-03-14 15:22
           dueDate: 2018-04-12 12:00
-          assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
-          assignedToName: Frukt & Grönt
-          assignedToObjectType: Group
+          assignedToUserId: d290f1ee-6c54-4b01-90e6-d701748f0851
+          assignedToUserName: arifai
+          assignedToGroupId: d290f1ee-6c54-4b01-90e6-d701748f0851
+          assignedToGroupName: Frukt & Grönt          
           isCompleted: true
           completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
           completedByName: Göran Roseen
@@ -1605,9 +1606,10 @@ definitions:
           context: https://episerver.ica.se/getContent?id=4711
           createdAt: 2018-03-14 15:22
           dueDate: 2018-04-12 12:00
-          assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
-          assignedToName: Frukt & Grönt
-          assignedToObjectType: Group
+          assignedToUserId: d290f1ee-6c54-4b01-90e6-d701748f0851
+          assignedToUserName: arifai
+          assignedToGroupId: d290f1ee-6c54-4b01-90e6-d701748f0851
+          assignedToGroupName: Frukt & Grönt   
           isCompleted: true
           completedById: d290f1ee-6c54-4b01-90e6-d701748f0851
           completedByName: Göran Roseen
@@ -1809,22 +1811,26 @@ definitions:
   TodoInstantiate:
     type: object
     required:
-    - assignedToId
-    - assignedToName
-    - assignedToObjectType
+    - assignedToUserId
+    - assignedToUserName
+    - assignedToGroupId
+    - assignedToGroupName
     - dueDate
-    - craetedById
+    - createdById
     - createdByName
     properties:
-      assignedToId:
+      assignedToUserId:
         type: string
         example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      assignedToName:
+      assignedToUserName:
+        type: string
+        example: arifai
+      assignedToGroupId:
+        type: string
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      assignedToGroupName:
         type: string
         example: Frukt & Grönt
-      assignedToObjectType:
-        type: string
-        example: Group
       dueDate:
         type: string
         format: date-time
@@ -1837,9 +1843,10 @@ definitions:
         example: "Abdallah Rifai"
     example:
       dueDate: 2018-04-24 14:41
-      assignedToId: d290f1ee-6c54-4b01-90e6-d701748f0851
-      assignedToName: Frukt & Grönt
-      assignedToObjectType: Group
+      assignedToUserId: d290f1ee-6c54-4b01-90e6-d701748f0851
+      assignedToUserName: arifai
+      assignedToGroupId: d290f1ee-6c54-4b01-90e6-d701748f0851
+      assignedToGroupName: Frukt & Grönt
   CardBase:
     type: object
     required:
